@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { submitEnquiry } from "@/app/actions";
 import LeadForm, { type Field } from "@/components/LeadForm";
 import { CallButton, Footer, Header, PageHero } from "@/components/chrome";
-import { site } from "@/lib/site";
+import { countyNames, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -86,7 +86,7 @@ export default function Contact() {
                     Service area
                   </dt>
                   <dd className="mt-1 text-lg text-ink-soft">
-                    {site.counties.join(", ")} counties.
+                    {countyNames.join(", ")} counties.
                   </dd>
                 </div>
               </dl>

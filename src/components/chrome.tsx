@@ -102,7 +102,7 @@ export function PageHero({
 /* Closing conversion block, repeated at the foot of every page. */
 export function ClosingCta({
   title = "Tell us what they need. We will tell you straight.",
-  body = "No pressure and no sales script — just a conversation about what is going on and whether we are the right fit.",
+  body = "No pressure and no sales script, just a conversation about what is going on and whether we are the right fit.",
 }: {
   title?: string;
   body?: string;

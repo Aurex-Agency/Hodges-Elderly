@@ -51,7 +51,7 @@ function validate(
   return { fields, fieldErrors };
 }
 
-const UNCONFIGURED = `Our contact form is not connected yet. Please call ${site.phone} — someone will answer.`;
+const UNCONFIGURED = `Our contact form is not connected yet. Please call ${site.phone} and someone will answer.`;
 
 export async function submitEnquiry(
   _prev: FormState,

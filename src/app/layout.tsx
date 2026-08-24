@@ -24,8 +24,8 @@ const sans = Source_Sans_3({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.shortName} — In-Home Care in Tupelo & North Mississippi`,
-    template: `%s — ${site.shortName}`,
+    default: `${site.shortName} | In-Home Care in Tupelo & North Mississippi`,
+    template: `%s | ${site.shortName}`,
   },
   description:
     "In-home care across Lee, Pontotoc, Union, Chickasaw, Monroe, Lafayette, and Itawamba counties. Founder-led, local, and built on eight years of caring for elderly, IDD, and mental health clients.",
@@ -76,7 +76,7 @@ export default function RootLayout({
               },
               areaServed: site.counties.map((c) => ({
                 "@type": "AdministrativeArea",
-                name: `${c} County, Mississippi`,
+                name: `${c.name} County, Mississippi`,
               })),
             }),
           }}

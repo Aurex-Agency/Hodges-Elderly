@@ -146,7 +146,7 @@ export default function Magnolia({
                  at all, so the simple variant becomes a green line drawing
                  that ties to the frame instead of a tonal shape. */
               fill={simple ? "#ffffff" : `url(#${PETAL_BACK})`}
-              stroke={simple ? "var(--color-green)" : "#c3d0c8"}
+              stroke={simple ? "currentColor" : "#c3d0c8"}
               strokeWidth={simple ? 11 : 1.1}
               strokeLinejoin={simple ? "round" : undefined}
             />
@@ -173,7 +173,7 @@ export default function Magnolia({
           cy="-1"
           rx={simple ? 24 : 11}
           ry={simple ? 24 : 14}
-          fill={simple ? "var(--color-plum)" : `url(#${CONE})`}
+          fill={simple ? "currentColor" : `url(#${CONE})`}
         />
         {!simple &&
           STAMENS.map((st, i) => (

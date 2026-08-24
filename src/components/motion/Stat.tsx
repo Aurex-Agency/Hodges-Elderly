@@ -23,10 +23,13 @@ export default function Stat({
   value,
   suffix,
   label,
+  accent = "plum",
 }: {
   value: number | null;
   suffix: string;
   label: string;
+  /** Palette token name. */
+  accent?: string;
 }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
@@ -45,13 +48,19 @@ export default function Stat({
 
   return (
     <motion.div
-      className="bg-mist px-6 py-9 text-center"
+      className="bg-mist px-6 py-9 text-center transition-colors duration-300 hover:bg-[var(--accent-wash)]"
+      style={
+        {
+          "--accent": `var(--color-${accent})`,
+          "--accent-wash": `var(--color-${accent}-wash)`,
+        } as React.CSSProperties
+      }
       initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
     >
-      <p ref={ref} className="font-display text-3xl font-semibold text-plum">
+      <p ref={ref} className="font-display text-3xl font-semibold text-[var(--accent)]">
         {value === null ? suffix : `${display} ${suffix}`}
       </p>
       <p className="mx-auto mt-2 max-w-[16rem] text-base leading-snug text-ink-soft">

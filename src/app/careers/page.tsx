@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { submitApplication } from "@/app/actions";
 import LeadForm, { type Field } from "@/components/LeadForm";
 import { Footer, Header, PageHero } from "@/components/chrome";
-import { site } from "@/lib/site";
+import { countyNames, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Caregiver Jobs in North Mississippi",
@@ -23,13 +23,13 @@ const FIELDS: Field[] = [
     name: "experience",
     label: "Your experience",
     type: "textarea",
-    help: "Paid work, family caregiving, CNA or other certification — all of it counts. If you are new to this, say so.",
+    help: "Paid work, family caregiving, CNA or other certification. All of it counts, and if you are new to this, say so.",
   },
   {
     name: "availability",
     label: "When you can work",
     type: "textarea",
-    help: "Days, evenings, weekends, overnights — whatever suits you.",
+    help: "Days, evenings, weekends, overnights, whatever suits you.",
   },
 ];
 
@@ -57,7 +57,7 @@ export default function Careers() {
               <h2 className="pt-2 text-3xl text-ink">Who does well here</h2>
               <p>
                 People who show up when they said they would. Most of what makes
-                a caregiver good is not clinical — it is reliability, patience,
+                a caregiver good is not clinical. It is reliability, patience,
                 and treating someone&rsquo;s home like their home.
               </p>
               <p>
@@ -68,7 +68,7 @@ export default function Careers() {
               <h2 className="pt-2 text-3xl text-ink">Where we need people</h2>
               <p>
                 Across all seven counties we serve:{" "}
-                {site.counties.join(", ")}. Living close to the families you
+                {countyNames.join(", ")}. Living close to the families you
                 serve makes everything easier, so tell us where you are.
               </p>
             </div>

@@ -29,8 +29,8 @@ export default function About() {
             <p>
               {site.firstName} was not trained for it and nobody assigned it to
               her. She did it the way most people in Mississippi come to this
-              work — at home, without being asked, because someone she loved
-              needed her and she was the one who was there.
+              work. At home, without being asked, because someone she loved needed
+              her and she was the one who was there.
             </p>
             <blockquote className="border-l-4 border-plum pl-6 font-display text-2xl leading-snug text-ink">
               &ldquo;Taking care of my grandmother was an eye-opener. That is
@@ -41,7 +41,7 @@ export default function About() {
               intellectual and developmental disabilities and with serious
               mental illness. That is difficult, specialized work, and it is
               where she learned that consistency matters more than almost
-              anything — that the same familiar face showing up on schedule is
+              anything else. The same familiar face showing up on schedule is
               itself a form of care.
             </p>
             <p>
@@ -84,8 +84,8 @@ export default function About() {
             <p>
               When you call Hodges, you reach {site.firstName}. She knows which
               caregiver is going to your mother&rsquo;s house, because she hired
-              them. If something is not working, you are not filing a ticket —
-              you are telling the owner.
+              them. If something is not working, you are not filing a ticket.
+              You are telling the owner.
             </p>
             <p>
               <Link

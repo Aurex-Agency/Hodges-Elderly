@@ -35,7 +35,16 @@ export default function ServicesExplorer({
         const buttonId = `svc-button-${service.slug}`;
 
         return (
-          <li key={service.slug} className="border-b border-rule">
+          <li
+            key={service.slug}
+            style={
+              {
+                "--accent": `var(--color-${service.accent})`,
+                "--accent-wash": `var(--color-${service.accent}-wash)`,
+              } as React.CSSProperties
+            }
+            className="border-b border-rule"
+          >
             <h3>
               <button
                 id={buttonId}
@@ -43,13 +52,20 @@ export default function ServicesExplorer({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : service.slug)}
-                className="group grid w-full cursor-pointer items-center gap-x-8 gap-y-2 py-7 text-left font-body font-normal transition-colors duration-200 hover:bg-mist sm:grid-cols-[4rem_21rem_1fr_2rem] sm:px-4"
+                className={`group relative grid w-full cursor-pointer items-center gap-x-8 gap-y-2 py-7 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[4rem_21rem_1fr_2rem] sm:px-4 ${isOpen ? "bg-[var(--accent-wash)]" : ""}`}
               >
+                <span
+                  aria-hidden="true"
+                  className={`absolute left-0 top-0 h-full w-1 origin-top bg-[var(--accent)] transition-transform duration-300 ${
+                    isOpen ? "scale-y-100" : "scale-y-0 group-hover:scale-y-100"
+                  }`}
+                />
+
                 {/* The numeral gives way to a small bloom when the row is
-                    open — a quiet marker of "you are here". */}
+                    open, a quiet marker of "you are here". */}
                 <span className="relative flex h-10 w-10 items-center justify-center">
                   <motion.span
-                    className="absolute font-display text-2xl tabular-nums text-plum-soft"
+                    className="absolute font-display text-2xl tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]"
                     animate={{ opacity: isOpen ? 0 : 1, scale: isOpen ? 0.6 : 1 }}
                     transition={{ duration: 0.25, ease: EASE }}
                   >
@@ -66,7 +82,7 @@ export default function ServicesExplorer({
                     transition={{ type: "spring", bounce: 0.4, duration: 0.55 }}
                   >
                     <Magnolia
-                      className="h-full w-full"
+                      className="h-full w-full text-[var(--accent)]"
                       variant="simple"
                       withLeaves={false}
                     />
@@ -74,8 +90,10 @@ export default function ServicesExplorer({
                 </span>
 
                 <span
-                  className={`font-display text-2xl font-semibold transition-colors duration-200 ${
-                    isOpen ? "text-plum" : "text-ink group-hover:text-plum"
+                  className={`font-display text-2xl font-semibold transition-colors duration-300 ${
+                    isOpen
+                      ? "text-[var(--accent)]"
+                      : "text-ink group-hover:text-[var(--accent)]"
                   }`}
                 >
                   {service.name}
@@ -85,7 +103,7 @@ export default function ServicesExplorer({
 
                 <motion.span
                   aria-hidden="true"
-                  className="hidden justify-self-end text-plum sm:block"
+                  className="hidden justify-self-end text-[var(--accent)] sm:block"
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   transition={{ duration: 0.3, ease: EASE }}
                 >
@@ -141,7 +159,7 @@ export default function ServicesExplorer({
                           >
                             <svg
                               viewBox="0 0 20 20"
-                              className="mt-1.5 h-5 w-5 shrink-0 text-green"
+                              className="mt-1.5 h-5 w-5 shrink-0 text-[var(--accent)]"
                               fill="none"
                               aria-hidden="true"
                             >
@@ -161,7 +179,7 @@ export default function ServicesExplorer({
                       <p className="mt-7">
                         <Link
                           href={`/services/${service.slug}`}
-                          className="inline-flex items-center gap-2 text-lg font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                          className="inline-flex items-center gap-2 text-lg font-semibold text-[var(--accent)] underline decoration-current/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-current"
                         >
                           More about {service.name.toLowerCase()}
                           <svg
@@ -184,6 +202,7 @@ export default function ServicesExplorer({
 
                       <ServiceIllustration
                         slug={service.slug}
+                        accent={service.accent}
                         className="hidden h-44 w-44 lg:block lg:justify-self-end"
                       />
                     </div>

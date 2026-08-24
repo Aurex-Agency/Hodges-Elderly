@@ -13,12 +13,17 @@ let vars = "";
 for (const slug of SLUGS) {
   const page = await ctx.newPage();
   await page.goto(`${BASE}/services/${slug}`, { waitUntil: "networkidle" });
-  await page.waitForTimeout(1600);
+  await page.waitForTimeout(3200);
   const r = await page.evaluate(() => {
     const svg = document.querySelector("main svg[viewBox='0 0 120 120']");
     const cs = getComputedStyle(document.documentElement);
-    const names = ["--color-green","--color-green-soft","--color-plum","--color-plum-soft",
-      "--color-plum-wash","--color-ink","--color-rule","--color-mist"];
+    // Every token the illustrations can reference. Missing one leaves the
+    // var unresolved in the sheet and the strokes vanish.
+    const names = ["--color-green","--color-green-soft","--color-green-wash",
+      "--color-plum","--color-plum-soft","--color-plum-wash",
+      "--color-spruce","--color-spruce-wash","--color-clay","--color-clay-wash",
+      "--color-ochre","--color-ochre-wash","--color-wine","--color-wine-wash",
+      "--color-ink","--color-rule","--color-mist"];
     return {
       html: svg ? svg.outerHTML : null,
       vars: names.map((n) => `${n}:${cs.getPropertyValue(n)}`).join(";"),

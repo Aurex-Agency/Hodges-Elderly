@@ -40,18 +40,27 @@ export default async function ServicePage({
       <main id="main">
         <PageHero eyebrow="Services" title={service.name} lede={service.blurb} />
 
-        <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+        <section
+          style={
+            {
+              "--accent": `var(--color-${service.accent})`,
+              "--accent-wash": `var(--color-${service.accent}-wash)`,
+            } as React.CSSProperties
+          }
+          className="mx-auto max-w-6xl px-6 py-16 lg:py-24"
+        >
           <div className="grid gap-14 lg:grid-cols-[1.1fr_1fr]">
             <div>
               <ServiceIllustration
                 slug={service.slug}
+                accent={service.accent}
                 className="mb-8 h-32 w-32"
               />
               <h2 className="text-3xl">Who this is for</h2>
               <p className="mt-5 text-xl leading-relaxed text-ink-soft">
                 {service.forWhom}
               </p>
-              <p className="mt-8 border-l-4 border-green pl-6 text-lg leading-relaxed text-ink">
+              <p className="mt-8 border-l-4 border-[var(--accent)] bg-[var(--accent-wash)] py-4 pl-6 pr-4 text-lg leading-relaxed text-ink">
                 {service.note}
               </p>
             </div>
@@ -63,7 +72,7 @@ export default async function ServicePage({
                   <li key={item} className="flex gap-4 border-b border-rule pb-4">
                     <svg
                       viewBox="0 0 20 20"
-                      className="mt-1.5 h-5 w-5 shrink-0 text-green"
+                      className="mt-1.5 h-5 w-5 shrink-0 text-[var(--accent)]"
                       fill="none"
                       aria-hidden="true"
                     >

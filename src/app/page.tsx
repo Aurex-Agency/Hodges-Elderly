@@ -6,12 +6,12 @@ import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import Stat from "@/components/motion/Stat";
 import ServicesExplorer from "@/components/ServicesExplorer";
 import { CallButton, ClosingCta, Footer, Header } from "@/components/chrome";
-import { site, services } from "@/lib/site";
+import { countyNames, site, services } from "@/lib/site";
 
 const STATS = [
-  { value: 8, suffix: "years", label: "caring for elderly, IDD, and mental health clients" },
-  { value: 7, suffix: "counties", label: "across North Mississippi, all locally served" },
-  { value: null, suffix: "Founder-led", label: `you talk to ${site.founder}, not a franchise office` },
+  { value: 8, suffix: "years", accent: "spruce", label: "caring for elderly, IDD, and mental health clients" },
+  { value: 7, suffix: "counties", accent: "clay", label: "across North Mississippi, all locally served" },
+  { value: null, suffix: "Founder-led", accent: "plum", label: `you talk to ${site.founder}, not a franchise office` },
 ];
 
 export default function Home() {
@@ -52,7 +52,7 @@ export default function Home() {
               <RevealItem>
                 <p className="mt-7 max-w-xl text-xl text-ink-soft">
                   In-home care for aging parents and grandparents across seven
-                  counties around Tupelo — so they keep the home they know, and
+                  counties around Tupelo, so they keep the home they know and
                   you stop lying awake about the days you can&rsquo;t be there.
                 </p>
               </RevealItem>
@@ -71,8 +71,8 @@ export default function Home() {
 
               <RevealItem>
                 <p className="mt-6 text-base text-ink-faint">
-                  Serving {site.counties.slice(0, -1).join(", ")}, and{" "}
-                  {site.counties.at(-1)} counties.
+                  Serving {countyNames.slice(0, -1).join(", ")}, and{" "}
+                  {countyNames.at(-1)} counties.
                 </p>
               </RevealItem>
             </RevealGroup>
@@ -84,7 +84,13 @@ export default function Home() {
         <section className="border-y border-rule bg-mist">
           <div className="mx-auto grid max-w-6xl gap-px bg-rule sm:grid-cols-3">
             {STATS.map((s) => (
-              <Stat key={s.suffix} value={s.value} suffix={s.suffix} label={s.label} />
+              <Stat
+                key={s.suffix}
+                value={s.value}
+                suffix={s.suffix}
+                label={s.label}
+                accent={s.accent}
+              />
             ))}
           </div>
         </section>
@@ -95,7 +101,7 @@ export default function Home() {
           <Reveal className="max-w-2xl">
             <h2 className="text-4xl lg:text-5xl">What we do in the home</h2>
             <p className="mt-5 text-xl text-ink-soft">
-              Non-medical care, built around what they actually need help with —
+              Non-medical care, built around what they actually need help with,
               not a package they have to fit into. Open any one to see what it
               covers.
             </p>
@@ -143,8 +149,8 @@ export default function Home() {
               <p>
                 Before there was an agency, there was a granddaughter looking
                 after her grandmother through bone cancer. {site.firstName}{" "}
-                learned this work the way most people in Mississippi learn it —
-                at home, without being asked, because someone she loved needed
+                learned this work the way most people in Mississippi learn it. At
+                home, without being asked, because someone she loved needed
                 her.
               </p>
               <p>
@@ -172,7 +178,7 @@ export default function Home() {
               <h2 className="text-4xl lg:text-5xl">Where we go</h2>
               <p className="mt-5 text-lg text-ink-soft">
                 Seven counties, all within reach of Tupelo. If you are just
-                outside the line, call anyway — {site.firstName} will tell you
+                outside the line, call anyway. {site.firstName} will tell you
                 honestly whether she can serve you.
               </p>
               <div className="mt-8">
@@ -182,13 +188,24 @@ export default function Home() {
 
             <RevealGroup as="ul" className="grid grid-cols-2 gap-x-8 sm:grid-cols-3" stagger={0.05}>
               {site.counties.map((county) => (
-                <RevealItem as="li" key={county} className="border-b border-rule py-4">
-                  <span className="font-display text-2xl font-semibold text-ink">
-                    {county}
-                  </span>
-                  <span className="mt-0.5 block text-sm uppercase tracking-wider text-ink-faint">
-                    County
-                  </span>
+                <RevealItem as="li" key={county.name}>
+                  <Link
+                    href={county.href}
+                    style={
+                      {
+                        "--accent": `var(--color-${county.accent})`,
+                        "--accent-wash": `var(--color-${county.accent}-wash)`,
+                      } as React.CSSProperties
+                    }
+                    className="group block border-b-2 border-rule px-3 py-4 transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[var(--accent-wash)]"
+                  >
+                    <span className="font-display text-2xl font-semibold text-ink transition-colors duration-200 group-hover:text-[var(--accent)]">
+                      {county.name}
+                    </span>
+                    <span className="mt-0.5 block text-sm uppercase tracking-wider text-ink-faint transition-colors duration-200 group-hover:text-[var(--accent)]">
+                      County
+                    </span>
+                  </Link>
                 </RevealItem>
               ))}
             </RevealGroup>

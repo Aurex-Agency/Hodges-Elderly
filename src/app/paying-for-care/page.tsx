@@ -6,7 +6,7 @@ import { PRICING_CONFIRMED, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "What In-Home Care Costs in North Mississippi",
   description:
-    "How families pay for in-home care in Mississippi: private pay, the Medicaid Elderly and Disabled Waiver, long-term care insurance, and VA benefits — explained plainly.",
+    "How families pay for in-home care in Mississippi: private pay, the Medicaid Elderly and Disabled Waiver, long-term care insurance, and VA benefits, explained plainly.",
 };
 
 /* TODO(client): REAL NUMBERS REQUIRED.
@@ -22,7 +22,7 @@ const PAYMENT_ROUTES = [
   },
   {
     title: "Medicaid Elderly and Disabled Waiver",
-    body: "Mississippi's E&D Waiver is a Medicaid program that can cover in-home personal care for people who would otherwise need nursing-home level care. Eligibility is decided by the Mississippi Division of Medicaid — not by any agency. There is an application process and, at times, a waiting list.",
+    body: "Mississippi's E&D Waiver is a Medicaid program that can cover in-home personal care for people who would otherwise need nursing-home level care. Eligibility is decided by the Mississippi Division of Medicaid, not by any agency. There is an application process and, at times, a waiting list.",
   },
   {
     title: "Long-term care insurance",
@@ -52,8 +52,8 @@ export default function PayingForCare() {
               <p className="mt-4 text-lg text-ink-soft">
                 Call {site.phone} and we will give you a straight number for the
                 schedule you actually need. Cost depends on how many hours a
-                week and what kind of help — there is no sense quoting you a
-                figure for care that is not yours.
+                week and what kind of help. There is no sense quoting you a figure
+                for care that is not yours.
               </p>
               <div className="mt-7">
                 <CallButton />
@@ -100,8 +100,8 @@ export default function PayingForCare() {
                 </strong>
               </p>
               <p>
-                Medicare covers short-term skilled care — a nurse or a physical
-                therapist for a limited period, usually after a hospital stay.
+                Medicare covers short-term skilled care, such as a nurse or a
+                physical therapist for a limited period after a hospital stay.
                 That is home health, and it is a different service from what we
                 provide. The daily, ongoing, non-medical help that keeps someone
                 in their own home is not part of it.
@@ -124,8 +124,8 @@ export default function PayingForCare() {
             </p>
             <p>
               If the Medicaid waiver is the right route, that process runs
-              through the Mississippi Division of Medicaid and takes time — so
-              the sooner someone starts it, the better. If we are not the right
+              through the Mississippi Division of Medicaid and takes time, so the
+              sooner someone starts it, the better. If we are not the right
               agency for your situation, we will say so.
             </p>
             <p>

@@ -66,12 +66,12 @@ function Bloom({
   y: number;
   /** Approximate diameter in viewBox units. */
   d?: number;
-  tone?: "plum" | "green";
+  /** Palette token name. */
+  tone?: string;
 }) {
   const scale = d / 228;
-  const stroke =
-    tone === "plum" ? "var(--color-plum-soft)" : "var(--color-green-soft)";
-  const fill = tone === "plum" ? "var(--color-plum-wash)" : "var(--color-green-wash)";
+  const stroke = `var(--color-${tone})`;
+  const fill = `var(--color-${tone}-wash)`;
 
   return (
     <motion.g
@@ -99,7 +99,7 @@ function Bloom({
           strokeLinejoin="round"
         />
       ))}
-      <circle r={22} fill="var(--color-plum)" opacity="0.75" />
+      <circle r={22} fill={`var(--color-${tone})`} opacity="0.7" />
     </motion.g>
   );
 }
@@ -108,16 +108,16 @@ function L(d: string, extra?: Record<string, string | number>) {
   return <motion.path d={d} variants={line} {...extra} />;
 }
 
-const SCENES: Record<string, React.ReactNode> = {
+const buildScenes = (bloomTone: string): Record<string, React.ReactNode> => ({
   /* Folded towels with a bloom resting on top. Reads instantly, keeps the
      dignity of the service, and depicts no one. */
   "personal-care": (
     <>
       {L("M 32 74 L 88 74 C 91 74, 94 77, 94 80 L 94 88 C 94 91, 91 94, 88 94 L 32 94 C 29 94, 26 91, 26 88 L 26 80 C 26 77, 29 74, 32 74 Z")}
       {L("M 38 57 L 82 57 C 85 57, 88 60, 88 63 L 88 68 C 88 71, 85 74, 82 74 L 38 74 C 35 74, 32 71, 32 68 L 32 63 C 32 60, 35 57, 38 57 Z")}
-      {L("M 37 74 C 33 80, 33 88, 37 94", { stroke: "var(--color-green-soft)" })}
-      {L("M 43 57 C 39 61, 39 70, 43 74", { stroke: "var(--color-green-soft)" })}
-      <Bloom x={60} y={46} d={26} />
+      {L("M 37 74 C 33 80, 33 88, 37 94", { opacity: 0.5 })}
+      {L("M 43 57 C 39 61, 39 70, 43 74", { opacity: 0.5 })}
+      <Bloom x={60} y={46} d={26} tone={bloomTone} />
     </>
   ),
 
@@ -130,9 +130,9 @@ const SCENES: Record<string, React.ReactNode> = {
       {L("M 64 64 C 75 64, 75 78, 64 78")}
       {L("M 74 68 L 74 84 C 74 88, 78 92, 82 92 L 88 92 C 92 92, 96 88, 96 84 L 96 68")}
       {L("M 70 68 L 100 68")}
-      {L("M 44 48 C 40 42, 48 38, 44 30", { stroke: "var(--color-green-soft)" })}
-      {L("M 56 48 C 52 42, 60 38, 56 30", { stroke: "var(--color-green-soft)" })}
-      <Bloom x={20} y={86} d={16} />
+      {L("M 44 48 C 40 42, 48 38, 44 30", { opacity: 0.5 })}
+      {L("M 56 48 C 52 42, 60 38, 56 30", { opacity: 0.5 })}
+      <Bloom x={20} y={86} d={16} tone={bloomTone} />
     </>
   ),
 
@@ -145,9 +145,9 @@ const SCENES: Record<string, React.ReactNode> = {
       {L("M 58 86 C 58 70, 58 56, 58 46")}
       {L("M 58 74 C 48 74, 40 68, 38 59 C 48 57, 56 64, 58 74")}
       {L("M 58 64 C 66 63, 72 58, 74 51 C 66 50, 60 55, 58 64")}
-      {L("M 76 50 L 76 86", { stroke: "var(--color-green-soft)" })}
-      {L("M 56 70 L 78 70", { stroke: "var(--color-plum-soft)" })}
-      <Bloom x={58} y={36} d={22} />
+      {L("M 76 50 L 76 86", { opacity: 0.5 })}
+      {L("M 56 70 L 78 70", { opacity: 0.5 })}
+      <Bloom x={58} y={36} d={22} tone={bloomTone} />
     </>
   ),
 
@@ -160,10 +160,10 @@ const SCENES: Record<string, React.ReactNode> = {
       {L("M 39 64 C 41 53, 49 47, 60 47 C 71 47, 79 53, 81 64")}
       {L("M 34 71 C 27 71, 27 80, 34 80")}
       {L("M 86 71 C 93 71, 93 80, 86 80")}
-      {L("M 50 38 C 46 32, 54 28, 50 22", { stroke: "var(--color-green-soft)" })}
-      {L("M 70 38 C 66 32, 74 28, 70 22", { stroke: "var(--color-green-soft)" })}
-      <motion.circle cx="60" cy="42" r="4.5" variants={solid} fill="var(--color-green)" />
-      <Bloom x={100} y={96} d={16} />
+      {L("M 50 38 C 46 32, 54 28, 50 22", { opacity: 0.5 })}
+      {L("M 70 38 C 66 32, 74 28, 70 22", { opacity: 0.5 })}
+      <motion.circle cx="60" cy="42" r="4.5" variants={solid} fill="currentColor" />
+      <Bloom x={100} y={96} d={16} tone={bloomTone} />
     </>
   ),
 
@@ -175,8 +175,8 @@ const SCENES: Record<string, React.ReactNode> = {
       {L("M 48 50 L 98 50")}
       {L("M 84 50 L 84 64")}
       {L("M 94 50 L 94 61")}
-      {L("M 34 64 L 34 74", { stroke: "var(--color-plum-soft)" })}
-      <Bloom x={34} y={85} d={21} />
+      {L("M 34 64 L 34 74", { opacity: 0.5 })}
+      <Bloom x={34} y={85} d={21} tone={bloomTone} />
     </>
   ),
 
@@ -190,22 +190,28 @@ const SCENES: Record<string, React.ReactNode> = {
       {L("M 30 84 L 30 96")}
       {L("M 90 84 L 90 96")}
       {L("M 33 50 C 22 50, 14 58, 13 70 C 13 76, 16 80, 21 80 C 26 80, 28 75, 27 70 C 26 62, 30 55, 36 53", {
-        stroke: "var(--color-plum-soft)",
+        opacity: 0.5,
       })}
-      <Bloom x={60} y={46} d={18} />
+      <Bloom x={60} y={46} d={18} tone={bloomTone} />
     </>
   ),
-};
+});
 
 export default function ServiceIllustration({
   slug,
   className,
+  accent = "green",
 }: {
   slug: string;
   className?: string;
+  /** Palette token the linework is drawn in. */
+  accent?: string;
 }) {
   const reduced = useReducedMotion();
-  const drawing = SCENES[slug];
+  /* Keep the magnolia legible against the linework: on the purple-family
+     accents it switches to ochre rather than disappearing into the drawing. */
+  const bloomTone = accent === "plum" || accent === "wine" ? "ochre" : "plum";
+  const drawing = buildScenes(bloomTone)[slug];
   if (!drawing) return null;
 
   return (
@@ -216,7 +222,8 @@ export default function ServiceIllustration({
       aria-hidden="true"
       focusable="false"
       fill="none"
-      stroke="var(--color-green)"
+      stroke={`var(--color-${accent})`}
+      color={`var(--color-${accent})`}
       strokeWidth={STROKE}
       strokeLinecap="round"
       strokeLinejoin="round"

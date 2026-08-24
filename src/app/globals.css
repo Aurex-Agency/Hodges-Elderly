@@ -29,6 +29,18 @@
   /* Warm accent, used sparingly */
   --color-gold: #b8862b;
 
+  /* Accent family. Each service and county carries one, so the site has
+     colour without the palette turning into confetti. Every one of these
+     clears 5.5:1 on white, because they are used for text, not just fills. */
+  --color-spruce: #145c66;
+  --color-spruce-wash: #eaf4f6;
+  --color-clay: #9a4420;
+  --color-clay-wash: #fcf1ec;
+  --color-ochre: #86620f;
+  --color-ochre-wash: #faf4e6;
+  --color-wine: #7b2c4e;
+  --color-wine-wash: #fbeff4;
+
   /* Ground */
   --color-page: #ffffff;
   --color-mist: #f2f5f3;

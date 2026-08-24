@@ -17,7 +17,7 @@ export default function Services() {
         <PageHero
           eyebrow="Services"
           title="Care built around their day, not around a package."
-          lede="Non-medical in-home care. Start with whatever is actually a problem right now — a few hours a week is a normal place to begin."
+          lede="Non-medical in-home care. Start with whatever is actually a problem right now. A few hours a week is a normal place to begin."
         />
 
         <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">

@@ -13,7 +13,7 @@ const townPages = site.towns.filter((t) => t.page);
 const TOWN_COPY: Record<string, { intro: string; local: string }> = {
   tupelo: {
     intro:
-      "Tupelo is where the agency is based, so it is where we can respond fastest — including on short notice.",
+      "Tupelo is where the agency is based, so it is where we can respond fastest, including on short notice.",
     local:
       "As the largest city in the region, Tupelo is also where most families in the surrounding counties come for medical appointments. If your mother lives here, or comes here regularly for care, we can build the schedule around those trips rather than around ours.",
   },
@@ -21,7 +21,7 @@ const TOWN_COPY: Record<string, { intro: string; local: string }> = {
     intro:
       "New Albany sits about half an hour north of Tupelo, and we serve families throughout Union County.",
     local:
-      "Families in smaller towns often have fewer options and end up driving further for help. That is exactly the situation in-home care is meant to solve — the care comes to the house instead of the house emptying out.",
+      "Families in smaller towns often have fewer options and end up driving further for help. That is exactly the situation in-home care is meant to solve. The care comes to the house instead of the house emptying out.",
   },
   pontotoc: {
     intro:

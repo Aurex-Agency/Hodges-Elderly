@@ -30,13 +30,13 @@ export const site = {
   url: "https://hodgeselderlycare.com",
 
   counties: [
-    "Lee",
-    "Pontotoc",
-    "Union",
-    "Chickasaw",
-    "Monroe",
-    "Lafayette",
-    "Itawamba",
+    { name: "Lee", accent: "green", href: "/in-home-care/tupelo" },
+    { name: "Pontotoc", accent: "plum", href: "/in-home-care/pontotoc" },
+    { name: "Union", accent: "spruce", href: "/in-home-care/new-albany" },
+    { name: "Chickasaw", accent: "clay", href: "/service-area" },
+    { name: "Monroe", accent: "ochre", href: "/service-area" },
+    { name: "Lafayette", accent: "wine", href: "/service-area" },
+    { name: "Itawamba", accent: "green", href: "/service-area" },
   ],
 
   towns: [
@@ -60,6 +60,8 @@ export const site = {
   ],
 } as const;
 
+export const countyNames = site.counties.map((c) => c.name);
+
 export const NAV = [
   { label: "Services", href: "/services" },
   { label: "Her Story", href: "/about" },
@@ -76,6 +78,7 @@ export const NAV = [
 export const services = [
   {
     slug: "personal-care",
+    accent: "plum",
     name: "Personal care",
     blurb:
       "Bathing, dressing, grooming, and help getting safely in and out of bed. The daily things that get harder to do alone.",
@@ -93,9 +96,10 @@ export const services = [
   },
   {
     slug: "companion-care",
+    accent: "ochre",
     name: "Companion care",
     blurb:
-      "Someone in the house. Conversation, a shared meal, a hand of cards — and a person who notices when something is off.",
+      "Someone in the house. Conversation, a shared meal, a hand of cards, and a person who notices when something is off.",
     forWhom:
       "Someone who is managing physically but is alone most of the day, and a family that has started worrying about what they would not hear about.",
     includes: [
@@ -110,6 +114,7 @@ export const services = [
   },
   {
     slug: "idd-and-mental-health-support",
+    accent: "spruce",
     name: "IDD and mental health support",
     blurb:
       "Aaliyah spent eight years supporting adults with intellectual and developmental disabilities and mental illness before opening her own agency.",
@@ -118,7 +123,7 @@ export const services = [
     includes: [
       "Support with daily routines and personal care",
       "Help keeping appointments and taking medication on schedule",
-      "Community access — errands, activities, getting out of the house",
+      "Community access for errands, activities, and getting out of the house",
       "Consistency of caregiver, which matters more here than anywhere",
       "Communication with family and support coordinators",
     ],
@@ -126,11 +131,12 @@ export const services = [
   },
   {
     slug: "meals-and-homemaking",
+    accent: "clay",
     name: "Meals and homemaking",
     blurb:
       "Cooking, laundry, dishes, and keeping the house in the condition they always kept it themselves.",
     forWhom:
-      "Someone whose house has quietly gotten away from them — and who would be embarrassed to have you notice.",
+      "Someone whose house has quietly gotten away from them, and who would be embarrassed to have you notice.",
     includes: [
       "Cooking and preparing meals, including for specific diets",
       "Grocery shopping and putting it away",
@@ -142,9 +148,10 @@ export const services = [
   },
   {
     slug: "errands-and-transportation",
+    accent: "green",
     name: "Errands and transportation",
     blurb:
-      "Rides to the doctor, the pharmacy, and the grocery store — with someone who walks in alongside them.",
+      "Rides to the doctor, the pharmacy, and the grocery store, with someone who walks in alongside them.",
     forWhom:
       "Someone who has stopped driving, or should, and is missing appointments because getting there has become the hard part.",
     includes: [
@@ -158,6 +165,7 @@ export const services = [
   },
   {
     slug: "respite-for-family",
+    accent: "wine",
     name: "Respite for family",
     blurb:
       "If you have been the one doing all of it, this is the service that lets you sleep, work, or leave town without worrying.",
@@ -203,7 +211,7 @@ export const faqs = [
   },
   {
     q: "What if they do not like the caregiver?",
-    a: "Say so. This happens and it is nobody's fault — personalities either fit or they do not. We would far rather change a caregiver than have your parent dread the doorbell.",
+    a: "Say so. This happens and it is nobody's fault. Personalities either fit or they do not. We would far rather change a caregiver than have your parent dread the doorbell.",
     group: "Trust and safety",
   },
   {
@@ -214,7 +222,7 @@ export const faqs = [
   },
   {
     q: "Is this medical care?",
-    a: "No. This is non-medical in-home care — help with daily living, not skilled nursing. We do not provide wound care, injections, or therapy. If those are needed, they come from a home health agency, and the two often run alongside each other.",
+    a: "No. This is non-medical in-home care, meaning help with daily living rather than skilled nursing. We do not provide wound care, injections, or therapy. If those are needed, they come from a home health agency, and the two often run alongside each other.",
     group: "What we do",
   },
   {
