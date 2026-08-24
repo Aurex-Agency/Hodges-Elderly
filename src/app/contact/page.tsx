@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { submitEnquiry } from "@/app/actions";
 import LeadForm, { type Field } from "@/components/LeadForm";
+import FigureScene from "@/components/FigureScene";
 import { CallButton, Footer, Header, PageHero } from "@/components/chrome";
 import { countyNames, site } from "@/lib/site";
 
@@ -48,6 +49,7 @@ export default function Contact() {
         <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr]">
             <div>
+              <FigureScene name="call" accent="plum" className="mb-6 h-40 w-full max-w-sm" />
               <h2 className="text-3xl">Calling is fastest</h2>
               <p className="mt-5 text-lg text-ink-soft">
                 Most families would rather talk than type, and honestly it is

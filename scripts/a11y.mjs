@@ -13,6 +13,20 @@ let total = 0;
 for (const route of ROUTES) {
   const page = await ctx.newPage();
   await page.goto(BASE + route, { waitUntil: "networkidle" });
+
+  // Scroll the page so every whileInView reveal fires, then let them settle.
+  // Axe computes contrast against actual rendered opacity, so an element
+  // caught mid-fade reports a false contrast failure.
+  await page.evaluate(async () => {
+    const step = window.innerHeight * 0.6;
+    for (let y = 0; y < document.body.scrollHeight; y += step) {
+      window.scrollTo({ top: y, behavior: "instant" });
+      await new Promise((r) => setTimeout(r, 120));
+    }
+    window.scrollTo({ top: 0, behavior: "instant" });
+  });
+  await page.waitForTimeout(1500);
+
   const { violations } = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();

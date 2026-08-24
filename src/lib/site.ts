@@ -60,6 +60,30 @@ export const site = {
   ],
 } as const;
 
+/* The three steps between "I should probably call someone" and someone
+ * actually turning up. Families put this call off for months because they
+ * do not know what happens next, so the site says it plainly. */
+export const howItStarts = [
+  {
+    scene: "call" as const,
+    accent: "plum",
+    title: "You call",
+    body: `You describe what is going on at home. ${site.firstName} asks what a normal day looks like and what has changed lately. No script, no pressure, and no obligation at the end of it.`,
+  },
+  {
+    scene: "visit" as const,
+    accent: "spruce",
+    title: "We come to the house",
+    body: "We meet the person who needs care, in their own home, alongside whoever else in the family wants to be there. Together we work out the hours and the help that would actually make a difference.",
+  },
+  {
+    scene: "care" as const,
+    accent: "green",
+    title: "Care begins",
+    body: "A caregiver starts on the schedule you agreed. If something is not working, you call and we change it. Needs shift over time and the schedule shifts with them.",
+  },
+];
+
 export const countyNames = site.counties.map((c) => c.name);
 
 export const NAV = [

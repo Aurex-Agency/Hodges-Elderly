@@ -4,9 +4,10 @@ import BloomingMagnolia from "@/components/motion/BloomingMagnolia";
 import DriftingPetals from "@/components/motion/DriftingPetals";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import Stat from "@/components/motion/Stat";
+import FigureScene from "@/components/FigureScene";
 import ServicesExplorer from "@/components/ServicesExplorer";
 import { CallButton, ClosingCta, Footer, Header } from "@/components/chrome";
-import { countyNames, site, services } from "@/lib/site";
+import { countyNames, howItStarts, site, services } from "@/lib/site";
 
 const STATS = [
   { value: 8, suffix: "years", accent: "spruce", label: "caring for elderly, IDD, and mental health clients" },
@@ -108,6 +109,54 @@ export default function Home() {
           </Reveal>
 
           <ServicesExplorer services={services} />
+        </section>
+
+        {/* The three steps between deciding to call and someone turning up.
+            Families stall for months here, so it gets its own section. */}
+        <section className="border-y border-rule bg-mist">
+          <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+            <Reveal className="max-w-2xl">
+              <h2 className="text-4xl lg:text-5xl">How it starts</h2>
+              <p className="mt-5 text-xl text-ink-soft">
+                Most families put this call off for months because nobody tells
+                them what happens next. Here is the whole of it.
+              </p>
+            </Reveal>
+
+            <ol className="mt-14 grid gap-10 lg:grid-cols-3">
+              {howItStarts.map((step, i) => (
+                <Reveal as="li" key={step.scene} delay={i * 0.1}>
+                  <div
+                    style={
+                      {
+                        "--accent": `var(--color-${step.accent})`,
+                        "--accent-wash": `var(--color-${step.accent}-wash)`,
+                      } as React.CSSProperties
+                    }
+                    className="h-full rounded-2xl border border-rule bg-page p-7 transition-colors duration-300 hover:border-[var(--accent)]"
+                  >
+                    <FigureScene
+                      name={step.scene}
+                      accent={step.accent}
+                      className="h-40 w-full"
+                    />
+                    <p className="mt-6 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent)]">
+                      <span className="h-px w-8 bg-[var(--accent)]" aria-hidden="true" />
+                      Step {i + 1}
+                    </p>
+                    <h3 className="mt-3 font-display text-2xl font-semibold text-ink">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-lg text-ink-soft">{step.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+
+            <Reveal className="mt-12">
+              <CallButton />
+            </Reveal>
+          </div>
         </section>
 
         {/* Her story — the strongest asset on the project. */}

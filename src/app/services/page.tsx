@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ClosingCta, Footer, Header, PageHero } from "@/components/chrome";
+import ServiceIllustration from "@/components/ServiceIllustration";
 import { services } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -23,15 +24,37 @@ export default function Services() {
         <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <ul className="border-t border-rule">
             {services.map((service, i) => (
-              <li key={service.slug} className="border-b border-rule">
+              <li
+                key={service.slug}
+                style={
+                  {
+                    "--accent": `var(--color-${service.accent})`,
+                    "--accent-wash": `var(--color-${service.accent}-wash)`,
+                  } as React.CSSProperties
+                }
+                className="border-b border-rule"
+              >
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group grid items-baseline gap-x-8 gap-y-3 py-8 transition-colors duration-200 hover:bg-mist sm:grid-cols-[4rem_21rem_1fr] sm:px-4"
+                  className="group relative grid items-center gap-x-8 gap-y-3 py-8 transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[6rem_20rem_1fr] sm:px-4"
                 >
-                  <span className="font-display text-2xl text-plum-soft tabular-nums">
-                    {String(i + 1).padStart(2, "0")}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-0 h-full w-1 origin-top scale-y-0 bg-[var(--accent)] transition-transform duration-300 group-hover:scale-y-100"
+                  />
+
+                  <span className="flex items-center gap-3">
+                    <span className="font-display text-2xl tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <ServiceIllustration
+                      slug={service.slug}
+                      accent={service.accent}
+                      className="h-14 w-14 shrink-0"
+                    />
                   </span>
-                  <h2 className="font-display text-2xl font-semibold text-ink transition-colors duration-200 group-hover:text-plum">
+
+                  <h2 className="font-display text-2xl font-semibold text-ink transition-colors duration-300 group-hover:text-[var(--accent)]">
                     {service.name}
                   </h2>
                   <p className="text-lg text-ink-soft">{service.blurb}</p>
