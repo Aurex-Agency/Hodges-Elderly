@@ -1,12 +1,13 @@
 import { chromium } from "playwright";
 
 const BASE = process.env.BASE ?? "http://localhost:55843";
+const PATH = process.env.PATH_ ?? "";
 const W = Number(process.env.W ?? 1440);
 const TAG = process.env.TAG ?? `d${W}`;
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: W, height: 1000 } });
-await page.goto(BASE, { waitUntil: "networkidle" });
+await page.goto(BASE + PATH, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 
 // Capture each band separately so nothing gets downscaled into mush.

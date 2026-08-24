@@ -1,85 +1,35 @@
+import Link from "next/link";
 import Magnolia from "@/components/Magnolia";
-import Logo from "@/components/Logo";
+import { CallButton, ClosingCta, Footer, Header } from "@/components/chrome";
 import { site, services } from "@/lib/site";
-
-function CallButton({ subtle = false }: { subtle?: boolean }) {
-  return (
-    <a
-      href={site.phoneHref}
-      className={
-        subtle
-          ? "inline-flex min-h-[3.25rem] items-center gap-2 rounded-full border-2 border-plum px-7 text-lg font-semibold text-plum transition-colors duration-200 hover:bg-plum hover:text-petal"
-          : "inline-flex min-h-[3.5rem] items-center gap-3 rounded-full bg-plum px-8 text-lg font-semibold text-petal shadow-[0_2px_0_0_var(--color-plum-deep)] transition-colors duration-200 hover:bg-plum-deep"
-      }
-    >
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden="true">
-        <path
-          d="M6.6 2.5 9 3.1l1.2 3.6-1.9 1.6a12.4 12.4 0 0 0 5.4 5.4l1.6-1.9 3.6 1.2.6 2.4a2 2 0 0 1-2 2.5A16.5 16.5 0 0 1 4.1 4.5a2 2 0 0 1 2.5-2Z"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-      </svg>
-      Call {site.phone}
-    </a>
-  );
-}
 
 export default function Home() {
   return (
     <>
-      <header className="relative z-20 border-b border-rule">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
-          <Logo />
-          <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
-            {["Services", "Her Story", "Service Area", "What It Costs", "Answers"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-base font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
-                >
-                  {item}
-                </a>
-              ),
-            )}
-          </nav>
-          <div className="hidden sm:block">
-            <CallButton subtle />
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main id="main">
-        {/* ---------------------------------------------------------------
-            Hero. No photography exists, so the bloom does the emotional
-            work that a photograph normally would.
-        --------------------------------------------------------------- */}
-        <section className="grain relative overflow-hidden">
-          {/* Two separate treatments. On narrow screens the text block spans
-              the full width, so a full-strength bloom behind it destroys
-              legibility — especially the dark leaves. There it becomes a
-              faint, leafless corner accent instead. */}
-          <div className="pointer-events-none absolute -right-24 -top-16 h-[20rem] w-[20rem] opacity-[0.35] lg:hidden">
+        {/* Hero. There is no photography, so the bloom does the emotional
+            work a photograph normally would. */}
+        <section className="relative overflow-hidden bg-page">
+          {/* On narrow screens the text spans the full width, so a
+              full-strength bloom behind it destroys legibility. There it
+              becomes a faint, leafless corner accent instead. */}
+          <div className="pointer-events-none absolute -right-24 -top-16 h-[20rem] w-[20rem] opacity-40 lg:hidden">
             <Magnolia className="h-full w-full -rotate-[14deg]" withLeaves={false} />
           </div>
-          {/* Desktop: bleeds off the right edge so it reads as a composed
-              field the headline sits against, not a stamp floating in space. */}
-          <div className="pointer-events-none absolute -right-36 -top-20 hidden h-[54rem] w-[54rem] opacity-90 lg:block">
+          <div className="pointer-events-none absolute -right-44 -top-20 hidden h-[54rem] w-[54rem] opacity-[0.88] lg:block">
             <Magnolia className="h-full w-full -rotate-[14deg]" />
           </div>
-          <div className="pointer-events-none absolute -bottom-56 -left-44 hidden h-[30rem] w-[30rem] opacity-[0.22] lg:block">
-            <Magnolia className="h-full w-full rotate-[195deg]" withLeaves={false} />
-          </div>
 
-          <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-20 lg:pb-36 lg:pt-28">
+          <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-16 lg:pb-32 lg:pt-24">
             <div className="max-w-2xl">
-              <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.2em] text-leaf">
-                <span className="h-px w-10 bg-leaf-soft" aria-hidden="true" />
+              <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-green">
+                <span className="h-px w-10 bg-green-soft" aria-hidden="true" />
                 In-home care across North Mississippi
               </p>
 
-              <h1 className="mt-7 text-[2.7rem] leading-[1.03] sm:text-6xl lg:text-[4.25rem]">
+              <h1 className="mt-7 text-[2.6rem] leading-[1.06] sm:text-6xl lg:text-[4.1rem]">
                 She stays in her own home.
                 <span className="block text-plum">
                   We take care of everything else.
@@ -87,19 +37,19 @@ export default function Home() {
               </h1>
 
               <p className="mt-7 max-w-xl text-xl text-ink-soft">
-                Hodges Elderly &amp; Disabled Services is a local, family-founded
-                agency serving seven counties around Tupelo. You will not get a
-                call center. You will get {site.founder.split(" ")[0]}.
+                A local, family-founded agency serving seven counties around
+                Tupelo. You will not get a call center. You will get{" "}
+                {site.firstName}.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 <CallButton />
-                <a
-                  href="#contact"
+                <Link
+                  href="/contact"
                   className="inline-flex min-h-[3.5rem] items-center px-2 text-lg font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
                 >
                   Ask a question first
-                </a>
+                </Link>
               </div>
 
               <p className="mt-6 text-base text-ink-faint">
@@ -112,14 +62,14 @@ export default function Home() {
 
         {/* Three things that are true today. The insured/bonded and waiver
             claims belong here too — withheld until the client confirms. */}
-        <section className="border-y border-rule bg-cream-deep">
+        <section className="border-y border-rule bg-mist">
           <div className="mx-auto grid max-w-6xl gap-px bg-rule sm:grid-cols-3">
             {[
               { stat: "8 years", label: "caring for elderly, IDD, and mental health clients" },
               { stat: "7 counties", label: "across North Mississippi, all locally served" },
               { stat: "Founder-led", label: `you talk to ${site.founder}, not a franchise office` },
             ].map(({ stat, label }) => (
-              <div key={stat} className="bg-cream-deep px-6 py-9 text-center">
+              <div key={stat} className="bg-mist px-6 py-9 text-center">
                 <p className="font-display text-3xl font-semibold text-plum">{stat}</p>
                 <p className="mx-auto mt-2 max-w-[16rem] text-base leading-snug text-ink-soft">
                   {label}
@@ -129,12 +79,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ---------------------------------------------------------------
-            Services. An editorial list with hanging numerals rather than a
-            grid of equal rounded cards — the default pattern every
-            competitor in this market already uses.
-        --------------------------------------------------------------- */}
-        <section id="services" className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+        {/* Editorial list with hanging numerals rather than a grid of equal
+            rounded cards — the pattern every competitor here already uses. */}
+        <section className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <div className="max-w-2xl">
             <h2 className="text-4xl lg:text-5xl">What we do in the home</h2>
             <p className="mt-5 text-xl text-ink-soft">
@@ -143,12 +90,12 @@ export default function Home() {
             </p>
           </div>
 
-          <ul className="mt-16 border-t border-rule">
+          <ul className="mt-14 border-t border-rule">
             {services.map((service, i) => (
               <li key={service.slug} className="border-b border-rule">
-                <a
+                <Link
                   href={`/services/${service.slug}`}
-                  className="group grid items-baseline gap-x-8 gap-y-3 py-8 transition-colors duration-200 hover:bg-plum-wash sm:grid-cols-[4rem_21rem_1fr] sm:px-4"
+                  className="group grid items-baseline gap-x-8 gap-y-3 py-8 transition-colors duration-200 hover:bg-mist sm:grid-cols-[4rem_21rem_1fr] sm:px-4"
                 >
                   <span className="font-display text-2xl text-plum-soft tabular-nums">
                     {String(i + 1).padStart(2, "0")}
@@ -157,42 +104,38 @@ export default function Home() {
                     {service.name}
                   </h3>
                   <p className="text-lg text-ink-soft">{service.blurb}</p>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </section>
 
-        {/* ---------------------------------------------------------------
-            Her story. The strongest asset on the project: she started this
-            after caring for her grandmother through bone cancer. Full-bleed
-            dark green so it lands as the emotional centre of the page.
-        --------------------------------------------------------------- */}
-        <section id="her-story" className="grain relative overflow-hidden bg-leaf-deep text-cream">
+        {/* Her story — the strongest asset on the project. */}
+        <section className="relative overflow-hidden bg-forest text-white">
           <div className="pointer-events-none absolute -bottom-32 -right-24 h-[34rem] w-[34rem] opacity-[0.09]">
             <Magnolia className="h-full w-full rotate-[18deg]" withLeaves={false} />
           </div>
 
-          <div className="relative mx-auto grid max-w-6xl gap-14 px-6 py-24 lg:grid-cols-[1fr_1.1fr] lg:py-32">
+          <div className="relative mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[1fr_1.1fr] lg:py-28">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-leaf-soft">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-soft">
                 Why this agency exists
               </p>
               <blockquote className="mt-8">
-                <p className="font-display text-3xl leading-[1.2] text-cream sm:text-4xl">
+                <p className="font-display text-3xl leading-[1.24] sm:text-4xl">
                   &ldquo;Taking care of my grandmother was an eye-opener. That is
                   when I realized caring for people was my passion.&rdquo;
                 </p>
                 <footer className="mt-8 flex items-center gap-4">
-                  {/* Placeholder for her portrait — see TODO below. */}
+                  {/* TODO(client): replace with her portrait once we have one. */}
                   <span
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-leaf-soft font-display text-xl text-cream"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-green-soft font-display text-xl"
                     aria-hidden="true"
                   >
                     AH
                   </span>
-                  <span className="text-base leading-tight text-leaf-soft">
-                    <span className="block font-semibold text-cream">
+                  <span className="text-base leading-tight text-green-soft">
+                    <span className="block font-semibold text-white">
                       {site.founder}
                     </span>
                     {site.founderTitle}
@@ -201,10 +144,10 @@ export default function Home() {
               </blockquote>
             </div>
 
-            <div className="space-y-6 text-lg leading-relaxed text-cream/85 lg:pt-16">
+            <div className="space-y-6 text-lg leading-relaxed text-white/85 lg:pt-16">
               <p>
                 Before there was an agency, there was a granddaughter looking
-                after her grandmother through bone cancer. {site.founder.split(" ")[0]}{" "}
+                after her grandmother through bone cancer. {site.firstName}{" "}
                 learned this work the way most people in Mississippi learn it —
                 at home, without being asked, because someone she loved needed
                 her.
@@ -215,26 +158,30 @@ export default function Home() {
                 illness. She opened Hodges to do it on her own terms:
                 compassion, dignity, and a genuine passion for serving others.
               </p>
-              <p className="font-semibold text-cream">
-                Her mother has run a care home in West Point for years. This is
-                the second generation of the same family doing the same work.
+              <p>
+                <Link
+                  href="/about"
+                  className="font-semibold text-white underline decoration-green-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-white"
+                >
+                  Read more about {site.firstName}
+                </Link>
               </p>
             </div>
           </div>
         </section>
 
         {/* Service area, set as display type rather than a map or pill row. */}
-        <section id="service-area" className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
             <div>
               <h2 className="text-4xl lg:text-5xl">Where we go</h2>
               <p className="mt-5 text-lg text-ink-soft">
                 Seven counties, all within reach of Tupelo. If you are just
-                outside the line, call anyway — {site.founder.split(" ")[0]} will
-                tell you honestly whether she can serve you.
+                outside the line, call anyway — {site.firstName} will tell you
+                honestly whether she can serve you.
               </p>
               <div className="mt-8">
-                <CallButton subtle />
+                <CallButton variant="outline" />
               </div>
             </div>
 
@@ -257,102 +204,10 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Closing call to action. */}
-        <section id="contact" className="grain relative overflow-hidden border-t border-rule bg-plum-wash">
-          <div className="pointer-events-none absolute -left-20 -top-28 h-[24rem] w-[24rem] opacity-40">
-            <Magnolia className="h-full w-full rotate-[145deg]" />
-          </div>
-          <div className="relative mx-auto max-w-3xl px-6 py-24 text-center lg:py-32">
-            <h2 className="text-4xl lg:text-5xl">
-              Tell us what she needs. We will tell you straight.
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-xl text-ink-soft">
-              No pressure and no sales script — just a conversation about what is
-              going on and whether we are the right fit.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <CallButton />
-            </div>
-            <p className="mt-6 text-base text-ink-faint">
-              {/* TODO(client): confirm answering hours before publishing them. */}
-              Serving {site.address.city} and the surrounding seven counties.
-            </p>
-          </div>
-        </section>
+        <ClosingCta />
       </main>
 
-      <footer className="border-t border-rule bg-cream-deep">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Logo />
-            <p className="mt-5 max-w-xs text-base text-ink-soft">
-              Locally founded in-home care for elderly and disabled adults across
-              North Mississippi.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="font-display text-lg font-semibold text-ink">Services</h2>
-            <ul className="mt-4 space-y-2.5">
-              {services.map((s) => (
-                <li key={s.slug}>
-                  <a
-                    href={`/services/${s.slug}`}
-                    className="text-base text-ink-soft transition-colors duration-200 hover:text-plum"
-                  >
-                    {s.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-display text-lg font-semibold text-ink">Towns</h2>
-            <ul className="mt-4 space-y-2.5">
-              {site.towns
-                .filter((t) => t.page)
-                .map((t) => (
-                  <li key={t.name}>
-                    <a
-                      href={`/in-home-care/${t.name.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="text-base text-ink-soft transition-colors duration-200 hover:text-plum"
-                    >
-                      In-home care in {t.name}
-                    </a>
-                  </li>
-                ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-display text-lg font-semibold text-ink">Contact</h2>
-            <ul className="mt-4 space-y-2.5 text-base text-ink-soft">
-              <li>
-                <a
-                  href={site.phoneHref}
-                  className="font-semibold text-plum transition-colors duration-200 hover:text-plum-deep"
-                >
-                  {site.phone}
-                </a>
-              </li>
-              <li>
-                {site.address.street}
-                <br />
-                {site.address.city}, {site.address.state} {site.address.zip}
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-rule">
-          <div className="mx-auto max-w-6xl px-6 py-6">
-            <p className="text-sm text-ink-faint">
-              &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

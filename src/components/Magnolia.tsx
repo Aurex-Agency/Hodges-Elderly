@@ -52,25 +52,29 @@ export function MagnoliaDefs() {
       focusable="false"
     >
       <defs>
+        {/* Petals stay a warm ivory so the bloom still reads as a flower
+            against a white page, with a cool green-grey edge to define it. */}
         <linearGradient id={PETAL_FRONT} x1="0" y1="1" x2="0.3" y2="0">
-          <stop offset="0%" stopColor="#f0e4d4" />
-          <stop offset="45%" stopColor="#fdf8f1" />
-          <stop offset="100%" stopColor="#fffdfa" />
+          <stop offset="0%" stopColor="#e9eeea" />
+          <stop offset="45%" stopColor="#fbfcfa" />
+          <stop offset="100%" stopColor="#ffffff" />
         </linearGradient>
         <linearGradient id={PETAL_BACK} x1="0" y1="1" x2="0.3" y2="0">
-          <stop offset="0%" stopColor="#ddcdb8" />
-          <stop offset="60%" stopColor="#f2e7d8" />
-          <stop offset="100%" stopColor="#f8f1e6" />
+          <stop offset="0%" stopColor="#cfdad3" />
+          <stop offset="60%" stopColor="#e8efea" />
+          <stop offset="100%" stopColor="#f3f7f4" />
         </linearGradient>
+        {/* Deep and desaturated on purpose. A brighter green reads as flat
+            cut-out foliage and competes with the headline beside it. */}
         <linearGradient id={LEAF_FILL} x1="0" y1="1" x2="0.6" y2="0">
-          <stop offset="0%" stopColor="#1c3524" />
-          <stop offset="70%" stopColor="#2e5339" />
-          <stop offset="100%" stopColor="#3d6b48" />
+          <stop offset="0%" stopColor="#0e2a20" />
+          <stop offset="70%" stopColor="#1a4234" />
+          <stop offset="100%" stopColor="#245442" />
         </linearGradient>
         <radialGradient id={CONE} cx="0.4" cy="0.3" r="0.8">
-          <stop offset="0%" stopColor="#dccfa0" />
-          <stop offset="65%" stopColor="#c3ad70" />
-          <stop offset="100%" stopColor="#9c8449" />
+          <stop offset="0%" stopColor="#d8c384" />
+          <stop offset="65%" stopColor="#c19c46" />
+          <stop offset="100%" stopColor="#8f6a24" />
         </radialGradient>
       </defs>
     </svg>
@@ -111,7 +115,7 @@ export default function Magnolia({
               <path d={LEAF} fill={`url(#${LEAF_FILL})`} />
               <path
                 d="M 0 -12 L 0 -164"
-                stroke="#16291d"
+                stroke="#0c2019"
                 strokeWidth="2"
                 strokeLinecap="round"
                 opacity="0.4"
@@ -127,8 +131,8 @@ export default function Magnolia({
               /* At logo size a cream bloom on a cream ground has no contrast
                  at all, so the simple variant becomes a green line drawing
                  that ties to the frame instead of a tonal shape. */
-              fill={simple ? "#fffdf9" : `url(#${PETAL_BACK})`}
-              stroke={simple ? "var(--color-leaf)" : "#dbcab3"}
+              fill={simple ? "#ffffff" : `url(#${PETAL_BACK})`}
+              stroke={simple ? "var(--color-green)" : "#c3d0c8"}
               strokeWidth={simple ? 7 : 1.1}
               strokeLinejoin={simple ? "round" : undefined}
             />
@@ -141,10 +145,10 @@ export default function Magnolia({
             <path
               d={PETAL}
               fill={`url(#${PETAL_FRONT})`}
-              stroke="#e2d2bb"
+              stroke="#cddad2"
               strokeWidth="1.4"
             />
-            <path d={CREASE} stroke="#eaddc9" strokeWidth="1.6" fill="none" />
+            <path d={CREASE} stroke="#dde7e0" strokeWidth="1.6" fill="none" />
           </g>
           ))}
 
@@ -167,7 +171,7 @@ export default function Magnolia({
               y1={Math.sin(a) * 10 - 1}
               x2={Math.cos(a) * 18}
               y2={Math.sin(a) * 18 - 1}
-              stroke="#b9a86e"
+              stroke="#b39a5e"
               strokeWidth="2"
               strokeLinecap="round"
               opacity="0.7"
