@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ServiceIllustration from "@/components/ServiceIllustration";
 import { ClosingCta, Footer, Header, PageHero } from "@/components/chrome";
 import { services, site } from "@/lib/site";
 
@@ -42,6 +43,10 @@ export default async function ServicePage({
         <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
           <div className="grid gap-14 lg:grid-cols-[1.1fr_1fr]">
             <div>
+              <ServiceIllustration
+                slug={service.slug}
+                className="mb-8 h-32 w-32"
+              />
               <h2 className="text-3xl">Who this is for</h2>
               <p className="mt-5 text-xl leading-relaxed text-ink-soft">
                 {service.forWhom}

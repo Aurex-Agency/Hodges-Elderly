@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Magnolia from "./Magnolia";
+import ServiceIllustration from "./ServiceIllustration";
 import type { Service } from "@/lib/site";
 
 /* The services list, made openable in place.
@@ -119,7 +120,8 @@ export default function ServicesExplorer({
                 >
                   <div className="grid gap-8 pb-9 sm:grid-cols-[4rem_1fr] sm:px-4">
                     <span aria-hidden="true" />
-                    <div>
+                    <div className="grid gap-8 lg:grid-cols-[1fr_11rem] lg:items-start">
+                      <div>
                       <p className="max-w-2xl text-lg text-ink-soft">
                         {service.forWhom}
                       </p>
@@ -178,6 +180,12 @@ export default function ServicesExplorer({
                           </svg>
                         </Link>
                       </p>
+                      </div>
+
+                      <ServiceIllustration
+                        slug={service.slug}
+                        className="hidden h-44 w-44 lg:block lg:justify-self-end"
+                      />
                     </div>
                   </div>
                 </motion.div>
