@@ -82,9 +82,9 @@ export default async function TownPage({
               <p>{copy.local}</p>
               <p>
                 We are not a franchise branch. {site.founder} founded this
-                agency, hires every caregiver herself, and answers the phone
+                agency, hires every caregiver personally, and answers the phone
                 when you call. If something is not working with your
-                mother&rsquo;s care, you are talking to the owner about it.
+                parent&rsquo;s care, you are talking to the owner about it.
               </p>
               <p>
                 <Link

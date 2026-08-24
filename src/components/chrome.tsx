@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import Magnolia from "./Magnolia";
+import BloomingMagnolia from "./motion/BloomingMagnolia";
+import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
 import { site, services, NAV } from "@/lib/site";
 
 export function CallButton({
@@ -11,7 +12,7 @@ export function CallButton({
   className?: string;
 }) {
   const base =
-    "inline-flex min-h-[3.5rem] items-center gap-3 rounded-full px-8 text-lg font-semibold transition-colors duration-200";
+    "inline-flex min-h-[3.5rem] items-center gap-3 rounded-full px-8 text-lg font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
   const styles = {
     solid: "bg-plum text-white hover:bg-plum-deep",
     outline: "border-2 border-plum text-plum hover:bg-plum hover:text-white",
@@ -72,19 +73,27 @@ export function PageHero({
   return (
     <section className="relative overflow-hidden border-b border-rule bg-mist">
       <div className="pointer-events-none absolute -right-28 -top-24 hidden h-[30rem] w-[30rem] opacity-70 lg:block">
-        <Magnolia className="h-full w-full -rotate-[14deg]" />
+        <BloomingMagnolia className="h-full w-full -rotate-[14deg]" />
       </div>
       <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
-        <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-green">
-          <span className="h-px w-10 bg-green-soft" aria-hidden="true" />
-          {eyebrow}
-        </p>
-        <h1 className="mt-6 max-w-3xl text-[2.4rem] leading-[1.08] sm:text-5xl lg:text-[3.5rem]">
-          {title}
-        </h1>
-        {lede && (
-          <p className="mt-6 max-w-2xl text-xl text-ink-soft">{lede}</p>
-        )}
+        <RevealGroup stagger={0.09}>
+          <RevealItem>
+            <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-green">
+              <span className="h-px w-10 bg-green-soft" aria-hidden="true" />
+              {eyebrow}
+            </p>
+          </RevealItem>
+          <RevealItem>
+            <h1 className="mt-6 max-w-3xl text-[2.4rem] leading-[1.08] sm:text-5xl lg:text-[3.5rem]">
+              {title}
+            </h1>
+          </RevealItem>
+          {lede && (
+            <RevealItem>
+              <p className="mt-6 max-w-2xl text-xl text-ink-soft">{lede}</p>
+            </RevealItem>
+          )}
+        </RevealGroup>
       </div>
     </section>
   );
@@ -92,7 +101,7 @@ export function PageHero({
 
 /* Closing conversion block, repeated at the foot of every page. */
 export function ClosingCta({
-  title = "Tell us what she needs. We will tell you straight.",
+  title = "Tell us what they need. We will tell you straight.",
   body = "No pressure and no sales script — just a conversation about what is going on and whether we are the right fit.",
 }: {
   title?: string;
@@ -101,9 +110,9 @@ export function ClosingCta({
   return (
     <section className="relative overflow-hidden bg-forest text-white">
       <div className="pointer-events-none absolute -bottom-32 -right-24 h-[32rem] w-[32rem] opacity-[0.08]">
-        <Magnolia className="h-full w-full rotate-[18deg]" withLeaves={false} />
+        <BloomingMagnolia className="h-full w-full rotate-[18deg]" withLeaves={false} />
       </div>
-      <div className="relative mx-auto max-w-3xl px-6 py-20 text-center lg:py-28">
+      <Reveal className="relative mx-auto max-w-3xl px-6 py-20 text-center lg:py-28">
         <h2 className="text-4xl lg:text-5xl">{title}</h2>
         <p className="mx-auto mt-6 max-w-xl text-xl text-white/80">{body}</p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -115,7 +124,7 @@ export function ClosingCta({
             Send a message
           </Link>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

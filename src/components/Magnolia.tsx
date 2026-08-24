@@ -12,21 +12,21 @@
 
 /* Broad, cupped tepal. Wide enough that neighbours in a whorl overlap
  * heavily — a magnolia is a dense mass of petals, not a radiating daisy. */
-const PETAL =
+export const PETAL =
   "M 0 0 C -44 -16, -54 -60, -36 -92 C -23 -114, 23 -114, 36 -92 C 54 -60, 44 -16, 0 0 Z";
 
 /* Faint crease down the middle of a tepal, for a little relief. */
-const CREASE = "M 0 -10 C -6 -42, -5 -74, 0 -96";
+export const CREASE = "M 0 -10 C -6 -42, -5 -74, 0 -96";
 
 /* Magnolia grandiflora leaves are long, leathery and much bigger than
  * the petals — they have to read as foliage, not as green shards. */
-const LEAF = "M 0 0 C -34 -52, -36 -128, 0 -178 C 36 -128, 34 -52, 0 0 Z";
+export const LEAF = "M 0 0 C -34 -52, -36 -128, 0 -178 C 36 -128, 34 -52, 0 0 Z";
 
 /* Loose, slightly irregular whorls. Perfect radial symmetry is the single
  * biggest tell of clip art, so every element carries a little jitter. */
-const BACK_WHORL = [4, 61, 122, 178, 241, 299];
-const FRONT_WHORL = [32, 119, 208, 295];
-const LEAVES = [
+export const BACK_WHORL = [4, 61, 122, 178, 241, 299];
+export const FRONT_WHORL = [32, 119, 208, 295];
+export const LEAVES = [
   { angle: 18, scale: 1.0 },
   { angle: 74, scale: 0.86 },
   { angle: 152, scale: 0.95 },
@@ -37,10 +37,24 @@ const LEAVES = [
 /* Gradients live in one hidden sprite rendered once per document, so the
  * blossom stays a pure Server Component (no useId, no client JS) and the
  * page never carries duplicate element ids. */
-const PETAL_FRONT = "mag-petal-front";
-const PETAL_BACK = "mag-petal-back";
-const LEAF_FILL = "mag-leaf";
-const CONE = "mag-cone";
+/* Precomputed and rounded. Full-precision floats serialise differently on
+ * the server and in the browser (…76 vs …759), which React reports as a
+ * hydration mismatch, so the values are fixed here once and shared. */
+export const STAMENS = Array.from({ length: 11 }, (_, i) => {
+  const a = (i / 11) * Math.PI * 2 + 0.3;
+  const r = (n: number) => Math.round(n * 100) / 100;
+  return {
+    x1: r(Math.cos(a) * 10),
+    y1: r(Math.sin(a) * 10 - 1),
+    x2: r(Math.cos(a) * 18),
+    y2: r(Math.sin(a) * 18 - 1),
+  };
+});
+
+export const PETAL_FRONT = "mag-petal-front";
+export const PETAL_BACK = "mag-petal-back";
+export const LEAF_FILL = "mag-leaf";
+export const CONE = "mag-cone";
 
 export function MagnoliaDefs() {
   return (
@@ -133,7 +147,7 @@ export default function Magnolia({
                  that ties to the frame instead of a tonal shape. */
               fill={simple ? "#ffffff" : `url(#${PETAL_BACK})`}
               stroke={simple ? "var(--color-green)" : "#c3d0c8"}
-              strokeWidth={simple ? 7 : 1.1}
+              strokeWidth={simple ? 11 : 1.1}
               strokeLinejoin={simple ? "round" : undefined}
             />
           </g>
@@ -162,22 +176,19 @@ export default function Magnolia({
           fill={simple ? "var(--color-plum)" : `url(#${CONE})`}
         />
         {!simple &&
-          Array.from({ length: 11 }, (_, i) => {
-          const a = (i / 11) * Math.PI * 2 + 0.3;
-          return (
+          STAMENS.map((st, i) => (
             <line
               key={`stamen-${i}`}
-              x1={Math.cos(a) * 10}
-              y1={Math.sin(a) * 10 - 1}
-              x2={Math.cos(a) * 18}
-              y2={Math.sin(a) * 18 - 1}
+              x1={st.x1}
+              y1={st.y1}
+              x2={st.x2}
+              y2={st.y2}
               stroke="#b39a5e"
               strokeWidth="2"
               strokeLinecap="round"
               opacity="0.7"
             />
-            );
-          })}
+          ))}
       </g>
     </svg>
   );

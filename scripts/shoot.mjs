@@ -10,6 +10,18 @@ const page = await browser.newPage({ viewport: { width: W, height: 1000 } });
 await page.goto(BASE + PATH, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 
+// Scroll the whole page so every whileInView reveal has fired, then return
+// to the top. Without this the captures show elements mid-transition.
+await page.evaluate(async () => {
+  const step = window.innerHeight * 0.6;
+  for (let y = 0; y < document.body.scrollHeight; y += step) {
+    window.scrollTo({ top: y, behavior: "instant" });
+    await new Promise((r) => setTimeout(r, 130));
+  }
+  window.scrollTo({ top: 0, behavior: "instant" });
+});
+await page.waitForTimeout(1400);
+
 // Capture each band separately so nothing gets downscaled into mush.
 const bands = await page.evaluate(() =>
   [...document.querySelectorAll("header, main > section, footer")].map((el, i) => ({

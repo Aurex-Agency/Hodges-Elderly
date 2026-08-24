@@ -103,7 +103,7 @@ export const services = [
       "Shared meals rather than eating alone",
       "Cards, puzzles, television, reading aloud",
       "Walks and time outside when the weather allows",
-      "A regular set of eyes on how she is really doing",
+      "A regular set of eyes on how they are really doing",
       "A phone call to you if something changes",
     ],
     note: "Isolation is not a small problem. A caregiver who is there three afternoons a week often catches a decline weeks before anyone else would.",
@@ -128,7 +128,7 @@ export const services = [
     slug: "meals-and-homemaking",
     name: "Meals and homemaking",
     blurb:
-      "Cooking, laundry, dishes, and keeping the house in the condition she kept it herself.",
+      "Cooking, laundry, dishes, and keeping the house in the condition they always kept it themselves.",
     forWhom:
       "Someone whose house has quietly gotten away from them — and who would be embarrassed to have you notice.",
     includes: [
@@ -144,7 +144,7 @@ export const services = [
     slug: "errands-and-transportation",
     name: "Errands and transportation",
     blurb:
-      "Rides to the doctor, the pharmacy, and the grocery store — with someone who walks in alongside her.",
+      "Rides to the doctor, the pharmacy, and the grocery store — with someone who walks in alongside them.",
     forWhom:
       "Someone who has stopped driving, or should, and is missing appointments because getting there has become the hard part.",
     includes: [
@@ -198,12 +198,12 @@ export const faqs = [
   },
   {
     q: "Who exactly is coming into my mother's home?",
-    a: `A caregiver ${site.firstName} has personally hired. This is a small local agency, not a franchise office assigning whoever is free. You will know who is coming, and if a caregiver is not the right match for your mother, tell us and we will change it.`,
+    a: `A caregiver ${site.firstName} has personally hired. This is a small local agency, not a franchise office assigning whoever is free. You will know who is coming, and if a caregiver is not the right match for your parent, tell us and we will change it.`,
     group: "Trust and safety",
   },
   {
-    q: "What if she does not like the caregiver?",
-    a: "Say so. This happens and it is nobody's fault — personalities either fit or they do not. We would far rather change a caregiver than have your mother dread the doorbell.",
+    q: "What if they do not like the caregiver?",
+    a: "Say so. This happens and it is nobody's fault — personalities either fit or they do not. We would far rather change a caregiver than have your parent dread the doorbell.",
     group: "Trust and safety",
   },
   {
@@ -219,7 +219,7 @@ export const faqs = [
   },
   {
     q: "How many hours do we have to book?",
-    a: "It depends on what she needs. Some families start with a few hours a week for bathing and errands. Others need daily help or overnight cover. Start with what is actually a problem right now.",
+    a: "It depends on what they need. Some families start with a few hours a week for bathing and errands. Others need daily help or overnight cover. Start with what is actually a problem right now.",
     group: "What we do",
   },
   {
