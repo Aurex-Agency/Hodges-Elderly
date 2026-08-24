@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Hodges Elderly and Disabled Services — design tokens
+   Concept: the Southern magnolia. Mississippi's state flower,
+   already present in the client's own mark. Glossy dark leaf,
+   creamy petal, bronze leaf-underside, gold stamen — plus the
+   plum carried forward from her existing logo.
+   ============================================================ */
+
+@theme {
+  /* Brand */
+  --color-plum: #5c2a54;
+  --color-plum-deep: #3d1a38;
+  --color-plum-soft: #8a5583;
+  --color-plum-wash: #f3ebf1;
+
+  --color-leaf: #2e5339;
+  --color-leaf-deep: #1c3524;
+  --color-leaf-soft: #6a8a72;
+  --color-leaf-wash: #e8efe9;
+
+  --color-bronze: #a9713b;
+  --color-gold: #c9a227;
+
+  /* Ground */
+  --color-cream: #fbf7f0;
+  --color-cream-deep: #f3ece0;
+  --color-petal: #fffdf9;
+
+  /* Ink — warm neutrals, never pure black */
+  --color-ink: #241f26;
+  --color-ink-soft: #574f59;
+  --color-ink-faint: #877e88;
+  --color-rule: #e3dad2;
+
+  /* Type */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-source), system-ui, -apple-system, sans-serif;
+
+  /* Spacing rhythm — generous, this audience is not in a hurry */
+  --spacing-section: 7rem;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  /* 18px floor: the primary reader is 55+ and often on a phone */
+  font-size: 1.125rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+
+/* Visible, high-contrast focus. Never removed — this audience
+   includes keyboard and switch users. */
+:focus-visible {
+  outline: 3px solid var(--color-plum);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--color-plum);
+  color: var(--color-petal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Paper grain — keeps large cream fields from reading as flat
+   default-white. Cheap: one inline SVG, no network request. */
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
