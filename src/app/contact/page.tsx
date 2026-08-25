@@ -50,7 +50,7 @@ export default function Contact() {
         <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr]">
             <div>
-              <FigureScene name="call" accent="plum" className="mb-6 h-40 w-full max-w-sm" />
+              <FigureScene name="call" accent="pink" className="mb-6 h-40 w-full max-w-sm" />
               <h2 className="text-[2.1rem]">Calling is fastest</h2>
               <p className="mt-5 text-xl text-ink-soft">
                 Most families would rather talk than type, and honestly it is
@@ -68,7 +68,7 @@ export default function Contact() {
                   <dd className="mt-1">
                     <a
                       href={site.phoneHref}
-                      className="text-2xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                      className="text-2xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                     >
                       {site.phone}
                     </a>

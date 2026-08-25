@@ -14,7 +14,7 @@ import { countyNames, howItStarts, site, services } from "@/lib/site";
 const STATS = [
   { value: 8, suffix: "years", accent: "spruce", label: "caring for elderly, IDD, and mental health clients" },
   { value: 7, suffix: "counties", accent: "clay", label: "across North Mississippi, all locally served" },
-  { value: null, suffix: "Founder-led", accent: "plum", label: `you talk to ${site.founder}, not a franchise office` },
+  { value: null, suffix: "Founder-led", accent: "pink", label: `you talk to ${site.founder}, not a franchise office` },
 ];
 
 export default function Home() {
@@ -46,7 +46,7 @@ export default function Home() {
               <RevealItem>
                 <h1 className="mt-7 text-[2.6rem] leading-[1.06] sm:text-6xl lg:text-[4.1rem]">
                   You can&rsquo;t be there every day.
-                  <span className="block text-plum">We can.</span>
+                  <span className="block text-pink">We can.</span>
                 </h1>
               </RevealItem>
 
@@ -63,7 +63,7 @@ export default function Home() {
                   <CallButton />
                   <Link
                     href="/contact"
-                    className="inline-flex min-h-[3.5rem] items-center px-2 text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
+                    className="inline-flex min-h-[3.5rem] items-center px-2 text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-pink"
                   >
                     Ask a question first
                   </Link>
@@ -315,7 +315,7 @@ export default function Home() {
             <Reveal className="mt-12">
               <Link
                 href="/guides"
-                className="text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
+                className="text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-pink"
               >
                 Read all guides
               </Link>

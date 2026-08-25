@@ -61,7 +61,7 @@ export default function PayingForCare() {
 
         <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-28">
           {PRICING_CONFIRMED ? null : (
-            <div className="rounded-panel border-2 border-plum bg-plum-wash p-8">
+            <div className="rounded-panel border-2 border-pink bg-pink-wash p-8">
               <h2 className="text-[1.7rem]">Our rates</h2>
               <p className="mt-4 text-xl text-ink-soft">
                 Call {site.phone} and we will give you a straight number for the
@@ -87,7 +87,11 @@ export default function PayingForCare() {
             {PAYMENT_ROUTES.map((route, i) => (
               <li key={route.title} className="border-t border-rule pt-7">
                 <div className="flex gap-5">
-                  <span className="font-display text-[1.7rem] text-plum-soft tabular-nums">
+                  {/* text-pink, not text-pink-soft. The soft tone is a decoration
+                      colour for underlines and borders at 2.67:1, and axe
+                      correctly failed it the moment it was asked to be a
+                      numeral someone has to read. */}
+                  <span className="font-display text-[1.7rem] text-pink tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
@@ -99,7 +103,7 @@ export default function PayingForCare() {
                       <p className="mt-3">
                         <Link
                           href={route.guide.href}
-                          className="text-lg font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                          className="text-lg font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                         >
                           {route.guide.label}
                         </Link>
@@ -136,7 +140,7 @@ export default function PayingForCare() {
                 looking at, our guide on{" "}
                 <Link
                   href="/guides/home-health-vs-in-home-care"
-                  className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                  className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                 >
                   home health versus in-home care
                 </Link>{" "}
@@ -163,7 +167,7 @@ export default function PayingForCare() {
             <p>
               <Link
                 href="/answers"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
               >
                 More questions families ask
               </Link>

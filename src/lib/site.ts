@@ -12,8 +12,23 @@
 export const LAUNCH_READY = false;
 
 export const site = {
-  name: "Hodges Elderly and Disabled Services",
-  shortName: "Hodges Elderly & Disabled Services",
+  /* "Disable", not "Disabled", and "Services", not "Service".
+   *
+   * This is what the client says the business is called and it matches her
+   * own logo artwork, which reads "HODGES ELDERLY & DISABLE SERVICES". An
+   * earlier version of this file assumed the logo contained a typo and
+   * published "Disabled Services". That was wrong, and it is a reminder
+   * that a client's own name is a fact to be confirmed with them, not
+   * corrected on their behalf.
+   *
+   * TODO(client): her NPI record (1376496257) is registered under a THIRD
+   * spelling, "HODGES ELDERLY AND DISABLED SERVICE", differing on both
+   * words. The website follows what she has told us. Worth her checking
+   * whether the NPI registration should be amended to match, because that
+   * is the name Medicaid and any insurer will be matching against, and a
+   * mismatch causes real administrative friction at enrollment. */
+  name: "Hodges Elderly and Disable Services",
+  shortName: "Hodges Elderly & Disable Services",
   founder: "Aaliyah Hodges",
   firstName: "Aaliyah",
   founderTitle: "Founder & Administrator",
@@ -37,7 +52,7 @@ export const site = {
 
   counties: [
     { name: "Lee", accent: "green", href: "/in-home-care/tupelo" },
-    { name: "Pontotoc", accent: "plum", href: "/in-home-care/pontotoc" },
+    { name: "Pontotoc", accent: "pink", href: "/in-home-care/pontotoc" },
     { name: "Union", accent: "spruce", href: "/in-home-care/new-albany" },
     { name: "Chickasaw", accent: "clay", href: "/service-area" },
     { name: "Monroe", accent: "ochre", href: "/service-area" },
@@ -72,7 +87,7 @@ export const site = {
 export const howItStarts = [
   {
     scene: "call" as const,
-    accent: "plum",
+    accent: "pink",
     title: "You call",
     body: `You describe what is going on at home. ${site.firstName} asks what a normal day looks like and what has changed lately. No script, no pressure, and no obligation at the end of it.`,
   },
@@ -108,7 +123,7 @@ export const NAV = [
 export const services = [
   {
     slug: "personal-care",
-    accent: "plum",
+    accent: "pink",
     name: "Personal care",
     blurb:
       "Bathing, dressing, grooming, and help getting safely in and out of bed. The daily things that get harder to do alone.",

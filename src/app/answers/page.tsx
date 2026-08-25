@@ -72,28 +72,28 @@ export default function Answers() {
               Call {site.phone} and ask. Or read the longer versions in our{" "}
               <Link
                 href="/guides"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4"
               >
                 guides for families
               </Link>
               , which go through{" "}
               <Link
                 href="/guides/what-in-home-care-costs-in-mississippi"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4"
               >
                 what care costs in Mississippi
               </Link>
               ,{" "}
               <Link
                 href="/guides/elderly-and-disabled-waiver-north-mississippi"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4"
               >
                 the Medicaid waiver
               </Link>
               , and{" "}
               <Link
                 href="/guides/home-health-vs-in-home-care"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4"
               >
                 what Medicare does and does not pay for
               </Link>

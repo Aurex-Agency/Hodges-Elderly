@@ -2,13 +2,24 @@ import { PETAL } from "./Magnolia";
 
 /* Redrawn from the client's supplied JPEG (assets/brand-source/logo-original.jpg).
  *
+ * The whole lockup uses --color-pink-bright, the pink sampled straight out
+ * of her artwork, rather than the darkened pink the rest of the site uses
+ * for text. WCAG 1.4.3 exempts text that is part of a logo or brand name
+ * from the contrast minimum, and at 23px bold it clears the 3:1 large-text
+ * bar anyway. Everywhere else on the site, type uses --color-pink.
+ *
  * Deliberately kept: the H monogram, the square frame, the magnolia, and
- * her plum-and-green pairing, so she stays recognizable to anyone who has
+ * her pink-and-green pairing, so she stays recognizable to anyone who has
  * already seen a card or a flyer.
  *
- * Deliberately fixed: the original wordmark reads "DISABLE SERVICES".
- * The correct name is "DISABLED SERVICES". The original was also a 640px
- * raster with no vector source; this is resolution-independent.
+ * "DISABLE SERVICES", not "DISABLED". An earlier version of this file
+ * treated that as a typo in her artwork and silently corrected it. It is
+ * not a typo, it is the name of the business, confirmed by the client. The
+ * lesson is the obvious one: a client's own name is a fact to be checked
+ * with them, never a thing to be tidied up on their behalf.
+ *
+ * The original was a 640px raster with no vector source; this is
+ * resolution-independent.
  *
  * Every coordinate below is derived from the frame rather than typed in.
  * A hand-placed version had the frame centred on (46,46) and the monogram
@@ -89,7 +100,9 @@ export function LogoMark({ className }: { className?: string }) {
         stroke="var(--color-green)"
         strokeWidth={FRAME.stroke}
       />
-      <path d={MONOGRAM} fill="var(--color-plum)" />
+      {/* The mark carries no type, so it uses her logo's own pink at full
+          strength rather than the darkened text-safe one. */}
+      <path d={MONOGRAM} fill="var(--color-pink-bright)" />
 
       <g transform={`translate(${BLOOM.x} ${BLOOM.y}) scale(${BLOOM_SCALE})`}>
         {LOGO_PETALS.map((angle) => (
@@ -103,7 +116,7 @@ export function LogoMark({ className }: { className?: string }) {
             strokeLinejoin="round"
           />
         ))}
-        <circle r={16} fill="var(--color-plum)" />
+        <circle r={16} fill="var(--color-pink-bright)" />
       </g>
     </svg>
   );
@@ -126,14 +139,14 @@ export default function Logo({
         }
       />
       <span className={stacked ? "text-center" : ""}>
-        <span className="block font-display text-[1.45rem] font-bold leading-none tracking-tight text-plum sm:text-[1.6rem]">
+        <span className="block font-display text-[1.45rem] font-bold leading-none tracking-tight text-pink-bright sm:text-[1.6rem]">
           Hodges
         </span>
         {/* Tracking pulled in from 0.14em. The descriptor was running to
             more than twice the width of the name, which pulled the whole
             lockup out of shape. */}
         <span className="mt-1.5 block text-[0.66rem] font-bold uppercase leading-tight tracking-[0.08em] text-green sm:whitespace-nowrap sm:text-[0.72rem] sm:tracking-[0.09em]">
-          Elderly &amp; Disabled Services
+          Elderly &amp; Disable Services
         </span>
       </span>
     </span>

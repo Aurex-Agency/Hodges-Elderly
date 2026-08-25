@@ -46,9 +46,9 @@ export default function LeadForm({
       {state.status === "error" && (
         <div
           role="alert"
-          className="rounded-panel border-2 border-plum bg-plum-wash p-5"
+          className="rounded-panel border-2 border-pink bg-pink-wash p-5"
         >
-          <p className="text-xl font-semibold text-plum-deep">{state.message}</p>
+          <p className="text-xl font-semibold text-pink-deep">{state.message}</p>
         </div>
       )}
 
@@ -65,7 +65,7 @@ export default function LeadForm({
             <label htmlFor={id} className="block text-xl font-semibold text-ink">
               {field.label}
               {field.required ? (
-                <span className="ml-1 text-plum" aria-hidden="true">
+                <span className="ml-1 text-pink" aria-hidden="true">
                   *
                 </span>
               ) : (
@@ -88,7 +88,7 @@ export default function LeadForm({
                 rows={5}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 w-full rounded-control border-2 border-rule bg-page px-4 py-3 text-xl text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 w-full rounded-control border-2 border-rule bg-page px-4 py-3 text-xl text-ink transition-colors duration-200 focus:border-pink"
               />
             ) : (
               <input
@@ -98,14 +98,14 @@ export default function LeadForm({
                 autoComplete={field.autoComplete}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 min-h-[3.25rem] w-full rounded-control border-2 border-rule bg-page px-4 text-xl text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 min-h-[3.25rem] w-full rounded-control border-2 border-rule bg-page px-4 text-xl text-ink transition-colors duration-200 focus:border-pink"
               />
             )}
 
             {error && (
               <p
                 id={`${id}-error`}
-                className="mt-2 text-lg font-semibold text-plum-deep"
+                className="mt-2 text-lg font-semibold text-pink-deep"
               >
                 {error}
               </p>
@@ -129,7 +129,7 @@ export default function LeadForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex min-h-[3.5rem] items-center rounded-control bg-plum px-9 text-xl font-semibold text-white transition-colors duration-200 hover:bg-plum-deep disabled:opacity-70"
+        className="inline-flex min-h-[3.5rem] items-center rounded-control bg-pink px-9 text-xl font-semibold text-white transition-colors duration-200 hover:bg-pink-deep disabled:opacity-70"
       >
         {pending ? "Sending…" : submitLabel}
       </button>

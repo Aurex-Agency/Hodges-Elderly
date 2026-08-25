@@ -32,7 +32,7 @@ export type Guide = {
    *  person would ask it. Used for the FAQ-style summary block. */
   question: string;
   /** Accent token, so each guide carries a colour like services do. */
-  accent: "plum" | "green" | "spruce" | "clay" | "ochre" | "wine";
+  accent: "pink" | "green" | "spruce" | "clay" | "ochre" | "wine";
   /** Internal links that belong at the foot of this guide. */
   related: { label: string; href: string }[];
 };
@@ -50,7 +50,7 @@ export const guides: Guide[] = [
     updated: "2026-08-25",
     readMinutes: 7,
     question: "How much does in-home care cost per hour in Mississippi?",
-    accent: "plum",
+    accent: "pink",
     related: [
       { label: "How families pay for care", href: "/paying-for-care" },
       { label: "What we do in the home", href: "/services" },

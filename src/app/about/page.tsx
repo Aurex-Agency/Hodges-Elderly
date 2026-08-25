@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Aaliyah Hodges",
   description:
-    "Aaliyah Hodges founded Hodges Elderly and Disabled Services after caring for her grandmother through bone cancer, and eight years supporting adults with IDD and mental illness.",
+    "Aaliyah Hodges founded Hodges Elderly and Disable Services after caring for her grandmother through bone cancer, and eight years supporting adults with IDD and mental illness.",
   alternates: { canonical: "/about" },
 };
 
@@ -33,7 +33,7 @@ export default function About() {
               work. At home, without being asked, because someone she loved needed
               her and she was the one who was there.
             </p>
-            <blockquote className="border-l-4 border-plum pl-6 font-display text-[1.7rem] leading-snug text-ink">
+            <blockquote className="border-l-4 border-pink pl-6 font-display text-[1.7rem] leading-snug text-ink">
               &ldquo;Taking care of my grandmother was an eye-opener. That is
               when I realized caring for people was my passion.&rdquo;
             </blockquote>
@@ -46,7 +46,7 @@ export default function About() {
               itself a form of care.
             </p>
             <p>
-              She opened Hodges Elderly and Disabled Services to do this work on
+              She opened Hodges Elderly and Disable Services to do this work on
               her own terms. The company is built on three things she names
               herself: compassion, dignity, and a genuine passion for serving
               others.
@@ -91,7 +91,7 @@ export default function About() {
             <p>
               <Link
                 href="/services"
-                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
               >
                 See what we do in the home
               </Link>

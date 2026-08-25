@@ -95,7 +95,7 @@ export function Step({
 export function A({ href, children }: { href: string; children: React.ReactNode }) {
   const external = href.startsWith("http");
   const cls =
-    "font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum";
+    "font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink";
   if (external) {
     return (
       <a href={href} className={cls} rel="noopener">
@@ -173,7 +173,7 @@ export function Sources({
             <a
               href={s.href}
               rel="noopener nofollow"
-              className="underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+              className="underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
             >
               {s.label}
             </a>
@@ -274,7 +274,7 @@ export function GuideShell({
                     <li>
                       <Link
                         href="/guides"
-                        className="transition-colors duration-200 hover:text-plum"
+                        className="transition-colors duration-200 hover:text-pink"
                       >
                         Guides
                       </Link>
@@ -338,7 +338,7 @@ export function GuideShell({
                 <li key={r.href}>
                   <Link
                     href={r.href}
-                    className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                    className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
                   >
                     {r.label}
                   </Link>
@@ -347,7 +347,7 @@ export function GuideShell({
               <li>
                 <Link
                   href="/guides"
-                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
                 >
                   All guides
                 </Link>

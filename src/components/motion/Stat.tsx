@@ -23,7 +23,7 @@ export default function Stat({
   value,
   suffix,
   label,
-  accent = "plum",
+  accent = "pink",
 }: {
   value: number | null;
   suffix: string;

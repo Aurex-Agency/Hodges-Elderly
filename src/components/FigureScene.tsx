@@ -206,7 +206,7 @@ function L(d: string) {
 
 export default function FigureScene({
   name,
-  accent = "plum",
+  accent = "pink",
   className,
 }: {
   name: "call" | "visit" | "care";

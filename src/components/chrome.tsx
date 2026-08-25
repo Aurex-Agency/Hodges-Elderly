@@ -28,8 +28,8 @@ export function CallButton({
   const base =
     "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-control px-8 text-xl font-semibold shadow-none transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:shadow-lift active:translate-y-px";
   const styles = {
-    solid: "bg-plum text-white hover:bg-plum-deep",
-    outline: "border-2 border-plum text-plum hover:bg-plum hover:text-white",
+    solid: "bg-pink text-white hover:bg-pink-deep",
+    outline: "border-2 border-pink text-pink hover:bg-pink hover:text-white",
     onDark: "bg-white text-forest hover:bg-green-wash",
   } as const;
 
@@ -60,7 +60,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap text-base font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
+              className="whitespace-nowrap text-base font-semibold text-ink-soft transition-colors duration-200 hover:text-pink"
             >
               {item.label}
             </Link>
@@ -172,7 +172,7 @@ export function Footer() {
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-pink"
                 >
                   {s.name}
                 </Link>
@@ -188,7 +188,7 @@ export function Footer() {
               <li key={t.name}>
                 <Link
                   href={`/in-home-care/${t.slug}`}
-                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-pink"
                 >
                   In-home care in {t.name}
                 </Link>
@@ -197,7 +197,7 @@ export function Footer() {
             <li>
               <Link
                 href="/service-area"
-                className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                className="text-lg text-ink-soft transition-colors duration-200 hover:text-pink"
               >
                 All seven counties
               </Link>
@@ -212,7 +212,7 @@ export function Footer() {
               <li key={g.slug}>
                 <Link
                   href={`/guides/${g.slug}`}
-                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-pink"
                 >
                   {g.metaTitle}
                 </Link>
@@ -221,7 +221,7 @@ export function Footer() {
             <li>
               <Link
                 href="/guides"
-                className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                className="text-lg text-ink-soft transition-colors duration-200 hover:text-pink"
               >
                 All guides
               </Link>
@@ -235,7 +235,7 @@ export function Footer() {
             <li>
               <a
                 href={site.phoneHref}
-                className="text-xl font-semibold text-plum transition-colors duration-200 hover:text-plum-deep"
+                className="text-xl font-semibold text-pink transition-colors duration-200 hover:text-pink-deep"
               >
                 {site.phone}
               </a>
@@ -248,7 +248,7 @@ export function Footer() {
             <li className="pt-2">
               <Link
                 href="/careers"
-                className="font-semibold text-ink transition-colors duration-200 hover:text-plum"
+                className="font-semibold text-ink transition-colors duration-200 hover:text-pink"
               >
                 Work with us
               </Link>

@@ -14,7 +14,7 @@ import {
  * A fixed stack of soft gradient fields sitting behind the whole page, one
  * per accent. Each fades up as you reach its part of the document and fades
  * down again as you leave, so the ground colour drifts continuously from
- * plum through ochre, spruce, clay, green and wine rather than the page
+ * pink through ochre, spruce, clay, green and wine rather than the page
  * being a flat white slab.
  *
  * Only opacity animates, on fixed elements, so the whole effect stays on
@@ -35,7 +35,7 @@ type Field = {
 };
 
 const FIELDS: Field[] = [
-  { token: "plum", at: [80, 14], size: [78, 68], stop: 0.0, strength: 34 },
+  { token: "pink-bright", at: [80, 14], size: [78, 68], stop: 0.0, strength: 34 },
   { token: "ochre", at: [12, 34], size: [74, 64], stop: 0.22, strength: 32 },
   { token: "spruce", at: [88, 50], size: [80, 66], stop: 0.42, strength: 34 },
   { token: "clay", at: [14, 66], size: [76, 64], stop: 0.62, strength: 30 },
@@ -48,7 +48,7 @@ const FIELDS: Field[] = [
 const COUNTER: Field[] = [
   { token: "ochre", at: [16, 8], size: [56, 46], stop: 0.0, strength: 20 },
   { token: "spruce", at: [86, 26], size: [54, 44], stop: 0.22, strength: 20 },
-  { token: "plum", at: [14, 54], size: [56, 46], stop: 0.42, strength: 20 },
+  { token: "pink-bright", at: [14, 54], size: [56, 46], stop: 0.42, strength: 20 },
   { token: "green", at: [84, 60], size: [54, 44], stop: 0.62, strength: 20 },
   { token: "wine", at: [12, 82], size: [56, 46], stop: 0.8, strength: 20 },
   { token: "clay", at: [84, 96], size: [54, 44], stop: 1.0, strength: 20 },
@@ -174,7 +174,7 @@ export function ScrollProgress() {
       style={{
         scaleX,
         background:
-          "linear-gradient(90deg, var(--color-plum), var(--color-ochre), var(--color-spruce), var(--color-clay), var(--color-green), var(--color-wine))",
+          "linear-gradient(90deg, var(--color-pink-bright), var(--color-ochre), var(--color-spruce), var(--color-clay), var(--color-green), var(--color-wine))",
       }}
     />
   );

@@ -119,7 +119,7 @@ export default async function TownPage({
           <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
             <div className="space-y-7 text-xl leading-relaxed text-ink-soft">
               <p className="text-2xl text-ink">
-                Hodges Elderly and Disabled Services provides non-medical
+                Hodges Elderly and Disable Services provides non-medical
                 in-home care to elderly and disabled adults in {t.name} and
                 throughout {t.county} County.
               </p>
@@ -133,7 +133,7 @@ export default async function TownPage({
               <p>
                 <Link
                   href="/about"
-                  className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                  className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                 >
                   Read {site.firstName}&rsquo;s story
                 </Link>
@@ -153,7 +153,7 @@ export default async function TownPage({
                 Or{" "}
                 <Link
                   href="/contact"
-                  className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+                  className="font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4"
                 >
                   send a message
                 </Link>{" "}
@@ -171,7 +171,7 @@ export default async function TownPage({
                 <li key={s.slug} className="border-b border-rule pb-4">
                   <Link
                     href={`/services/${s.slug}`}
-                    className="font-display text-2xl font-semibold text-ink transition-colors duration-200 hover:text-plum"
+                    className="font-display text-2xl font-semibold text-ink transition-colors duration-200 hover:text-pink"
                   >
                     {s.name}
                   </Link>
@@ -189,7 +189,7 @@ export default async function TownPage({
               <li key={o.slug}>
                 <Link
                   href={`/in-home-care/${o.slug}`}
-                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
                 >
                   In-home care in {o.name}
                 </Link>
@@ -198,7 +198,7 @@ export default async function TownPage({
             <li>
               <Link
                 href="/service-area"
-                className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
               >
                 All seven counties
               </Link>

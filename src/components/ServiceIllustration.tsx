@@ -60,7 +60,7 @@ function Bloom({
   x,
   y,
   d = 20,
-  tone = "plum",
+  tone = "pink",
 }: {
   x: number;
   y: number;
@@ -210,7 +210,7 @@ export default function ServiceIllustration({
   const reduced = useReducedMotion();
   /* Keep the magnolia legible against the linework: on the purple-family
      accents it switches to ochre rather than disappearing into the drawing. */
-  const bloomTone = accent === "plum" || accent === "wine" ? "ochre" : "plum";
+  const bloomTone = accent === "pink" || accent === "wine" ? "ochre" : "pink";
   const drawing = buildScenes(bloomTone)[slug];
   if (!drawing) return null;
 

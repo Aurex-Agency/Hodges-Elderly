@@ -153,7 +153,7 @@ export default async function ServicePage({
                   <li key={t.slug}>
                     <Link
                       href={`/in-home-care/${t.slug}`}
-                      className="text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                      className="text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                     >
                       {t.name}
                     </Link>
@@ -162,7 +162,7 @@ export default async function ServicePage({
               <li>
                 <Link
                   href="/service-area"
-                  className="text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                  className="text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
                 >
                   All seven counties
                 </Link>
@@ -178,7 +178,7 @@ export default async function ServicePage({
               <li key={o.slug}>
                 <Link
                   href={`/services/${o.slug}`}
-                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
                 >
                   {o.name}
                 </Link>

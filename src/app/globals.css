@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Hodges Elderly and Disabled Services — design tokens
+   Hodges Elderly and Disable Services — design tokens
 
    Ground is white, not cream: the reader is often 55+, frequently
    on a phone outdoors, and reading while worried about a parent.
    Maximum text contrast beats atmosphere.
 
-   Colour still comes from her own logo (plum + green), but the green
-   is now a cleaner forest rather than the original olive, and plum is
+   Colour still comes from her own logo (pink + green), but the green
+   is now a cleaner forest rather than the original olive, and pink is
    reserved for actions so it always means "you can do something here".
    ============================================================ */
 
@@ -20,11 +20,27 @@
   --color-green-soft: #7ba491;
   --color-green-wash: #eef4f0;
 
-  /* Plum — actions only */
-  --color-plum: #56254f;
-  --color-plum-deep: #3a1735;
-  --color-plum-soft: #8c5c85;
-  --color-plum-wash: #f7eff6;
+  /* Pink.
+   *
+   * Sampled from her own logo rather than guessed: the dominant fill in
+   * assets/brand-source/logo-original.jpg is #c250b2, a vivid orchid
+   * magenta, and its outline is a near-black plum. The site had been built
+   * on the outline colour, which is why it read purple rather than pink.
+   *
+   * Two pinks, because one cannot do both jobs. Her logo pink measures
+   * 4.13:1 on white, so it fails WCAG AA for text AND for white text sitting
+   * on it, and the call buttons are 20px, which does not qualify as large
+   * text. So the bright one is reserved for artwork that carries no words,
+   * and everything with type on it uses --color-pink at 5.72:1. */
+
+  /* Artwork only. Never put text on this or in it. */
+  --color-pink-bright: #c250b2;
+
+  /* Actions and text. 5.72:1 on white, and 5.72:1 for white type on it. */
+  --color-pink: #a83896;
+  --color-pink-deep: #7c2571;
+  --color-pink-soft: #c98abd;
+  --color-pink-wash: #fbeff8;
 
   /* Warm accent, used sparingly */
   --color-gold: #b8862b;
@@ -58,7 +74,7 @@
      controls (buttons, inputs) and panels (cards, callouts). */
   /* The one lift shadow. Plum-tinted rather than neutral grey so it reads
      as part of the palette instead of as a drop shadow. */
-  --shadow-lift: 0 6px 18px -6px color-mix(in srgb, var(--color-plum) 42%, transparent);
+  --shadow-lift: 0 6px 18px -6px color-mix(in srgb, var(--color-pink) 42%, transparent);
 
   --radius-control: 0.625rem;
   --radius-panel: 0.875rem;
@@ -116,13 +132,13 @@ p {
 p { text-wrap: pretty; }
 
 :focus-visible {
-  outline: 3px solid var(--color-plum);
+  outline: 3px solid var(--color-pink);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 ::selection {
-  background: var(--color-plum);
+  background: var(--color-pink);
   color: #fff;
 }
 
