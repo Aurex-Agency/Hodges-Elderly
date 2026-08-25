@@ -19,7 +19,7 @@ import { site } from "./site";
  * her actual email. Verify a SUBDOMAIN instead, which is what the provider
  * recommends and which leaves her mail flow completely untouched:
  *
- *   LEAD_FROM="Hodges Website <website@send.hodgeselderlyanddisable.com>"
+ *   LEAD_FROM="Hodges Website <website@team.hodgeselderlyanddisable.com>"
  */
 
 /* Overridable only so the send path can be exercised against a local mock
