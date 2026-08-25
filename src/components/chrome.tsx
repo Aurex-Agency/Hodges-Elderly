@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import MobileNav from "./MobileNav";
 import BloomingMagnolia from "./motion/BloomingMagnolia";
 import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
 import { site, services, NAV } from "@/lib/site";
@@ -12,7 +13,7 @@ export function CallButton({
   className?: string;
 }) {
   const base =
-    "inline-flex min-h-[3.5rem] items-center gap-3 rounded-full px-8 text-lg font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
+    "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-full px-8 text-xl font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
   const styles = {
     solid: "bg-plum text-white hover:bg-plum-deep",
     outline: "border-2 border-plum text-plum hover:bg-plum hover:text-white",
@@ -36,24 +37,30 @@ export function CallButton({
 
 export function Header() {
   return (
-    <header className="relative z-20 border-b border-rule">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
+    <header className="relative z-30 border-b border-rule">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5">
         <Link href="/" aria-label={`${site.shortName} home`}>
           <Logo />
         </Link>
-        <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-base font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
+              className="whitespace-nowrap text-lg font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
             >
               {item.label}
             </Link>
           ))}
         </nav>
-        <div className="hidden sm:block">
-          <CallButton variant="outline" className="min-h-[3.25rem] px-7 text-base" />
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:block">
+            <CallButton
+              variant="outline"
+              className="min-h-[3.25rem] whitespace-nowrap px-6 text-base xl:text-lg"
+            />
+          </div>
+          <MobileNav />
         </div>
       </div>
     </header>
@@ -75,10 +82,10 @@ export function PageHero({
       <div className="pointer-events-none absolute -right-28 -top-24 hidden h-[30rem] w-[30rem] opacity-70 lg:block">
         <BloomingMagnolia className="h-full w-full -rotate-[14deg]" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-24">
+      <div className="relative mx-auto max-w-6xl px-6 py-24 lg:py-32">
         <RevealGroup stagger={0.09}>
           <RevealItem>
-            <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-green">
+            <p className="flex items-center gap-3 text-base font-bold uppercase tracking-[0.18em] text-green">
               <span className="h-px w-10 bg-green-soft" aria-hidden="true" />
               {eyebrow}
             </p>
@@ -90,7 +97,7 @@ export function PageHero({
           </RevealItem>
           {lede && (
             <RevealItem>
-              <p className="mt-6 max-w-2xl text-xl text-ink-soft">{lede}</p>
+              <p className="mt-6 max-w-2xl text-2xl text-ink-soft">{lede}</p>
             </RevealItem>
           )}
         </RevealGroup>
@@ -112,14 +119,14 @@ export function ClosingCta({
       <div className="pointer-events-none absolute -bottom-32 -right-24 h-[32rem] w-[32rem] opacity-[0.08]">
         <BloomingMagnolia className="h-full w-full rotate-[18deg]" withLeaves={false} />
       </div>
-      <Reveal className="relative mx-auto max-w-3xl px-6 py-20 text-center lg:py-28">
+      <Reveal className="relative mx-auto max-w-3xl px-6 py-28 text-center lg:py-40">
         <h2 className="text-4xl lg:text-5xl">{title}</h2>
-        <p className="mx-auto mt-6 max-w-xl text-xl text-white/80">{body}</p>
+        <p className="mx-auto mt-6 max-w-xl text-2xl text-white/80">{body}</p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <CallButton variant="onDark" />
           <Link
             href="/contact"
-            className="inline-flex min-h-[3.5rem] items-center rounded-full border-2 border-white/40 px-8 text-lg font-semibold text-white transition-colors duration-200 hover:border-white"
+            className="inline-flex min-h-[3.5rem] items-center rounded-full border-2 border-white/40 px-8 text-xl font-semibold text-white transition-colors duration-200 hover:border-white"
           >
             Send a message
           </Link>
@@ -134,23 +141,23 @@ export function Footer() {
 
   return (
     <footer className="border-t border-rule bg-mist/65">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
           <Logo />
-          <p className="mt-5 max-w-xs text-base text-ink-soft">
+          <p className="mt-5 max-w-xs text-lg text-ink-soft">
             Locally founded in-home care for elderly and disabled adults across
             North Mississippi.
           </p>
         </div>
 
         <div>
-          <h2 className="font-display text-lg font-semibold text-ink">Services</h2>
+          <h2 className="font-display text-xl font-semibold text-ink">Services</h2>
           <ul className="mt-4 space-y-2.5">
             {services.map((s) => (
               <li key={s.slug}>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="text-base text-ink-soft transition-colors duration-200 hover:text-plum"
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
                 >
                   {s.name}
                 </Link>
@@ -160,13 +167,13 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="font-display text-lg font-semibold text-ink">Where we go</h2>
+          <h2 className="font-display text-xl font-semibold text-ink">Where we go</h2>
           <ul className="mt-4 space-y-2.5">
             {townPages.map((t) => (
               <li key={t.name}>
                 <Link
                   href={`/in-home-care/${t.slug}`}
-                  className="text-base text-ink-soft transition-colors duration-200 hover:text-plum"
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
                 >
                   In-home care in {t.name}
                 </Link>
@@ -175,7 +182,7 @@ export function Footer() {
             <li>
               <Link
                 href="/service-area"
-                className="text-base text-ink-soft transition-colors duration-200 hover:text-plum"
+                className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
               >
                 All seven counties
               </Link>
@@ -184,12 +191,12 @@ export function Footer() {
         </div>
 
         <div>
-          <h2 className="font-display text-lg font-semibold text-ink">Contact</h2>
-          <ul className="mt-4 space-y-2.5 text-base text-ink-soft">
+          <h2 className="font-display text-xl font-semibold text-ink">Contact</h2>
+          <ul className="mt-4 space-y-2.5 text-lg text-ink-soft">
             <li>
               <a
                 href={site.phoneHref}
-                className="text-lg font-semibold text-plum transition-colors duration-200 hover:text-plum-deep"
+                className="text-xl font-semibold text-plum transition-colors duration-200 hover:text-plum-deep"
               >
                 {site.phone}
               </a>
@@ -213,10 +220,10 @@ export function Footer() {
 
       <div className="border-t border-rule">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-6">
-          <p className="text-sm text-ink-faint">
+          <p className="text-base text-ink-faint">
             &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p className="text-sm text-ink-faint">
+          <p className="text-base text-ink-faint">
             Non-medical in-home care. Not a home health or hospice provider.
           </p>
         </div>

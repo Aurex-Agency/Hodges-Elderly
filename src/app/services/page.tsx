@@ -21,7 +21,7 @@ export default function Services() {
           lede="Non-medical in-home care. Start with whatever is actually a problem right now. A few hours a week is a normal place to begin."
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
+        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
           <ul className="border-t border-rule">
             {services.map((service, i) => (
               <li
@@ -36,7 +36,7 @@ export default function Services() {
               >
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative grid items-center gap-x-8 gap-y-3 py-8 transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[6rem_20rem_1fr] sm:px-4"
+                  className="group relative grid items-center gap-x-10 gap-y-4 py-10 transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[7.5rem_20rem_1fr] sm:px-4"
                 >
                   <span
                     aria-hidden="true"
@@ -44,7 +44,7 @@ export default function Services() {
                   />
 
                   <span className="flex items-center gap-3">
-                    <span className="font-display text-2xl tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]">
+                    <span className="font-display text-[1.7rem] tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <ServiceIllustration
@@ -54,16 +54,16 @@ export default function Services() {
                     />
                   </span>
 
-                  <h2 className="font-display text-2xl font-semibold text-ink transition-colors duration-300 group-hover:text-[var(--accent)]">
+                  <h2 className="font-display text-[1.7rem] font-semibold text-ink transition-colors duration-300 group-hover:text-[var(--accent)]">
                     {service.name}
                   </h2>
-                  <p className="text-lg text-ink-soft">{service.blurb}</p>
+                  <p className="text-xl text-ink-soft">{service.blurb}</p>
                 </Link>
               </li>
             ))}
           </ul>
 
-          <p className="mt-10 max-w-2xl text-lg text-ink-soft">
+          <p className="mt-10 max-w-2xl text-xl text-ink-soft">
             Not sure which of these you need? Most families are not. Describe
             what a normal day looks like and we will work it out together.
           </p>

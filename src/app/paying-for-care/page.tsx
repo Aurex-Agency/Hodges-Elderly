@@ -45,11 +45,11 @@ export default function PayingForCare() {
           lede="This is the question everybody has and almost nobody answers plainly. Here is the honest version."
         />
 
-        <section className="mx-auto max-w-3xl px-6 py-16 lg:py-20">
+        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-28">
           {PRICING_CONFIRMED ? null : (
             <div className="rounded-2xl border-2 border-plum bg-plum-wash p-8">
-              <h2 className="text-2xl">Our rates</h2>
-              <p className="mt-4 text-lg text-ink-soft">
+              <h2 className="text-[1.7rem]">Our rates</h2>
+              <p className="mt-4 text-xl text-ink-soft">
                 Call {site.phone} and we will give you a straight number for the
                 schedule you actually need. Cost depends on how many hours a
                 week and what kind of help. There is no sense quoting you a figure
@@ -61,8 +61,8 @@ export default function PayingForCare() {
             </div>
           )}
 
-          <div className="mt-14 space-y-7 text-lg leading-relaxed text-ink-soft">
-            <h2 className="text-3xl text-ink">The four ways this gets paid for</h2>
+          <div className="mt-14 space-y-7 text-xl leading-relaxed text-ink-soft">
+            <h2 className="text-[2.1rem] text-ink">The four ways this gets paid for</h2>
             <p>
               Almost every family in Mississippi pays for in-home care through
               one of four routes, and plenty use more than one.
@@ -73,14 +73,14 @@ export default function PayingForCare() {
             {PAYMENT_ROUTES.map((route, i) => (
               <li key={route.title} className="border-t border-rule pt-7">
                 <div className="flex gap-5">
-                  <span className="font-display text-2xl text-plum-soft tabular-nums">
+                  <span className="font-display text-[1.7rem] text-plum-soft tabular-nums">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <div>
-                    <h3 className="font-display text-2xl font-semibold text-ink">
+                    <h3 className="font-display text-[1.7rem] font-semibold text-ink">
                       {route.title}
                     </h3>
-                    <p className="mt-3 text-lg text-ink-soft">{route.body}</p>
+                    <p className="mt-3 text-xl text-ink-soft">{route.body}</p>
                   </div>
                 </div>
               </li>
@@ -89,9 +89,9 @@ export default function PayingForCare() {
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-3xl px-6 py-16">
-            <h2 className="text-3xl">What Medicare does not cover</h2>
-            <div className="mt-6 space-y-6 text-lg text-ink-soft">
+          <div className="mx-auto max-w-3xl px-6 py-24">
+            <h2 className="text-[2.1rem]">What Medicare does not cover</h2>
+            <div className="mt-6 space-y-7 text-xl text-ink-soft">
               <p>
                 This catches families out constantly, so it is worth being blunt:{" "}
                 <strong className="text-ink">
@@ -114,9 +114,9 @@ export default function PayingForCare() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 py-16">
-          <h2 className="text-3xl">Where to start if money is the obstacle</h2>
-          <div className="mt-6 space-y-6 text-lg text-ink-soft">
+        <section className="mx-auto max-w-3xl px-6 py-24">
+          <h2 className="text-[2.1rem]">Where to start if money is the obstacle</h2>
+          <div className="mt-6 space-y-7 text-xl text-ink-soft">
             <p>
               Call us anyway. We would rather spend twenty minutes helping you
               understand your options than have you put off getting help because

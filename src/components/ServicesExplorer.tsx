@@ -28,7 +28,7 @@ export default function ServicesExplorer({
   const reduced = useReducedMotion();
 
   return (
-    <ul className="mt-14 border-t border-rule">
+    <ul className="mt-16 border-t border-rule">
       {services.map((service, i) => {
         const isOpen = open === service.slug;
         const panelId = `svc-panel-${service.slug}`;
@@ -52,7 +52,7 @@ export default function ServicesExplorer({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : service.slug)}
-                className={`group relative grid w-full cursor-pointer items-center gap-x-8 gap-y-2 py-7 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[4rem_21rem_1fr_2rem] sm:px-4 ${isOpen ? "bg-[var(--accent-wash)]" : ""}`}
+                className={`group relative grid w-full cursor-pointer items-center gap-x-10 gap-y-3 py-10 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[4.5rem_20rem_1fr_2.5rem] sm:px-4 ${isOpen ? "bg-[var(--accent-wash)]" : ""}`}
               >
                 <span
                   aria-hidden="true"
@@ -65,7 +65,7 @@ export default function ServicesExplorer({
                     open, a quiet marker of "you are here". */}
                 <span className="relative flex h-10 w-10 items-center justify-center">
                   <motion.span
-                    className="absolute font-display text-2xl tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]"
+                    className="absolute font-display text-[1.7rem] tabular-nums text-ink-faint transition-colors duration-300 group-hover:text-[var(--accent)]"
                     animate={{ opacity: isOpen ? 0 : 1, scale: isOpen ? 0.6 : 1 }}
                     transition={{ duration: 0.25, ease: EASE }}
                   >
@@ -90,7 +90,7 @@ export default function ServicesExplorer({
                 </span>
 
                 <span
-                  className={`font-display text-2xl font-semibold transition-colors duration-300 ${
+                  className={`font-display text-[1.7rem] font-semibold transition-colors duration-300 ${
                     isOpen
                       ? "text-[var(--accent)]"
                       : "text-ink group-hover:text-[var(--accent)]"
@@ -99,7 +99,7 @@ export default function ServicesExplorer({
                   {service.name}
                 </span>
 
-                <span className="text-lg text-ink-soft">{service.blurb}</span>
+                <span className="text-xl text-ink-soft">{service.blurb}</span>
 
                 <motion.span
                   aria-hidden="true"
@@ -136,11 +136,11 @@ export default function ServicesExplorer({
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="grid gap-8 pb-9 sm:grid-cols-[4rem_1fr] sm:px-4">
+                  <div className="grid gap-8 pb-9 sm:grid-cols-[4.5rem_1fr] sm:px-4">
                     <span aria-hidden="true" />
                     <div className="grid gap-8 lg:grid-cols-[1fr_11rem] lg:items-start">
                       <div>
-                      <p className="max-w-2xl text-lg text-ink-soft">
+                      <p className="max-w-2xl text-xl text-ink-soft">
                         {service.forWhom}
                       </p>
 
@@ -171,7 +171,7 @@ export default function ServicesExplorer({
                                 strokeLinejoin="round"
                               />
                             </svg>
-                            <span className="text-lg text-ink-soft">{item}</span>
+                            <span className="text-xl text-ink-soft">{item}</span>
                           </motion.li>
                         ))}
                       </ul>
@@ -179,7 +179,7 @@ export default function ServicesExplorer({
                       <p className="mt-7">
                         <Link
                           href={`/services/${service.slug}`}
-                          className="inline-flex items-center gap-2 text-lg font-semibold text-[var(--accent)] underline decoration-current/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-current"
+                          className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--accent)] underline decoration-current/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-current"
                         >
                           More about {service.name.toLowerCase()}
                           <svg

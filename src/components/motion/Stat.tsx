@@ -48,7 +48,7 @@ export default function Stat({
 
   return (
     <motion.div
-      className="bg-mist/80 px-6 py-9 text-center transition-colors duration-300 hover:bg-[var(--accent-wash)]"
+      className="bg-mist/80 px-6 py-12 text-center transition-colors duration-300 hover:bg-[var(--accent-wash)]"
       style={
         {
           "--accent": `var(--color-${accent})`,
@@ -60,10 +60,10 @@ export default function Stat({
       viewport={{ once: true, amount: 0.5 }}
       transition={{ duration: 0.45, ease: [0.22, 0.61, 0.36, 1] }}
     >
-      <p ref={ref} className="font-display text-3xl font-semibold text-[var(--accent)]">
+      <p ref={ref} className="font-display text-[2.1rem] font-semibold text-[var(--accent)]">
         {value === null ? suffix : `${display} ${suffix}`}
       </p>
-      <p className="mx-auto mt-2 max-w-[16rem] text-base leading-snug text-ink-soft">
+      <p className="mx-auto mt-2 max-w-[16rem] text-lg leading-snug text-ink-soft">
         {label}
       </p>
     </motion.div>

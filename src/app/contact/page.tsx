@@ -46,12 +46,12 @@ export default function Contact() {
           lede="No script and no pressure. Tell us what is happening at home and we will tell you honestly whether we can help."
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-          <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr]">
+        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr]">
             <div>
               <FigureScene name="call" accent="plum" className="mb-6 h-40 w-full max-w-sm" />
-              <h2 className="text-3xl">Calling is fastest</h2>
-              <p className="mt-5 text-lg text-ink-soft">
+              <h2 className="text-[2.1rem]">Calling is fastest</h2>
+              <p className="mt-5 text-xl text-ink-soft">
                 Most families would rather talk than type, and honestly it is
                 quicker. You will reach {site.founder}, who owns the agency.
               </p>
@@ -61,42 +61,42 @@ export default function Contact() {
 
               <dl className="mt-12 space-y-6 border-t border-rule pt-8">
                 <div>
-                  <dt className="text-sm font-bold uppercase tracking-[0.18em] text-green">
+                  <dt className="text-base font-bold uppercase tracking-[0.18em] text-green">
                     Phone
                   </dt>
                   <dd className="mt-1">
                     <a
                       href={site.phoneHref}
-                      className="text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                      className="text-2xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
                     >
                       {site.phone}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-sm font-bold uppercase tracking-[0.18em] text-green">
+                  <dt className="text-base font-bold uppercase tracking-[0.18em] text-green">
                     Office
                   </dt>
-                  <dd className="mt-1 text-lg text-ink-soft">
+                  <dd className="mt-1 text-xl text-ink-soft">
                     {site.address.street}
                     <br />
                     {site.address.city}, {site.address.state} {site.address.zip}
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-sm font-bold uppercase tracking-[0.18em] text-green">
+                  <dt className="text-base font-bold uppercase tracking-[0.18em] text-green">
                     Service area
                   </dt>
-                  <dd className="mt-1 text-lg text-ink-soft">
+                  <dd className="mt-1 text-xl text-ink-soft">
                     {countyNames.join(", ")} counties.
                   </dd>
                 </div>
               </dl>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist/70 p-8 lg:p-10">
-              <h2 className="text-3xl">Or send a message</h2>
-              <p className="mt-3 text-lg text-ink-soft">
+            <div className="rounded-2xl border border-rule bg-mist/70 p-10 lg:p-12">
+              <h2 className="text-[2.1rem]">Or send a message</h2>
+              <p className="mt-3 text-xl text-ink-soft">
                 We will call you back on the number you leave.
               </p>
               <div className="mt-8">

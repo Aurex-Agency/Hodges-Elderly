@@ -31,10 +31,10 @@ export default function LeadForm({
         role="status"
         className="rounded-2xl border-2 border-green bg-green-wash p-8"
       >
-        <h3 className="font-display text-2xl font-semibold text-forest">
+        <h3 className="font-display text-[1.7rem] font-semibold text-forest">
           Message received
         </h3>
-        <p className="mt-3 text-lg text-ink-soft">{state.message}</p>
+        <p className="mt-3 text-xl text-ink-soft">{state.message}</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export default function LeadForm({
           role="alert"
           className="rounded-xl border-2 border-plum bg-plum-wash p-5"
         >
-          <p className="text-lg font-semibold text-plum-deep">{state.message}</p>
+          <p className="text-xl font-semibold text-plum-deep">{state.message}</p>
         </div>
       )}
 
@@ -62,21 +62,21 @@ export default function LeadForm({
 
         return (
           <div key={field.name}>
-            <label htmlFor={id} className="block text-lg font-semibold text-ink">
+            <label htmlFor={id} className="block text-xl font-semibold text-ink">
               {field.label}
               {field.required ? (
                 <span className="ml-1 text-plum" aria-hidden="true">
                   *
                 </span>
               ) : (
-                <span className="ml-2 text-base font-normal text-ink-faint">
+                <span className="ml-2 text-lg font-normal text-ink-faint">
                   optional
                 </span>
               )}
             </label>
 
             {field.help && (
-              <p id={`${id}-help`} className="mt-1 text-base text-ink-faint">
+              <p id={`${id}-help`} className="mt-1 text-lg text-ink-faint">
                 {field.help}
               </p>
             )}
@@ -88,7 +88,7 @@ export default function LeadForm({
                 rows={5}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 w-full rounded-xl border-2 border-rule bg-page px-4 py-3 text-lg text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 w-full rounded-xl border-2 border-rule bg-page px-4 py-3 text-xl text-ink transition-colors duration-200 focus:border-plum"
               />
             ) : (
               <input
@@ -98,14 +98,14 @@ export default function LeadForm({
                 autoComplete={field.autoComplete}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 min-h-[3.25rem] w-full rounded-xl border-2 border-rule bg-page px-4 text-lg text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 min-h-[3.25rem] w-full rounded-xl border-2 border-rule bg-page px-4 text-xl text-ink transition-colors duration-200 focus:border-plum"
               />
             )}
 
             {error && (
               <p
                 id={`${id}-error`}
-                className="mt-2 text-base font-semibold text-plum-deep"
+                className="mt-2 text-lg font-semibold text-plum-deep"
               >
                 {error}
               </p>
@@ -129,7 +129,7 @@ export default function LeadForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex min-h-[3.5rem] items-center rounded-full bg-plum px-9 text-lg font-semibold text-white transition-colors duration-200 hover:bg-plum-deep disabled:opacity-70"
+        className="inline-flex min-h-[3.5rem] items-center rounded-full bg-plum px-9 text-xl font-semibold text-white transition-colors duration-200 hover:bg-plum-deep disabled:opacity-70"
       >
         {pending ? "Sending…" : submitLabel}
       </button>

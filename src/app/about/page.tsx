@@ -20,9 +20,9 @@ export default function About() {
           lede={`${site.founder}, Founder and Administrator.`}
         />
 
-        <section className="mx-auto max-w-3xl px-6 py-16 lg:py-24">
-          <div className="space-y-7 text-xl leading-relaxed text-ink-soft">
-            <p className="text-2xl leading-relaxed text-ink">
+        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-32">
+          <div className="space-y-7 text-2xl leading-relaxed text-ink-soft">
+            <p className="text-[1.7rem] leading-relaxed text-ink">
               Before there was an agency, there was a granddaughter looking after
               her grandmother through bone cancer.
             </p>
@@ -32,7 +32,7 @@ export default function About() {
               work. At home, without being asked, because someone she loved needed
               her and she was the one who was there.
             </p>
-            <blockquote className="border-l-4 border-plum pl-6 font-display text-2xl leading-snug text-ink">
+            <blockquote className="border-l-4 border-plum pl-6 font-display text-[1.7rem] leading-snug text-ink">
               &ldquo;Taking care of my grandmother was an eye-opener. That is
               when I realized caring for people was my passion.&rdquo;
             </blockquote>
@@ -54,9 +54,9 @@ export default function About() {
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-3xl px-6 py-16 lg:py-20">
-            <h2 className="text-3xl lg:text-4xl">A second generation</h2>
-            <div className="mt-6 space-y-6 text-lg text-ink-soft">
+          <div className="mx-auto max-w-3xl px-6 py-24 lg:py-28">
+            <h2 className="text-[2.1rem] lg:text-4xl">A second generation</h2>
+            <div className="mt-6 space-y-7 text-xl text-ink-soft">
               <p>
                 {site.firstName}&rsquo;s mother has run a care home in West
                 Point for years. This is the second generation of the same
@@ -72,9 +72,9 @@ export default function About() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 py-16 lg:py-24">
-          <h2 className="text-3xl lg:text-4xl">Why families choose a local agency</h2>
-          <div className="mt-6 space-y-6 text-lg text-ink-soft">
+        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-32">
+          <h2 className="text-[2.1rem] lg:text-4xl">Why families choose a local agency</h2>
+          <div className="mt-6 space-y-7 text-xl text-ink-soft">
             <p>
               There are national franchises operating in this market. They are
               not bad companies, but they are branch offices of something

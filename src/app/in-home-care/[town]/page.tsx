@@ -71,10 +71,10 @@ export default async function TownPage({
           lede={copy.intro}
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-16 lg:py-24">
-          <div className="grid gap-14 lg:grid-cols-[1.1fr_1fr]">
-            <div className="space-y-6 text-lg leading-relaxed text-ink-soft">
-              <p className="text-xl text-ink">
+        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+          <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
+            <div className="space-y-7 text-xl leading-relaxed text-ink-soft">
+              <p className="text-2xl text-ink">
                 Hodges Elderly and Disabled Services provides non-medical
                 in-home care to elderly and disabled adults in {t.name} and
                 throughout {t.county} County.
@@ -96,16 +96,16 @@ export default async function TownPage({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist/70 p-8">
-              <h2 className="text-2xl">Start with a phone call</h2>
-              <p className="mt-4 text-lg text-ink-soft">
+            <div className="rounded-2xl border border-rule bg-mist/70 p-10">
+              <h2 className="text-[1.7rem]">Start with a phone call</h2>
+              <p className="mt-4 text-xl text-ink-soft">
                 Tell us what a normal day looks like in {t.name} and what has
                 changed. No script, no pressure.
               </p>
               <div className="mt-7">
                 <CallButton />
               </div>
-              <p className="mt-5 text-base text-ink-faint">
+              <p className="mt-5 text-lg text-ink-faint">
                 Or{" "}
                 <Link
                   href="/contact"
@@ -120,32 +120,32 @@ export default async function TownPage({
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-6xl px-6 py-16">
-            <h2 className="text-3xl">What we help with in {t.name}</h2>
+          <div className="mx-auto max-w-6xl px-6 py-24">
+            <h2 className="text-[2.1rem]">What we help with in {t.name}</h2>
             <ul className="mt-8 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((s) => (
                 <li key={s.slug} className="border-b border-rule pb-4">
                   <Link
                     href={`/services/${s.slug}`}
-                    className="font-display text-xl font-semibold text-ink transition-colors duration-200 hover:text-plum"
+                    className="font-display text-2xl font-semibold text-ink transition-colors duration-200 hover:text-plum"
                   >
                     {s.name}
                   </Link>
-                  <p className="mt-1.5 text-base text-ink-soft">{s.blurb}</p>
+                  <p className="mt-1.5 text-lg text-ink-soft">{s.blurb}</p>
                 </li>
               ))}
             </ul>
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-6 py-14">
-          <h2 className="text-2xl">Nearby</h2>
+        <section className="mx-auto max-w-6xl px-6 py-20">
+          <h2 className="text-[1.7rem]">Nearby</h2>
           <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
             {otherTowns.map((o) => (
               <li key={o.slug}>
                 <Link
                   href={`/in-home-care/${o.slug}`}
-                  className="text-lg text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                  className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
                 >
                   In-home care in {o.name}
                 </Link>
@@ -154,7 +154,7 @@ export default async function TownPage({
             <li>
               <Link
                 href="/service-area"
-                className="text-lg text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
+                className="text-xl text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-plum hover:decoration-plum-soft"
               >
                 All seven counties
               </Link>

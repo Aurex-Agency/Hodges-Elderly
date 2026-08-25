@@ -33,10 +33,10 @@ export default function Home() {
           </div>
           <HeroBloom className="pointer-events-none absolute -right-44 -top-20 hidden h-[54rem] w-[54rem] opacity-[0.88] lg:block" />
 
-          <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-16 lg:pb-32 lg:pt-24">
+          <div className="relative mx-auto max-w-6xl px-6 pb-28 pt-20 lg:pb-40 lg:pt-28">
             <RevealGroup className="max-w-2xl" stagger={0.09}>
               <RevealItem>
-                <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-green">
+                <p className="flex items-center gap-3 text-base font-bold uppercase tracking-[0.18em] text-green">
                   <span className="h-px w-10 bg-green-soft" aria-hidden="true" />
                   In-home care across North Mississippi
                 </p>
@@ -50,7 +50,7 @@ export default function Home() {
               </RevealItem>
 
               <RevealItem>
-                <p className="mt-7 max-w-xl text-xl text-ink-soft">
+                <p className="mt-7 max-w-xl text-2xl text-ink-soft">
                   In-home care for aging parents and grandparents across seven
                   counties around Tupelo, so they keep the home they know and
                   you stop lying awake about the days you can&rsquo;t be there.
@@ -62,7 +62,7 @@ export default function Home() {
                   <CallButton />
                   <Link
                     href="/contact"
-                    className="inline-flex min-h-[3.5rem] items-center px-2 text-lg font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
+                    className="inline-flex min-h-[3.5rem] items-center px-2 text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
                   >
                     Ask a question first
                   </Link>
@@ -70,7 +70,7 @@ export default function Home() {
               </RevealItem>
 
               <RevealItem>
-                <p className="mt-6 text-base text-ink-faint">
+                <p className="mt-6 text-lg text-ink-faint">
                   Serving {countyNames.slice(0, -1).join(", ")}, and{" "}
                   {countyNames.at(-1)} counties.
                 </p>
@@ -97,10 +97,10 @@ export default function Home() {
 
         {/* Openable in place: the "what does personal care actually cover"
             question gets answered without leaving the page. */}
-        <section className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
-          <Reveal className="max-w-2xl">
+        <section className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
+          <Reveal className="max-w-3xl">
             <h2 className="text-4xl lg:text-5xl">What we do in the home</h2>
-            <p className="mt-5 text-xl text-ink-soft">
+            <p className="mt-5 text-2xl text-ink-soft">
               Non-medical care, built around what they actually need help with,
               not a package they have to fit into. Open any one to see what it
               covers.
@@ -113,16 +113,16 @@ export default function Home() {
         {/* The three steps between deciding to call and someone turning up.
             Families stall for months here, so it gets its own section. */}
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
-            <Reveal className="max-w-2xl">
+          <div className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
+            <Reveal className="max-w-3xl">
               <h2 className="text-4xl lg:text-5xl">How it starts</h2>
-              <p className="mt-5 text-xl text-ink-soft">
+              <p className="mt-5 text-2xl text-ink-soft">
                 Most families put this call off for months because nobody tells
                 them what happens next. Here is the whole of it.
               </p>
             </Reveal>
 
-            <ol className="mt-14 grid gap-10 lg:grid-cols-3">
+            <ol className="mt-16 grid gap-8 lg:grid-cols-3">
               {howItStarts.map((step, i) => (
                 <Reveal as="li" key={step.scene} delay={i * 0.1}>
                   <div
@@ -132,21 +132,21 @@ export default function Home() {
                         "--accent-wash": `var(--color-${step.accent}-wash)`,
                       } as React.CSSProperties
                     }
-                    className="h-full rounded-2xl border border-rule bg-page/75 p-7 transition-colors duration-300 hover:border-[var(--accent)]"
+                    className="h-full rounded-2xl border border-rule bg-page/75 p-8 transition-colors duration-300 hover:border-[var(--accent)]"
                   >
                     <FigureScene
                       name={step.scene}
                       accent={step.accent}
                       className="h-40 w-full"
                     />
-                    <p className="mt-6 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent)]">
+                    <p className="mt-6 flex items-center gap-3 text-base font-bold uppercase tracking-[0.18em] text-[var(--accent)]">
                       <span className="h-px w-8 bg-[var(--accent)]" aria-hidden="true" />
                       Step {i + 1}
                     </p>
-                    <h3 className="mt-3 font-display text-2xl font-semibold text-ink">
+                    <h3 className="mt-3 font-display text-[1.7rem] font-semibold text-ink">
                       {step.title}
                     </h3>
-                    <p className="mt-3 text-lg text-ink-soft">{step.body}</p>
+                    <p className="mt-3 text-xl text-ink-soft">{step.body}</p>
                   </div>
                 </Reveal>
               ))}
@@ -165,25 +165,25 @@ export default function Home() {
             <BloomingMagnolia className="h-full w-full rotate-[18deg]" withLeaves={false} />
           </div>
 
-          <div className="relative mx-auto grid max-w-6xl gap-14 px-6 py-20 lg:grid-cols-[1fr_1.1fr] lg:py-28">
+          <div className="relative mx-auto grid max-w-6xl gap-16 px-6 py-20 lg:grid-cols-[1fr_1.1fr] lg:py-28">
             <Reveal>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-green-soft">
+              <p className="text-base font-bold uppercase tracking-[0.18em] text-green-soft">
                 Why this agency exists
               </p>
               <blockquote className="mt-8">
-                <p className="font-display text-3xl leading-[1.24] sm:text-4xl">
+                <p className="font-display text-[2.1rem] leading-[1.24] sm:text-4xl">
                   &ldquo;Taking care of my grandmother was an eye-opener. That is
                   when I realized caring for people was my passion.&rdquo;
                 </p>
                 <footer className="mt-8 flex items-center gap-4">
                   {/* TODO(client): replace with her portrait once we have one. */}
                   <span
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-green-soft font-display text-xl"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-green-soft font-display text-2xl"
                     aria-hidden="true"
                   >
                     AH
                   </span>
-                  <span className="text-base leading-tight text-green-soft">
+                  <span className="text-lg leading-tight text-green-soft">
                     <span className="block font-semibold text-white">
                       {site.founder}
                     </span>
@@ -193,7 +193,7 @@ export default function Home() {
               </blockquote>
             </Reveal>
 
-            <Reveal delay={0.12} className="space-y-6 text-lg leading-relaxed text-white/85 lg:pt-16">
+            <Reveal delay={0.12} className="space-y-7 text-xl leading-relaxed text-white/85 lg:pt-16">
               <p>
                 Before there was an agency, there was a granddaughter looking
                 after her grandmother through bone cancer. {site.firstName}{" "}
@@ -220,11 +220,11 @@ export default function Home() {
         </section>
 
         {/* Service area, set as display type rather than a map or pill row. */}
-        <section className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
+        <section className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
             <Reveal>
               <h2 className="text-4xl lg:text-5xl">Where we go</h2>
-              <p className="mt-5 text-lg text-ink-soft">
+              <p className="mt-5 text-xl text-ink-soft">
                 Seven counties, all within reach of Tupelo. If you are just
                 outside the line, call anyway. {site.firstName} will tell you
                 honestly whether she can serve you.
@@ -247,10 +247,10 @@ export default function Home() {
                     }
                     className="group block border-b-2 border-rule px-3 py-4 transition-colors duration-200 hover:border-[var(--accent)] hover:bg-[var(--accent-wash)]"
                   >
-                    <span className="font-display text-2xl font-semibold text-ink transition-colors duration-200 group-hover:text-[var(--accent)]">
+                    <span className="font-display text-[1.7rem] font-semibold text-ink transition-colors duration-200 group-hover:text-[var(--accent)]">
                       {county.name}
                     </span>
-                    <span className="mt-0.5 block text-sm uppercase tracking-wider text-ink-faint transition-colors duration-200 group-hover:text-[var(--accent)]">
+                    <span className="mt-0.5 block text-base uppercase tracking-wider text-ink-faint transition-colors duration-200 group-hover:text-[var(--accent)]">
                       County
                     </span>
                   </Link>
@@ -259,7 +259,7 @@ export default function Home() {
             </RevealGroup>
           </div>
 
-          <p className="mt-12 max-w-3xl text-base text-ink-faint">
+          <p className="mt-12 max-w-3xl text-lg text-ink-faint">
             Including {site.towns.map((t) => t.name).join(", ")}.
           </p>
         </section>

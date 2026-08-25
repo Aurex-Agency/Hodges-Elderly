@@ -72,18 +72,25 @@ body {
   background: transparent;
   color: var(--color-ink);
   font-family: var(--font-body);
-  /* 18px floor. Do not lower this. */
-  font-size: 1.125rem;
-  line-height: 1.65;
+  /* 19px floor with generous leading. The primary reader is 55+, often on
+     a phone, and often reading while worried. Do not lower either value. */
+  font-size: 1.1875rem;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.12;
+  line-height: 1.16;
   letter-spacing: -0.011em;
   text-wrap: balance;
+}
+
+/* Body copy gets a comfortable measure. Long lines are the other half of
+   readability, and bigger type makes over-long lines worse, not better. */
+p {
+  max-width: 68ch;
 }
 
 p { text-wrap: pretty; }
