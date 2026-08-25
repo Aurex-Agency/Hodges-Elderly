@@ -1,6 +1,6 @@
 "use server";
 
-import { sendLead } from "@/lib/mail";
+import { sendConfirmation, sendLead } from "@/lib/mail";
 import { site } from "@/lib/site";
 
 export type FormState = {
@@ -31,9 +31,15 @@ const LABELS: Record<string, string> = {
   availability: "Availability",
 };
 
-function toLines(fields: Record<string, string>) {
+/* Name and phone lead the email in their own right, and the free-text
+ * answer gets pulled into a quote block, so neither is repeated in the
+ * details table underneath. */
+const LEAD_FIELDS = new Set(["website", "name", "phone"]);
+
+function toLines(fields: Record<string, string>, omit: string[] = []) {
+  const skip = new Set([...LEAD_FIELDS, ...omit]);
   return Object.entries(fields)
-    .filter(([k, v]) => k !== "website" && v)
+    .filter(([k, v]) => !skip.has(k) && v)
     .map(([k, v]) => ({ label: LABELS[k] ?? k, value: v }));
 }
 
@@ -89,13 +95,30 @@ export async function submitEnquiry(
   }
 
   const sent = await sendLead({
-    subject: `Website enquiry from ${fields.name}`,
-    fields: toLines(fields),
+    kind: "enquiry",
+    subject: `New enquiry from ${fields.name}`,
+    name: fields.name,
+    phone: fields.phone,
+    fields: toLines(fields, ["message"]),
+    message: fields.message
+      ? { label: "What is going on", value: fields.message }
+      : undefined,
     replyTo: fields.email || undefined,
   });
   if (!sent.ok) {
     return { status: "error", message: UNDELIVERED };
   }
+
+  /* Not awaited for its result, and never allowed to fail the submission.
+   * Aaliyah has the enquiry; a courtesy receipt that bounced is not a
+   * reason to tell a worried family their message did not go through. */
+  await sendConfirmation({
+    kind: "enquiry",
+    to: fields.email,
+    name: fields.name,
+    phone: fields.phone,
+    town: fields.town,
+  });
 
   return {
     status: "ok",
@@ -126,13 +149,27 @@ export async function submitApplication(
   }
 
   const sent = await sendLead({
+    kind: "application",
     subject: `Caregiver application from ${fields.name}`,
-    fields: toLines(fields),
+    name: fields.name,
+    phone: fields.phone,
+    fields: toLines(fields, ["experience"]),
+    message: fields.experience
+      ? { label: "Experience", value: fields.experience }
+      : undefined,
     replyTo: fields.email || undefined,
   });
   if (!sent.ok) {
     return { status: "error", message: UNDELIVERED };
   }
+
+  await sendConfirmation({
+    kind: "application",
+    to: fields.email,
+    name: fields.name,
+    phone: fields.phone,
+    town: fields.town,
+  });
 
   return {
     status: "ok",

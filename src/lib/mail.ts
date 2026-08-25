@@ -1,3 +1,4 @@
+import { confirmationEmail, ownerEmail } from "./email-template";
 import { site } from "./site";
 
 /* Lead delivery.
@@ -46,32 +47,17 @@ export type LeadResult =
   | { ok: true }
   | { ok: false; reason: "unconfigured" | "failed" };
 
-export async function sendLead({
-  subject,
-  fields,
-  replyTo,
-}: {
+/* The one place that talks to the provider. */
+async function send(payload: {
+  from: string;
+  to: string;
   subject: string;
-  fields: { label: string; value: string }[];
+  html: string;
+  text: string;
   replyTo?: string;
 }): Promise<LeadResult> {
   const key = process.env.RESEND_API_KEY;
-  const from = process.env.LEAD_FROM;
-  const to = process.env.LEAD_TO ?? site.email;
-
-  if (!key || !from || !to) return { ok: false, reason: "unconfigured" };
-
-  const reply = usableReplyTo(replyTo);
-
-  /* Plain text on purpose. This lands on a phone, is read in a hurry, and
-   * often gets forwarded. HTML buys nothing and renders unpredictably in
-   * the mail clients small businesses actually use. */
-  const body = [
-    ...fields.map((f) => `${f.label}:\n${f.value}`),
-    "",
-    "----",
-    `Sent from ${site.url}`,
-  ].join("\n\n");
+  if (!key) return { ok: false, reason: "unconfigured" };
 
   try {
     const res = await fetch(API, {
@@ -81,26 +67,131 @@ export async function sendLead({
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        from,
-        to: [to],
-        subject,
-        text: body,
-        /* So she can hit reply and reach the family directly, rather than
-         * replying to a no-reply address and wondering why nobody got it.
-         * Omitted entirely when what they typed is not a usable address:
-         * a malformed one fails the send, and losing the enquiry is far
-         * worse than losing the convenience of hitting reply. */
-        ...(reply ? { reply_to: reply } : {}),
+        from: payload.from,
+        to: [payload.to],
+        subject: payload.subject,
+        /* Both parts, always. HTML for the ninety-odd percent of clients
+         * that render it, and a real plain-text alternative rather than an
+         * auto-stripped one, because text/plain is what shows up in
+         * notification previews and in the clients that refuse HTML. */
+        html: payload.html,
+        text: payload.text,
+        ...(payload.replyTo ? { reply_to: payload.replyTo } : {}),
       }),
     });
 
     if (!res.ok) {
-      console.error("[lead] send failed", res.status, await res.text());
+      console.error("[mail] send failed", res.status, await res.text());
       return { ok: false, reason: "failed" };
     }
     return { ok: true };
   } catch (err) {
-    console.error("[lead] send threw", err);
+    console.error("[mail] send threw", err);
     return { ok: false, reason: "failed" };
   }
+}
+
+/* ---------- To Aaliyah ---------- */
+
+export async function sendLead({
+  kind,
+  subject,
+  name,
+  phone,
+  fields,
+  message,
+  replyTo,
+}: {
+  kind: "enquiry" | "application";
+  subject: string;
+  name: string;
+  phone: string;
+  fields: { label: string; value: string }[];
+  message?: { label: string; value: string };
+  replyTo?: string;
+}): Promise<LeadResult> {
+  const from = process.env.LEAD_FROM;
+  const to = process.env.LEAD_TO ?? site.email;
+  if (!from || !to) return { ok: false, reason: "unconfigured" };
+
+  const text = [
+    message ? `${message.label}:\n${message.value}` : null,
+    ...fields.map((f) => `${f.label}:\n${f.value}`),
+    "",
+    "----",
+    `Sent from ${site.url}`,
+  ]
+    .filter((x): x is string => x !== null)
+    .join("\n\n");
+
+  return send({
+    from,
+    to,
+    subject,
+    html: ownerEmail({ kind, name, phone, fields, message }),
+    text,
+    replyTo: usableReplyTo(replyTo),
+  });
+}
+
+/* ---------- To the person who filled the form ---------- */
+
+/* Best effort, and deliberately separate from the lead itself.
+ *
+ * If this fails, the submission has still succeeded: Aaliyah has the
+ * enquiry and that is the part that matters. Nobody should be told their
+ * message did not go through because a courtesy receipt bounced.
+ *
+ * Only sent when they gave an address that will not blow up the send. The
+ * email field is optional on both forms, so most of the time there is
+ * simply nobody to confirm to. */
+export async function sendConfirmation({
+  kind,
+  to,
+  name,
+  phone,
+  town,
+}: {
+  kind: "enquiry" | "application";
+  to: string | undefined;
+  name: string;
+  phone: string;
+  town?: string;
+}): Promise<void> {
+  const address = usableReplyTo(to);
+  const from = process.env.LEAD_FROM;
+  if (!address || !from) return;
+
+  /* Sent under the agency's name rather than "Hodges Website". A receipt
+   * from a person's business should look like it came from the business. */
+  const sender = from.includes("<")
+    ? `${site.shortName} <${from.slice(from.indexOf("<") + 1, from.indexOf(">"))}>`
+    : from;
+
+  const text = [
+    `Thank you, ${name.split(" ")[0] || "there"}.`,
+    "",
+    kind === "enquiry"
+      ? `We have your message and somebody will call you back${phone ? ` on ${phone}` : ""}. You will be speaking to ${site.founder}, who owns the agency.`
+      : `We have your application and ${site.founder} will be in touch${phone ? ` on ${phone}` : ""}.`,
+    "",
+    `If something changes, or you would rather just talk now, call ${site.phone}.`,
+    "",
+    "----",
+    `You are getting this because you filled in the form on ${site.url}.`,
+    "You have not been added to any mailing list.",
+  ].join("\n");
+
+  await send({
+    from: sender,
+    to: address,
+    subject:
+      kind === "enquiry"
+        ? `We got your message, ${name.split(" ")[0] || "thank you"}`
+        : `We got your application, ${name.split(" ")[0] || "thank you"}`,
+    html: confirmationEmail({ kind, name, phone, town }),
+    text,
+    /* Replies land in her real inbox, not on the sending subdomain. */
+    replyTo: site.email ?? undefined,
+  });
 }
