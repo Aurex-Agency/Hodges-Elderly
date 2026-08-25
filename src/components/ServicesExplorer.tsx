@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Magnolia from "./Magnolia";
 import ServiceIllustration from "./ServiceIllustration";
@@ -20,6 +20,15 @@ import type { Service } from "@/lib/site";
  * the row that opens, the two height changes largely cancel and the page
  * does not lurch under the reader.
  *
+ * Keeping it from lurching: a panel is up to ~850px tall on a phone, taller
+ * than the viewport, so when the row above collapses the document loses a
+ * whole screen of height above your scroll position and the page snaps
+ * upward. The browser's own scroll anchoring does not rescue an animated
+ * height. So the open row's header is pinned by hand: its viewport position
+ * is recorded, and every time the list resizes mid-animation the scroll is
+ * corrected by however far that header moved. The row you are reading stays
+ * put and the panel opens beneath it.
+ *
  * Under prefers-reduced-motion the scroll behaviour is off entirely.
  * Content opening by itself as you scroll is precisely what that setting
  * exists to prevent. Click still works.
@@ -28,6 +37,9 @@ import type { Service } from "@/lib/site";
  * aria-controls, keyboard operable with Enter and Space. */
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;
+/* Slower out of the gate and a long settle, so the panel unfolds rather
+ * than snapping open. */
+const UNFOLD = [0.33, 0.02, 0.18, 1] as const;
 
 export default function ServicesExplorer({
   services,
@@ -44,6 +56,11 @@ export default function ServicesExplorer({
   });
 
   const rowRefs = useRef(new Map<string, HTMLLIElement>());
+  const listRef = useRef<HTMLUListElement>(null);
+  /* The element whose on-screen position must not change while the list
+   * reflows, and the position to hold it at. */
+  const anchor = useRef<{ el: HTMLElement; top: number } | null>(null);
+  const lastOpen = useRef<string | null>(null);
 
   useEffect(() => {
     if (reduced) return;
@@ -79,8 +96,39 @@ export default function ServicesExplorer({
 
   const open = manual.active || reduced ? manual.slug : inBand;
 
+  /* Record the anchor before the browser paints the new open state. When a
+   * row closes to nothing, keep pinning the row that just closed, otherwise
+   * scrolling out of the section drops a screen of height with nothing
+   * holding the page steady. */
+  useLayoutEffect(() => {
+    const slug = open ?? lastOpen.current;
+    lastOpen.current = open ?? lastOpen.current;
+    if (!slug) return;
+    const el = document.getElementById(`svc-button-${slug}`);
+    if (el) anchor.current = { el, top: el.getBoundingClientRect().top };
+  }, [open]);
+
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || reduced) return;
+
+    const observer = new ResizeObserver(() => {
+      const held = anchor.current;
+      if (!held || !held.el.isConnected) return;
+      const drift = held.el.getBoundingClientRect().top - held.top;
+      /* Sub-pixel drift is not worth a scroll write, and correcting it every
+       * frame is how you get a ResizeObserver feedback loop. */
+      if (Math.abs(drift) > 0.5) {
+        window.scrollBy({ top: drift, behavior: "instant" });
+      }
+    });
+
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [reduced]);
+
   return (
-    <ul className="-mx-6 mt-16 border-t border-rule sm:mx-0">
+    <ul ref={listRef} className="-mx-6 mt-16 border-t border-rule sm:mx-0">
       {services.map((service, i) => {
         const isOpen = open === service.slug;
         const panelId = `svc-panel-${service.slug}`;
@@ -197,18 +245,18 @@ export default function ServicesExplorer({
                   animate={{ height: "auto", opacity: 1 }}
                   exit={reduced ? undefined : { height: 0, opacity: 0 }}
                   transition={{
-                    height: { duration: 0.42, ease: EASE },
-                    opacity: { duration: 0.26, ease: EASE },
+                    height: { duration: 0.62, ease: UNFOLD },
+                    opacity: { duration: 0.4, ease: EASE },
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="px-6 pb-10 pt-7 sm:grid sm:grid-cols-[4.5rem_1fr] sm:gap-x-10 sm:px-6">
+                  <div className="px-6 pb-9 pt-6 sm:grid sm:grid-cols-[4.5rem_1fr] sm:gap-x-10 sm:px-6">
                     <span aria-hidden="true" className="hidden sm:block" />
                     <div className="lg:grid lg:grid-cols-[1fr_11rem] lg:items-start lg:gap-10">
                       <div>
                         <p className="text-xl text-ink-soft">{service.forWhom}</p>
 
-                        <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+                        <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2">
                           {service.includes.map((item, j) => (
                             <motion.li
                               key={item}
@@ -216,9 +264,9 @@ export default function ServicesExplorer({
                               initial={reduced ? false : { opacity: 0, x: -8 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{
-                                duration: 0.3,
+                                duration: 0.45,
                                 ease: EASE,
-                                delay: reduced ? 0 : 0.12 + j * 0.045,
+                                delay: reduced ? 0 : 0.2 + j * 0.06,
                               }}
                             >
                               <svg
@@ -269,7 +317,7 @@ export default function ServicesExplorer({
                       <ServiceIllustration
                         slug={service.slug}
                         accent={service.accent}
-                        className="mt-8 h-32 w-32 lg:mt-0 lg:h-44 lg:w-44 lg:justify-self-end"
+                        className="mt-7 h-24 w-24 lg:mt-0 lg:h-44 lg:w-44 lg:justify-self-end"
                       />
                     </div>
                   </div>
