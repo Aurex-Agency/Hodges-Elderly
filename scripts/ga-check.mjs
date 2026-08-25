@@ -4,7 +4,7 @@ import { chromium } from "playwright";
  * sends rather than trusting that the code looks right. Blocks the real
  * gtag script and installs a stub, so nothing reaches Google during a test
  * and every event can be inspected. */
-const BASE = process.env.BASE ?? "http://localhost:4432";
+const BASE = process.env.BASE ?? "https://hodgeselderlyanddisable.com";
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 
@@ -66,6 +66,21 @@ await p.evaluate(() => {
 });
 await p.waitForTimeout(400);
 await dump("footer phone link");
+
+/* Form submission.
+ *
+ * Guarded, because this genuinely submits: running it against production
+ * puts a real email in the owner's inbox. It did exactly that once. The
+ * page_view and click_to_call checks are safe anywhere; only this part
+ * needs a local server, or an explicit ALLOW_LIVE_SUBMIT=1 if you really
+ * mean it. */
+const isProd = /hodgeselderlyanddisable\.com/.test(BASE);
+if (isProd && process.env.ALLOW_LIVE_SUBMIT !== "1") {
+  console.log("\n[form submit] SKIPPED against production.");
+  console.log("   Run against a local server, or set ALLOW_LIVE_SUBMIT=1 to send a real enquiry.");
+  await b.close();
+  process.exit(0);
+}
 
 // Form submission.
 await p.goto(BASE + "/contact", { waitUntil: "networkidle" });
