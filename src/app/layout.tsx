@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Merriweather } from "next/font/google";
+import Analytics from "@/components/Analytics";
 import { MagnoliaDefs } from "@/components/Magnolia";
 import ScrollTint, { ScrollProgress } from "@/components/motion/ScrollTint";
 import { LAUNCH_READY, services, site } from "@/lib/site";
@@ -135,6 +136,7 @@ export default function RootLayout({
         <ScrollProgress />
         <MagnoliaDefs />
         {children}
+        <Analytics />
       </body>
     </html>
   );

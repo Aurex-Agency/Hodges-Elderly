@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
+import { trackLead } from "@/lib/analytics";
 import type { FormState } from "@/app/actions";
 
 const INITIAL: FormState = { status: "idle", message: "" };
@@ -18,12 +19,29 @@ export default function LeadForm({
   action,
   fields,
   submitLabel,
+  formName,
 }: {
   action: (prev: FormState, data: FormData) => Promise<FormState>;
   fields: Field[];
   submitLabel: string;
+  /** Which form this is, for the analytics event. Nothing else. */
+  formName: "contact" | "careers";
 }) {
   const [state, formAction, pending] = useActionState(action, INITIAL);
+
+  /* Fired on the transition into "ok", not on every render while the
+   * success panel is on screen, and only when the server actually
+   * confirmed the send. A lead event on a submission that failed to
+   * deliver would be worse than no measurement at all.
+   *
+   * Carries the form name and nothing the person typed. */
+  const counted = useRef(false);
+  useEffect(() => {
+    if (state.status === "ok" && !counted.current) {
+      counted.current = true;
+      trackLead(formName);
+    }
+  }, [state.status, formName]);
 
   if (state.status === "ok") {
     return (

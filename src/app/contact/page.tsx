@@ -116,6 +116,7 @@ export default function Contact() {
               <div className="mt-8">
                 <LeadForm
                   action={submitEnquiry}
+                  formName="contact"
                   fields={FIELDS}
                   submitLabel="Send message"
                 />

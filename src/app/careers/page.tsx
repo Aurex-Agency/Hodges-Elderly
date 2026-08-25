@@ -82,6 +82,7 @@ export default function Careers() {
               <div className="mt-8">
                 <LeadForm
                   action={submitApplication}
+                  formName="careers"
                   fields={FIELDS}
                   submitLabel="Send application"
                 />
