@@ -1,0 +1,12 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: +(process.env.W||390), height: 844 } });
+await p.goto(process.env.BASE + "/", { waitUntil: "networkidle" });
+await p.waitForTimeout(700);
+const row = p.locator("#svc-button-" + (process.env.SLUG || "companion-care"));
+const box = await row.boundingBox();
+await p.evaluate((y) => scrollTo({ top: y, behavior: "instant" }), box.y - 300);
+await p.waitForTimeout(1400);
+await p.screenshot({ path: `.shots/${process.env.OUT}.png` });
+console.log("expanded:", await row.getAttribute("aria-expanded"));
+await b.close();

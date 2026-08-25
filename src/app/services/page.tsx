@@ -21,8 +21,8 @@ export default function Services() {
           lede="Non-medical in-home care. Start with whatever is actually a problem right now. A few hours a week is a normal place to begin."
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
-          <ul className="border-t border-rule">
+        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
+          <ul className="-mx-6 border-t border-rule sm:mx-0">
             {services.map((service, i) => (
               <li
                 key={service.slug}
@@ -36,7 +36,7 @@ export default function Services() {
               >
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group relative grid items-center gap-x-10 gap-y-4 py-10 transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[7.5rem_20rem_1fr] sm:px-4"
+                  className="group relative grid items-center gap-x-10 gap-y-4 px-6 py-8 transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[7.5rem_20rem_1fr] sm:px-6 sm:py-10"
                 >
                   <span
                     aria-hidden="true"

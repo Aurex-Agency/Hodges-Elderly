@@ -46,7 +46,7 @@ export default function Contact() {
           lede="No script and no pressure. Tell us what is happening at home and we will tell you honestly whether we can help."
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.1fr]">
             <div>
               <FigureScene name="call" accent="plum" className="mb-6 h-40 w-full max-w-sm" />

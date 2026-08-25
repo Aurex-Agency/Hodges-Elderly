@@ -28,12 +28,12 @@ export default function Home() {
           {/* On narrow screens the text spans the full width, so a
               full-strength bloom behind it destroys legibility. There it
               becomes a faint, leafless corner accent instead. */}
-          <div className="pointer-events-none absolute -right-24 -top-16 h-[20rem] w-[20rem] opacity-40 lg:hidden">
+          <div className="pointer-events-none absolute -right-28 -top-28 h-[17rem] w-[17rem] opacity-30 lg:hidden">
             <Magnolia className="h-full w-full -rotate-[14deg]" withLeaves={false} />
           </div>
           <HeroBloom className="pointer-events-none absolute -right-44 -top-20 hidden h-[54rem] w-[54rem] opacity-[0.88] lg:block" />
 
-          <div className="relative mx-auto max-w-6xl px-6 pb-28 pt-20 lg:pb-40 lg:pt-28">
+          <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-14 sm:pb-28 sm:pt-20 lg:pb-40 lg:pt-28">
             <RevealGroup className="max-w-2xl" stagger={0.09}>
               <RevealItem>
                 <p className="flex items-center gap-3 text-base font-bold uppercase tracking-[0.18em] text-green">
@@ -97,7 +97,7 @@ export default function Home() {
 
         {/* Openable in place: the "what does personal care actually cover"
             question gets answered without leaving the page. */}
-        <section className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
+        <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28 lg:py-40">
           <Reveal className="max-w-3xl">
             <h2 className="text-4xl lg:text-5xl">What we do in the home</h2>
             <p className="mt-5 text-2xl text-ink-soft">
@@ -113,7 +113,7 @@ export default function Home() {
         {/* The three steps between deciding to call and someone turning up.
             Families stall for months here, so it gets its own section. */}
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
+          <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28 lg:py-40">
             <Reveal className="max-w-3xl">
               <h2 className="text-4xl lg:text-5xl">How it starts</h2>
               <p className="mt-5 text-2xl text-ink-soft">
@@ -220,7 +220,7 @@ export default function Home() {
         </section>
 
         {/* Service area, set as display type rather than a map or pill row. */}
-        <section className="mx-auto max-w-6xl px-6 py-28 lg:py-40">
+        <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28 lg:py-40">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
             <Reveal>
               <h2 className="text-4xl lg:text-5xl">Where we go</h2>

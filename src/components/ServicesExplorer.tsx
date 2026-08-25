@@ -1,21 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Magnolia from "./Magnolia";
 import ServiceIllustration from "./ServiceIllustration";
 import type { Service } from "@/lib/site";
 
-/* The services list, made openable in place.
+/* The services list, openable in place and driven by scroll.
  *
- * The previous version was a flat list of six links: to find out what
- * "personal care" actually covers you had to leave the homepage. Now each
- * row opens to show exactly what is included, which is the question
- * families are really asking, and the full page is still one click away.
+ * Each row opens as it reaches the middle of the viewport and closes again
+ * as it leaves, so scrolling the section reads as one continuous movement
+ * rather than six things waiting to be clicked. Clicking still works and
+ * takes over until you scroll to a different row.
  *
- * Built on a real <button> with aria-expanded/aria-controls rather than a
- * clickable div, so it works on a keyboard and announces its state. */
+ * Why a narrow band rather than plain visibility: with a focus band across
+ * the middle of the screen only one row qualifies at a time, so the list
+ * cannot open two at once. And because the row that closes is always above
+ * the row that opens, the two height changes largely cancel and the page
+ * does not lurch under the reader.
+ *
+ * Under prefers-reduced-motion the scroll behaviour is off entirely.
+ * Content opening by itself as you scroll is precisely what that setting
+ * exists to prevent. Click still works.
+ *
+ * Built on the W3C accordion pattern: a real button with aria-expanded and
+ * aria-controls, keyboard operable with Enter and Space. */
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;
 
@@ -24,11 +34,53 @@ export default function ServicesExplorer({
 }: {
   services: readonly Service[];
 }) {
-  const [open, setOpen] = useState<string | null>(services[0]?.slug ?? null);
   const reduced = useReducedMotion();
+  /* Set by scrolling. */
+  const [inBand, setInBand] = useState<string | null>(null);
+  /* Set by clicking, and released as soon as scrolling reaches another row. */
+  const [manual, setManual] = useState<{ slug: string | null; active: boolean }>({
+    slug: null,
+    active: false,
+  });
+
+  const rowRefs = useRef(new Map<string, HTMLLIElement>());
+
+  useEffect(() => {
+    if (reduced) return;
+    const nodes = [...rowRefs.current.values()];
+    if (nodes.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const slug = entry.target.getAttribute("data-slug");
+          if (!slug) continue;
+          if (entry.isIntersecting) {
+            setInBand(slug);
+            /* Reaching a different row hands control back to scrolling.
+               Released here, in the observer callback, rather than in an
+               effect that syncs derived state: an observer is an external
+               subscription, which is where setState belongs. */
+            setManual((m) =>
+              m.active && m.slug !== slug ? { slug: null, active: false } : m,
+            );
+          } else {
+            setInBand((current) => (current === slug ? null : current));
+          }
+        }
+      },
+      /* A thin band across the middle of the viewport. */
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+
+    for (const node of nodes) observer.observe(node);
+    return () => observer.disconnect();
+  }, [reduced, services]);
+
+  const open = manual.active || reduced ? manual.slug : inBand;
 
   return (
-    <ul className="mt-16 border-t border-rule">
+    <ul className="-mx-6 mt-16 border-t border-rule sm:mx-0">
       {services.map((service, i) => {
         const isOpen = open === service.slug;
         const panelId = `svc-panel-${service.slug}`;
@@ -37,6 +89,11 @@ export default function ServicesExplorer({
         return (
           <li
             key={service.slug}
+            data-slug={service.slug}
+            ref={(node) => {
+              if (node) rowRefs.current.set(service.slug, node);
+              else rowRefs.current.delete(service.slug);
+            }}
             style={
               {
                 "--accent": `var(--color-${service.accent})`,
@@ -51,8 +108,12 @@ export default function ServicesExplorer({
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => setOpen(isOpen ? null : service.slug)}
-                className={`group relative grid w-full cursor-pointer items-center gap-x-10 gap-y-3 py-10 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid-cols-[4.5rem_20rem_1fr_2.5rem] sm:px-4 ${isOpen ? "bg-[var(--accent-wash)]" : ""}`}
+                onClick={() =>
+                  setManual({ slug: isOpen ? null : service.slug, active: true })
+                }
+                className={`group relative w-full cursor-pointer px-6 py-8 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid sm:grid-cols-[4.5rem_20rem_1fr_2.5rem] sm:items-center sm:gap-x-10 sm:px-6 sm:py-10 ${
+                  isOpen ? "bg-[var(--accent-wash)]" : ""
+                }`}
               >
                 <span
                   aria-hidden="true"
@@ -90,7 +151,7 @@ export default function ServicesExplorer({
                 </span>
 
                 <span
-                  className={`font-display text-[1.7rem] font-semibold transition-colors duration-300 ${
+                  className={`mt-4 block font-display text-[1.7rem] font-semibold transition-colors duration-300 sm:mt-0 ${
                     isOpen
                       ? "text-[var(--accent)]"
                       : "text-ink group-hover:text-[var(--accent)]"
@@ -99,15 +160,20 @@ export default function ServicesExplorer({
                   {service.name}
                 </span>
 
-                <span className="text-xl text-ink-soft">{service.blurb}</span>
+                <span className="mt-2 block text-xl text-ink-soft sm:mt-0">
+                  {service.blurb}
+                </span>
 
+                {/* Top right on a phone, fourth column on a wide screen. It
+                    was hidden below sm entirely, which left nothing at all
+                    to signal that the rows open. */}
                 <motion.span
                   aria-hidden="true"
-                  className="hidden justify-self-end text-[var(--accent)] sm:block"
+                  className="absolute right-4 top-8 text-[var(--accent)] sm:static sm:justify-self-end"
                   animate={{ rotate: isOpen ? 180 : 0 }}
                   transition={{ duration: 0.3, ease: EASE }}
                 >
-                  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+                  <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none">
                     <path
                       d="m6 9 6 6 6-6"
                       stroke="currentColor"
@@ -131,79 +197,79 @@ export default function ServicesExplorer({
                   animate={{ height: "auto", opacity: 1 }}
                   exit={reduced ? undefined : { height: 0, opacity: 0 }}
                   transition={{
-                    height: { duration: 0.38, ease: EASE },
-                    opacity: { duration: 0.25, ease: EASE },
+                    height: { duration: 0.42, ease: EASE },
+                    opacity: { duration: 0.26, ease: EASE },
                   }}
                   className="overflow-hidden"
                 >
-                  <div className="grid gap-8 pb-9 sm:grid-cols-[4.5rem_1fr] sm:px-4">
-                    <span aria-hidden="true" />
-                    <div className="grid gap-8 lg:grid-cols-[1fr_11rem] lg:items-start">
+                  <div className="px-6 pb-10 pt-7 sm:grid sm:grid-cols-[4.5rem_1fr] sm:gap-x-10 sm:px-6">
+                    <span aria-hidden="true" className="hidden sm:block" />
+                    <div className="lg:grid lg:grid-cols-[1fr_11rem] lg:items-start lg:gap-10">
                       <div>
-                      <p className="max-w-2xl text-xl text-ink-soft">
-                        {service.forWhom}
-                      </p>
+                        <p className="text-xl text-ink-soft">{service.forWhom}</p>
 
-                      <ul className="mt-6 grid max-w-3xl gap-x-10 gap-y-3 sm:grid-cols-2">
-                        {service.includes.map((item, j) => (
-                          <motion.li
-                            key={item}
-                            className="flex gap-3"
-                            initial={reduced ? false : { opacity: 0, x: -8 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{
-                              duration: 0.3,
-                              ease: EASE,
-                              delay: reduced ? 0 : 0.12 + j * 0.045,
-                            }}
+                        <ul className="mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+                          {service.includes.map((item, j) => (
+                            <motion.li
+                              key={item}
+                              className="flex gap-3"
+                              initial={reduced ? false : { opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.3,
+                                ease: EASE,
+                                delay: reduced ? 0 : 0.12 + j * 0.045,
+                              }}
+                            >
+                              <svg
+                                viewBox="0 0 20 20"
+                                className="mt-2 h-5 w-5 shrink-0 text-[var(--accent)]"
+                                fill="none"
+                                aria-hidden="true"
+                              >
+                                <path
+                                  d="M4 10.5 8 14.5 16 5.5"
+                                  stroke="currentColor"
+                                  strokeWidth="2.2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                              <span className="text-xl text-ink-soft">{item}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+
+                        <p className="mt-8">
+                          <Link
+                            href={`/services/${service.slug}`}
+                            className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--accent)] underline decoration-current/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-current"
                           >
+                            More about {service.name.toLowerCase()}
                             <svg
                               viewBox="0 0 20 20"
-                              className="mt-1.5 h-5 w-5 shrink-0 text-[var(--accent)]"
+                              className="h-4 w-4"
                               fill="none"
                               aria-hidden="true"
                             >
                               <path
-                                d="M4 10.5 8 14.5 16 5.5"
+                                d="M4 10h12m0 0-5-5m5 5-5 5"
                                 stroke="currentColor"
                                 strokeWidth="2.2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
                               />
                             </svg>
-                            <span className="text-xl text-ink-soft">{item}</span>
-                          </motion.li>
-                        ))}
-                      </ul>
-
-                      <p className="mt-7">
-                        <Link
-                          href={`/services/${service.slug}`}
-                          className="inline-flex items-center gap-2 text-xl font-semibold text-[var(--accent)] underline decoration-current/40 decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-current"
-                        >
-                          More about {service.name.toLowerCase()}
-                          <svg
-                            viewBox="0 0 20 20"
-                            className="h-4 w-4"
-                            fill="none"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M4 10h12m0 0-5-5m5 5-5 5"
-                              stroke="currentColor"
-                              strokeWidth="2.2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </Link>
-                      </p>
+                          </Link>
+                        </p>
                       </div>
 
+                      {/* Now shown on phones too: it is colour and life in a
+                          section that is otherwise a wall of text there. */}
                       <ServiceIllustration
                         slug={service.slug}
                         accent={service.accent}
-                        className="hidden h-44 w-44 lg:block lg:justify-self-end"
+                        className="mt-8 h-32 w-32 lg:mt-0 lg:h-44 lg:w-44 lg:justify-self-end"
                       />
                     </div>
                   </div>

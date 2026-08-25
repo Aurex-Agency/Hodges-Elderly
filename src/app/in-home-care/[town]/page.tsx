@@ -71,7 +71,7 @@ export default async function TownPage({
           lede={copy.intro}
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
             <div className="space-y-7 text-xl leading-relaxed text-ink-soft">
               <p className="text-2xl text-ink">
@@ -120,7 +120,7 @@ export default async function TownPage({
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
             <h2 className="text-[2.1rem]">What we help with in {t.name}</h2>
             <ul className="mt-8 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
               {services.map((s) => (
@@ -138,7 +138,7 @@ export default async function TownPage({
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-6 py-20">
+        <section className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
           <h2 className="text-[1.7rem]">Nearby</h2>
           <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
             {otherTowns.map((o) => (

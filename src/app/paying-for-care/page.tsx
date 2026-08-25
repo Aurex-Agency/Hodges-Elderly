@@ -45,7 +45,7 @@ export default function PayingForCare() {
           lede="This is the question everybody has and almost nobody answers plainly. Here is the honest version."
         />
 
-        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-28">
+        <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-28">
           {PRICING_CONFIRMED ? null : (
             <div className="rounded-2xl border-2 border-plum bg-plum-wash p-8">
               <h2 className="text-[1.7rem]">Our rates</h2>
@@ -89,7 +89,7 @@ export default function PayingForCare() {
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-3xl px-6 py-24">
+          <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
             <h2 className="text-[2.1rem]">What Medicare does not cover</h2>
             <div className="mt-6 space-y-7 text-xl text-ink-soft">
               <p>
@@ -114,7 +114,7 @@ export default function PayingForCare() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 py-24">
+        <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
           <h2 className="text-[2.1rem]">Where to start if money is the obstacle</h2>
           <div className="mt-6 space-y-7 text-xl text-ink-soft">
             <p>

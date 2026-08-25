@@ -82,7 +82,7 @@ export function PageHero({
       <div className="pointer-events-none absolute -right-28 -top-24 hidden h-[30rem] w-[30rem] opacity-70 lg:block">
         <BloomingMagnolia className="h-full w-full -rotate-[14deg]" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-6 py-24 lg:py-32">
+      <div className="relative mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
         <RevealGroup stagger={0.09}>
           <RevealItem>
             <p className="flex items-center gap-3 text-base font-bold uppercase tracking-[0.18em] text-green">
@@ -141,7 +141,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-rule bg-mist/65">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-14 sm:py-20 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
           <Logo />
           <p className="mt-5 max-w-xs text-lg text-ink-soft">

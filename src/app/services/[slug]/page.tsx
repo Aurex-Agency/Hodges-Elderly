@@ -47,7 +47,7 @@ export default async function ServicePage({
               "--accent-wash": `var(--color-${service.accent}-wash)`,
             } as React.CSSProperties
           }
-          className="mx-auto max-w-6xl px-6 py-24 lg:py-32"
+          className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32"
         >
           <div className="grid gap-16 lg:grid-cols-[1.1fr_1fr]">
             <div>
@@ -93,7 +93,7 @@ export default async function ServicePage({
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-6xl px-6 py-24">
+          <div className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
             <h2 className="text-[2.1rem]">Where we provide it</h2>
             <p className="mt-4 max-w-2xl text-xl text-ink-soft">
               {service.name} is available across all seven counties we serve.
@@ -123,7 +123,7 @@ export default async function ServicePage({
           </div>
         </section>
 
-        <section className="mx-auto max-w-6xl px-6 py-24">
+        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
           <h2 className="text-[1.7rem]">Other things we help with</h2>
           <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((o) => (

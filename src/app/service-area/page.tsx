@@ -20,7 +20,7 @@ export default function ServiceArea() {
           lede={`If you are just outside the line, call anyway. ${site.firstName} will tell you honestly whether she can serve you.`}
         />
 
-        <section className="mx-auto max-w-6xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24 lg:py-32">
           <ul className="grid gap-px border border-rule bg-rule sm:grid-cols-2 lg:grid-cols-3">
             {site.counties.map((county) => {
               const towns = site.towns.filter((t) => t.county === county.name);

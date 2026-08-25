@@ -42,7 +42,7 @@ export default function Answers() {
           lede="Nobody hires in-home care casually. These are the things people want to know before they call, answered the way we would answer them on the phone."
         />
 
-        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-32">
           {GROUPS.map((group) => (
             <div key={group} className="mb-16 last:mb-0">
               <h2 className="border-b border-rule pb-4 text-base font-bold uppercase tracking-[0.18em] text-green">

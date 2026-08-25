@@ -20,7 +20,7 @@ export default function About() {
           lede={`${site.founder}, Founder and Administrator.`}
         />
 
-        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-32">
           <div className="space-y-7 text-2xl leading-relaxed text-ink-soft">
             <p className="text-[1.7rem] leading-relaxed text-ink">
               Before there was an agency, there was a granddaughter looking after
@@ -54,7 +54,7 @@ export default function About() {
         </section>
 
         <section className="border-y border-rule bg-mist/65">
-          <div className="mx-auto max-w-3xl px-6 py-24 lg:py-28">
+          <div className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-28">
             <h2 className="text-[2.1rem] lg:text-4xl">A second generation</h2>
             <div className="mt-6 space-y-7 text-xl text-ink-soft">
               <p>
@@ -72,7 +72,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-3xl px-6 py-24 lg:py-32">
+        <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-32">
           <h2 className="text-[2.1rem] lg:text-4xl">Why families choose a local agency</h2>
           <div className="mt-6 space-y-7 text-xl text-ink-soft">
             <p>
