@@ -1,5 +1,6 @@
 "use server";
 
+import { sendLead } from "@/lib/mail";
 import { site } from "@/lib/site";
 
 export type FormState = {
@@ -9,25 +10,31 @@ export type FormState = {
   fieldErrors?: Record<string, string>;
 };
 
-/* Lead delivery is not wired yet — the client has no business email and has
- * not said where submissions should go.
+/* Enquiries email Aaliyah at the address published on the site.
  *
- * This deliberately FAILS LOUDLY when unconfigured rather than showing a
- * success message. A contact form that silently drops a family's enquiry is
- * far worse than one that tells them to pick up the phone.
- *
- * TODO(launch): set LEAD_ENDPOINT to the webhook that emails/texts Aaliyah,
- * then verify end to end before the domain goes live. */
-async function deliver(kind: string, fields: Record<string, string>) {
-  const endpoint = process.env.LEAD_ENDPOINT;
-  if (!endpoint) return false;
+ * This still FAILS LOUDLY when the mail provider is unconfigured or the
+ * send errors, rather than showing a success message. A contact form that
+ * silently drops a family's enquiry is far worse than one that tells them
+ * to pick up the phone, and these are people deciding what to do about a
+ * parent. Never pretend a message arrived. */
 
-  const res = await fetch(endpoint, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ kind, fields, receivedAt: new Date().toISOString() }),
-  });
-  return res.ok;
+/* Labels for the email body, so the message reads as a note rather than a
+ * dump of form field names. Anything not listed still gets through under
+ * its raw key, so adding a field to a form can never silently drop it. */
+const LABELS: Record<string, string> = {
+  name: "Name",
+  phone: "Phone",
+  email: "Email",
+  town: "Town",
+  message: "What is going on",
+  experience: "Experience",
+  availability: "Availability",
+};
+
+function toLines(fields: Record<string, string>) {
+  return Object.entries(fields)
+    .filter(([k, v]) => k !== "website" && v)
+    .map(([k, v]) => ({ label: LABELS[k] ?? k, value: v }));
 }
 
 function validate(
@@ -38,6 +45,12 @@ function validate(
   const fieldErrors: Record<string, string> = {};
 
   for (const [key, value] of formData.entries()) {
+    /* Skip React's own Server Action fields. A form posted to a Server
+     * Action carries $ACTION_ID, $ACTION_KEY and the serialised bound
+     * arguments alongside the real inputs. Copying everything meant the
+     * email to Aaliyah opened with three blocks of React internals before
+     * it got to the family's name. Nothing a person types starts with $. */
+    if (key.startsWith("$")) continue;
     if (typeof value === "string") fields[key] = value.trim();
   }
 
@@ -51,7 +64,7 @@ function validate(
   return { fields, fieldErrors };
 }
 
-const UNCONFIGURED = `Our contact form is not connected yet. Please call ${site.phone} and someone will answer.`;
+const UNDELIVERED = `We could not send that just now. Please call ${site.phone} and someone will answer.`;
 
 export async function submitEnquiry(
   _prev: FormState,
@@ -64,7 +77,7 @@ export async function submitEnquiry(
   ]);
 
   if (fieldErrors.website) {
-    return { status: "error", message: UNCONFIGURED };
+    return { status: "error", message: UNDELIVERED };
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -75,9 +88,13 @@ export async function submitEnquiry(
     };
   }
 
-  const delivered = await deliver("enquiry", fields);
-  if (!delivered) {
-    return { status: "error", message: UNCONFIGURED };
+  const sent = await sendLead({
+    subject: `Website enquiry from ${fields.name}`,
+    fields: toLines(fields),
+    replyTo: fields.email || undefined,
+  });
+  if (!sent.ok) {
+    return { status: "error", message: UNDELIVERED };
   }
 
   return {
@@ -97,7 +114,7 @@ export async function submitApplication(
   ]);
 
   if (fieldErrors.website) {
-    return { status: "error", message: UNCONFIGURED };
+    return { status: "error", message: UNDELIVERED };
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -108,9 +125,13 @@ export async function submitApplication(
     };
   }
 
-  const delivered = await deliver("application", fields);
-  if (!delivered) {
-    return { status: "error", message: UNCONFIGURED };
+  const sent = await sendLead({
+    subject: `Caregiver application from ${fields.name}`,
+    fields: toLines(fields),
+    replyTo: fields.email || undefined,
+  });
+  if (!sent.ok) {
+    return { status: "error", message: UNDELIVERED };
   }
 
   return {

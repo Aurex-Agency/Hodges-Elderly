@@ -241,6 +241,14 @@ export function Footer() {
               </a>
             </li>
             <li>
+              <a
+                href={`mailto:${site.email}`}
+                className="[overflow-wrap:anywhere] text-lg text-ink-soft underline decoration-rule decoration-2 underline-offset-4 transition-colors duration-200 hover:text-pink hover:decoration-pink-soft"
+              >
+                {site.email}
+              </a>
+            </li>
+            <li>
               {site.address.street}
               <br />
               {site.address.city}, {site.address.state} {site.address.zip}

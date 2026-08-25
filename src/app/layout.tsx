@@ -71,6 +71,7 @@ export default function RootLayout({
               description:
                 "Non-medical in-home care for elderly and disabled adults across seven counties in North Mississippi.",
               telephone: site.phone,
+              email: site.email,
               url: site.url,
               founder: { "@type": "Person", name: site.founder },
               address: {

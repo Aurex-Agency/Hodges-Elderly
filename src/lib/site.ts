@@ -8,8 +8,10 @@
 /* One switch for everything that must not happen before the real domain
  * is live: search indexing, the robots file, and the sitemap. Flipping
  * this to true is the launch step, and it is deliberately a single edit
- * rather than three scattered ones that can be half-done. */
-export const LAUNCH_READY = false;
+ * rather than three scattered ones that can be half-done.
+ *
+ * Live since 2026-08-25 on hodgeselderlyanddisable.com. */
+export const LAUNCH_READY = true;
 
 export const site = {
   /* "Disable", not "Disabled", and "Services", not "Service".
@@ -36,8 +38,7 @@ export const site = {
   phone: "662-788-2032",
   phoneHref: "tel:+16627882032",
 
-  // TODO(client): business email is being created after launch.
-  email: null as string | null,
+  email: "admin@hodgeselderlyanddisable.com",
 
   // From NPPES. TODO(client): confirm this address should be published.
   address: {
@@ -47,8 +48,10 @@ export const site = {
     zip: "38801",
   },
 
-  // TODO(client): domain not purchased yet; buying at the end of the build.
-  url: "https://hodgeselderlycare.com",
+  /* The real domain, live and pointing at Vercel. Everything canonical,
+   * every sitemap URL, and the metadataBase all derive from this, so it
+   * has to be exact and it has to have no trailing slash. */
+  url: "https://hodgeselderlyanddisable.com",
 
   counties: [
     { name: "Lee", accent: "green", href: "/in-home-care/tupelo" },

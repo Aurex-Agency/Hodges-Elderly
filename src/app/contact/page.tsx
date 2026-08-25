@@ -76,6 +76,19 @@ export default function Contact() {
                 </div>
                 <div>
                   <dt className="text-base font-bold uppercase tracking-[0.18em] text-green">
+                    Email
+                  </dt>
+                  <dd className="mt-1">
+                    <a
+                      href={`mailto:${site.email}`}
+                      className="[overflow-wrap:anywhere] text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-pink"
+                    >
+                      {site.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-base font-bold uppercase tracking-[0.18em] text-green">
                     Office
                   </dt>
                   <dd className="mt-1 text-xl text-ink-soft">
