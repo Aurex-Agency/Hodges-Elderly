@@ -26,6 +26,22 @@ import { site } from "./site";
  * in development. Unset in production, where it must be the real API. */
 const API = process.env.LEAD_API_URL ?? "https://api.resend.com/emails";
 
+/* Resend rejects the whole send with a 422 if reply_to is not a valid
+ * address, and the email field on both forms is OPTIONAL. So anyone who
+ * typed a phone number, "n/a", or a plain typo into it lost their entire
+ * enquiry and saw "we could not send that just now".
+ *
+ * Deliberately permissive: this is not trying to decide whether an address
+ * is real, only whether handing it to the provider will blow up the send.
+ * Anything that fails is simply not used as reply_to. The raw value the
+ * person typed still goes in the body, so nothing they told us is lost and
+ * she can see the typo and correct it herself. */
+function usableReplyTo(value: string | undefined) {
+  if (!value) return undefined;
+  const v = value.trim();
+  return /^[^\s@<>,;]+@[^\s@<>,;.]+\.[^\s@<>,;]+$/.test(v) ? v : undefined;
+}
+
 export type LeadResult =
   | { ok: true }
   | { ok: false; reason: "unconfigured" | "failed" };
@@ -44,6 +60,8 @@ export async function sendLead({
   const to = process.env.LEAD_TO ?? site.email;
 
   if (!key || !from || !to) return { ok: false, reason: "unconfigured" };
+
+  const reply = usableReplyTo(replyTo);
 
   /* Plain text on purpose. This lands on a phone, is read in a hurry, and
    * often gets forwarded. HTML buys nothing and renders unpredictably in
@@ -68,8 +86,11 @@ export async function sendLead({
         subject,
         text: body,
         /* So she can hit reply and reach the family directly, rather than
-         * replying to a no-reply address and wondering why nobody got it. */
-        ...(replyTo ? { reply_to: replyTo } : {}),
+         * replying to a no-reply address and wondering why nobody got it.
+         * Omitted entirely when what they typed is not a usable address:
+         * a malformed one fails the send, and losing the enquiry is far
+         * worse than losing the convenience of hitting reply. */
+        ...(reply ? { reply_to: reply } : {}),
       }),
     });
 
