@@ -9,52 +9,34 @@ import type { Service } from "@/lib/site";
 
 /* The services list, openable in place and driven by scroll.
  *
- * Each row opens as it reaches the middle of the viewport and closes again
- * as it leaves, so scrolling the section reads as one continuous movement
- * rather than six things waiting to be clicked. Clicking still works and
- * takes over until you scroll to a different row.
+ * A row opens when it reaches the middle of the viewport and stays open
+ * until it has left the screen completely. Nothing ever collapses while
+ * you can see it, which is the whole point: watching a section you are
+ * still looking at fold itself shut reads as a fault, however smooth the
+ * animation is. It also means every collapse happens off-screen, so the
+ * scroll correction that follows has nothing visible to disturb.
  *
- * Why a narrow band rather than plain visibility: with a focus band across
- * the middle of the screen only one row qualifies at a time, so the list
- * cannot open two at once. And because the row that closes is always above
- * the row that opens, the two height changes largely cancel and the page
- * does not lurch under the reader.
+ * That does allow two rows to be open at once, the one you are reading
+ * and the one above still trailing off the top. That is fine, and it
+ * looks deliberate rather than like a list snapping between states.
  *
- * Keeping it from lurching: a panel is up to ~850px tall on a phone, taller
- * than the viewport, so when the row above collapses the document loses a
- * whole screen of height above your scroll position and the page snaps
- * upward. The browser's own scroll anchoring does not rescue an animated
- * height.
+ * Clicking toggles a row directly and scrolling carries on around it.
  *
  * Panels stay mounted and animate between height 0 and auto rather than
  * being added and removed. AnimatePresence removes an exiting child
  * asynchronously, a frame or more after the state change, so a correction
- * measured in a layout effect always read a drift of exactly zero and then
- * the height vanished afterwards with nothing compensating for it.
+ * measured in a layout effect always read a drift of exactly zero and the
+ * height then vanished afterwards with nothing compensating for it.
  *
  * Instead each panel carries a ResizeObserver, whose callback runs before
- * the frame is painted. When a panel changes height while sitting entirely
- * ABOVE the middle of the screen, the scroll is corrected by the same
- * amount in the same frame, so the two cancel and nothing appears to move.
- * A panel opening at or below that line is left alone: content below the
- * thing you are reading is supposed to move down.
+ * the frame is painted, so a correction issued there lands in the same
+ * frame as the height change and the two cancel invisibly. Only panels
+ * changing height entirely ABOVE the middle of the screen are corrected
+ * for; a panel opening at or below that line is meant to push the page
+ * down and must be left alone.
  *
- * That above-the-line test is what makes it stable. An earlier version
- * corrected every height change from a single observer on the whole list,
- * which meant it also fought the panel opening below the reader: 34 of 162
- * frames scrolled backwards during a normal downward scroll.
- *
- * An earlier version corrected continuously from a ResizeObserver across
- * the whole 620ms animation. It held position on a discrete test but
- * stuttered badly under real scrolling: 34 of 162 frames scrolled backwards
- * while the reader was scrolling forwards. Which is why the outgoing panel
- * now closes instantly on a scroll-driven change rather than animating.
- * It sits above the reading position and is mostly off-screen anyway; only
- * a click, where the panel is in view, animates it shut.
- *
- * Under prefers-reduced-motion the scroll behaviour is off entirely.
- * Content opening by itself as you scroll is precisely what that setting
- * exists to prevent. Click still works.
+ * Under prefers-reduced-motion the observers do not run at all, so
+ * nothing opens or closes by itself. Click still works.
  *
  * Built on the W3C accordion pattern: a real button with aria-expanded and
  * aria-controls, keyboard operable with Enter and Space. */
@@ -70,61 +52,68 @@ export default function ServicesExplorer({
   services: readonly Service[];
 }) {
   const reduced = useReducedMotion();
-  /* Set by scrolling. */
-  const [inBand, setInBand] = useState<string | null>(null);
-  /* Set by clicking, and released as soon as scrolling reaches another row. */
-  const [manual, setManual] = useState<{ slug: string | null; active: boolean }>({
-    slug: null,
-    active: false,
-  });
+  /* Every row currently open. Scrolling adds and removes; clicking toggles. */
+  const [open, setOpen] = useState<ReadonlySet<string>>(() => new Set());
+  /* Whether the most recent change came from a click. A scroll-driven close
+   * happens off-screen and must be instant: animating it puts the scroll
+   * correction back on a timer, and a running correction fights the reader. */
+  const [byClick, setByClick] = useState(false);
 
   const rowRefs = useRef(new Map<string, HTMLLIElement>());
   const panelRefs = useRef(new Map<string, HTMLDivElement>());
 
   useEffect(() => {
     if (reduced) return;
-    const nodes = [...rowRefs.current.values()];
-    if (nodes.length === 0) return;
+    const rows = [...rowRefs.current.values()];
+    if (rows.length === 0) return;
 
-    const observer = new IntersectionObserver(
+    const add = (slug: string) => {
+      setByClick(false);
+      setOpen((prev) => (prev.has(slug) ? prev : new Set(prev).add(slug)));
+    };
+    const remove = (slug: string) => {
+      setByClick(false);
+      setOpen((prev) => {
+        if (!prev.has(slug)) return prev;
+        const next = new Set(prev);
+        next.delete(slug);
+        return next;
+      });
+    };
+
+    /* Opens on reaching a line across the middle of the viewport. A line
+     * rather than a band, so the choice of row is never ambiguous. */
+    const opener = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const slug = entry.target.getAttribute("data-slug");
-          if (!slug) continue;
-          if (entry.isIntersecting) {
-            setInBand(slug);
-            /* Reaching a different row hands control back to scrolling.
-               Released here, in the observer callback, rather than in an
-               effect that syncs derived state: an observer is an external
-               subscription, which is where setState belongs. */
-            setManual((m) =>
-              m.active && m.slug !== slug ? { slug: null, active: false } : m,
-            );
-          } else {
-            setInBand((current) => {
-              if (current !== slug) return current;
-              return null;
-            });
-          }
+          if (slug && entry.isIntersecting) add(slug);
         }
       },
-      /* Effectively a single line across the middle of the viewport, about
-       * 3px tall, rather than a band.
-       *
-       * A band of any real height can overlap two adjacent rows at once. In
-       * particular, after the scroll correction that follows a close, the
-       * previous row's bottom edge lands back inside an 84px band, it
-       * re-enters, reopens, and the two rows oscillate. Two of the six
-       * services never opened at all as a result. Only one row can contain
-       * a line, so the choice is unambiguous. */
       { rootMargin: "-50% 0px -49.6% 0px", threshold: 0 },
     );
 
-    for (const node of nodes) observer.observe(node);
-    return () => observer.disconnect();
-  }, [reduced, services]);
+    /* Closes only once the row has left the viewport entirely, in either
+     * direction. Nothing folds shut in front of the reader. */
+    const closer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const slug = entry.target.getAttribute("data-slug");
+          if (slug && !entry.isIntersecting) remove(slug);
+        }
+      },
+      { threshold: 0 },
+    );
 
-  const open = manual.active || reduced ? manual.slug : inBand;
+    for (const row of rows) {
+      opener.observe(row);
+      closer.observe(row);
+    }
+    return () => {
+      opener.disconnect();
+      closer.disconnect();
+    };
+  }, [reduced, services]);
 
   /* One observer for every panel. Its callback lands before paint, so a
    * correction issued here is invisible rather than animated. */
@@ -163,7 +152,7 @@ export default function ServicesExplorer({
   return (
     <ul className="-mx-6 mt-16 border-t border-rule sm:mx-0">
       {services.map((service, i) => {
-        const isOpen = open === service.slug;
+        const isOpen = open.has(service.slug);
         const panelId = `svc-panel-${service.slug}`;
         const buttonId = `svc-button-${service.slug}`;
 
@@ -189,9 +178,15 @@ export default function ServicesExplorer({
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() =>
-                  setManual({ slug: isOpen ? null : service.slug, active: true })
-                }
+                onClick={() => {
+                  setByClick(true);
+                  setOpen((prev) => {
+                    const next = new Set(prev);
+                    if (isOpen) next.delete(service.slug);
+                    else next.add(service.slug);
+                    return next;
+                  });
+                }}
                 className={`group relative w-full cursor-pointer px-6 py-8 text-left font-body font-normal transition-colors duration-300 hover:bg-[var(--accent-wash)] sm:grid sm:grid-cols-[4.5rem_20rem_1fr_2.5rem] sm:items-center sm:gap-x-10 sm:px-6 sm:py-10 ${
                   isOpen ? "bg-[var(--accent-wash)]" : ""
                 }`}
@@ -289,12 +284,11 @@ export default function ServicesExplorer({
                         opacity: { duration: 0.4, ease: EASE },
                       }
                     : {
-                        /* Scrolling on closes the old panel instantly, so the
-                           correction is a single step rather than 37 spread
-                           across an animation. A click closes the panel you
-                           are looking at, so that one animates. */
-                        height: { duration: manual.active ? 0.4 : 0, ease: EASE },
-                        opacity: { duration: manual.active ? 0.2 : 0 },
+                        /* Off-screen and instant when scrolling, so the
+                           correction stays a single step. A click closes a
+                           panel you are looking at, so that one animates. */
+                        height: { duration: byClick ? 0.4 : 0, ease: EASE },
+                        opacity: { duration: byClick ? 0.2 : 0 },
                       }
               }
                   className="overflow-hidden"
