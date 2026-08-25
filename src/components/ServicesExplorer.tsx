@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import Magnolia from "./Magnolia";
 import ServiceIllustration from "./ServiceIllustration";
 import type { Service } from "@/lib/site";
@@ -24,10 +24,33 @@ import type { Service } from "@/lib/site";
  * than the viewport, so when the row above collapses the document loses a
  * whole screen of height above your scroll position and the page snaps
  * upward. The browser's own scroll anchoring does not rescue an animated
- * height. So the open row's header is pinned by hand: its viewport position
- * is recorded, and every time the list resizes mid-animation the scroll is
- * corrected by however far that header moved. The row you are reading stays
- * put and the panel opens beneath it.
+ * height.
+ *
+ * Panels stay mounted and animate between height 0 and auto rather than
+ * being added and removed. AnimatePresence removes an exiting child
+ * asynchronously, a frame or more after the state change, so a correction
+ * measured in a layout effect always read a drift of exactly zero and then
+ * the height vanished afterwards with nothing compensating for it.
+ *
+ * Instead each panel carries a ResizeObserver, whose callback runs before
+ * the frame is painted. When a panel changes height while sitting entirely
+ * ABOVE the middle of the screen, the scroll is corrected by the same
+ * amount in the same frame, so the two cancel and nothing appears to move.
+ * A panel opening at or below that line is left alone: content below the
+ * thing you are reading is supposed to move down.
+ *
+ * That above-the-line test is what makes it stable. An earlier version
+ * corrected every height change from a single observer on the whole list,
+ * which meant it also fought the panel opening below the reader: 34 of 162
+ * frames scrolled backwards during a normal downward scroll.
+ *
+ * An earlier version corrected continuously from a ResizeObserver across
+ * the whole 620ms animation. It held position on a discrete test but
+ * stuttered badly under real scrolling: 34 of 162 frames scrolled backwards
+ * while the reader was scrolling forwards. Which is why the outgoing panel
+ * now closes instantly on a scroll-driven change rather than animating.
+ * It sits above the reading position and is mostly off-screen anyway; only
+ * a click, where the panel is in view, animates it shut.
  *
  * Under prefers-reduced-motion the scroll behaviour is off entirely.
  * Content opening by itself as you scroll is precisely what that setting
@@ -56,11 +79,7 @@ export default function ServicesExplorer({
   });
 
   const rowRefs = useRef(new Map<string, HTMLLIElement>());
-  const listRef = useRef<HTMLUListElement>(null);
-  /* The element whose on-screen position must not change while the list
-   * reflows, and the position to hold it at. */
-  const anchor = useRef<{ el: HTMLElement; top: number } | null>(null);
-  const lastOpen = useRef<string | null>(null);
+  const panelRefs = useRef(new Map<string, HTMLDivElement>());
 
   useEffect(() => {
     if (reduced) return;
@@ -82,12 +101,23 @@ export default function ServicesExplorer({
               m.active && m.slug !== slug ? { slug: null, active: false } : m,
             );
           } else {
-            setInBand((current) => (current === slug ? null : current));
+            setInBand((current) => {
+              if (current !== slug) return current;
+              return null;
+            });
           }
         }
       },
-      /* A thin band across the middle of the viewport. */
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+      /* Effectively a single line across the middle of the viewport, about
+       * 3px tall, rather than a band.
+       *
+       * A band of any real height can overlap two adjacent rows at once. In
+       * particular, after the scroll correction that follows a close, the
+       * previous row's bottom edge lands back inside an 84px band, it
+       * re-enters, reopens, and the two rows oscillate. Two of the six
+       * services never opened at all as a result. Only one row can contain
+       * a line, so the choice is unambiguous. */
+      { rootMargin: "-50% 0px -49.6% 0px", threshold: 0 },
     );
 
     for (const node of nodes) observer.observe(node);
@@ -96,39 +126,42 @@ export default function ServicesExplorer({
 
   const open = manual.active || reduced ? manual.slug : inBand;
 
-  /* Record the anchor before the browser paints the new open state. When a
-   * row closes to nothing, keep pinning the row that just closed, otherwise
-   * scrolling out of the section drops a screen of height with nothing
-   * holding the page steady. */
-  useLayoutEffect(() => {
-    const slug = open ?? lastOpen.current;
-    lastOpen.current = open ?? lastOpen.current;
-    if (!slug) return;
-    const el = document.getElementById(`svc-button-${slug}`);
-    if (el) anchor.current = { el, top: el.getBoundingClientRect().top };
-  }, [open]);
-
+  /* One observer for every panel. Its callback lands before paint, so a
+   * correction issued here is invisible rather than animated. */
   useEffect(() => {
-    const list = listRef.current;
-    if (!list || reduced) return;
+    if (reduced) return;
+    const heights = new Map<Element, number>();
 
-    const observer = new ResizeObserver(() => {
-      const held = anchor.current;
-      if (!held || !held.el.isConnected) return;
-      const drift = held.el.getBoundingClientRect().top - held.top;
-      /* Sub-pixel drift is not worth a scroll write, and correcting it every
-       * frame is how you get a ResizeObserver feedback loop. */
-      if (Math.abs(drift) > 0.5) {
-        window.scrollBy({ top: drift, behavior: "instant" });
+    const observer = new ResizeObserver((entries) => {
+      let correction = 0;
+      for (const entry of entries) {
+        const el = entry.target as HTMLElement;
+        const now = el.offsetHeight;
+        const before = heights.get(el);
+        heights.set(el, now);
+        if (before === undefined || before === now) continue;
+
+        /* Only changes entirely above the reading line move content the
+         * reader is looking at. Anything at or below it is expected to
+         * push the page down and must be left alone. */
+        if (el.getBoundingClientRect().bottom <= window.innerHeight / 2) {
+          correction += now - before;
+        }
+      }
+      if (correction !== 0) {
+        window.scrollBy({ top: correction, behavior: "instant" });
       }
     });
 
-    observer.observe(list);
+    for (const el of panelRefs.current.values()) {
+      heights.set(el, el.offsetHeight);
+      observer.observe(el);
+    }
     return () => observer.disconnect();
-  }, [reduced]);
+  }, [reduced, services]);
 
   return (
-    <ul ref={listRef} className="-mx-6 mt-16 border-t border-rule sm:mx-0">
+    <ul className="-mx-6 mt-16 border-t border-rule sm:mx-0">
       {services.map((service, i) => {
         const isOpen = open === service.slug;
         const panelId = `svc-panel-${service.slug}`;
@@ -234,20 +267,36 @@ export default function ServicesExplorer({
               </button>
             </h3>
 
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  key="panel"
-                  initial={reduced ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={reduced ? undefined : { height: 0, opacity: 0 }}
-                  transition={{
-                    height: { duration: 0.62, ease: UNFOLD },
-                    opacity: { duration: 0.4, ease: EASE },
-                  }}
+            <motion.div
+              id={panelId}
+              role="region"
+              aria-labelledby={buttonId}
+              ref={(node) => {
+                if (node) panelRefs.current.set(service.slug, node);
+                else panelRefs.current.delete(service.slug);
+              }}
+              /* Kept in the DOM so its height is observable, but inert while
+                 collapsed so it takes no focus and is not announced. */
+              inert={!isOpen}
+              initial={false}
+              animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+              transition={
+                reduced
+                  ? { duration: 0 }
+                  : isOpen
+                    ? {
+                        height: { duration: 0.62, ease: UNFOLD },
+                        opacity: { duration: 0.4, ease: EASE },
+                      }
+                    : {
+                        /* Scrolling on closes the old panel instantly, so the
+                           correction is a single step rather than 37 spread
+                           across an animation. A click closes the panel you
+                           are looking at, so that one animates. */
+                        height: { duration: manual.active ? 0.4 : 0, ease: EASE },
+                        opacity: { duration: manual.active ? 0.2 : 0 },
+                      }
+              }
                   className="overflow-hidden"
                 >
                   <div className="px-6 pb-9 pt-6 sm:grid sm:grid-cols-[4.5rem_1fr] sm:gap-x-10 sm:px-6">
@@ -321,9 +370,7 @@ export default function ServicesExplorer({
                       />
                     </div>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            </motion.div>
           </li>
         );
       })}

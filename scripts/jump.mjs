@@ -12,9 +12,10 @@ await p.waitForTimeout(1200);
 /* Perceived jump: take whatever the reader is looking at near the top of the
  * viewport, scroll a fixed amount, and see whether THAT element moved by
  * exactly that amount. Anything else is a visible lurch. */
-const STEP = 120;
+const STEP = +(process.env.STEP || 120);
 let worst = 0;
-for (let i = 1; i <= 12; i++) {
+const N = +(process.env.N || 12);
+for (let i = 1; i <= N; i++) {
   await p.evaluate(() => {
     /* Track a row header rather than panel content: headers survive the
        open/close, so the measurement covers the transition itself. */
@@ -32,7 +33,7 @@ for (let i = 1; i <= 12; i++) {
     window.__top = el.getBoundingClientRect().top;
   });
   await p.evaluate((s) => scrollBy({ top: s, behavior: "instant" }), STEP);
-  await p.waitForTimeout(700);
+  await p.waitForTimeout(+(process.env.WAIT || 700));
   const r = await p.evaluate((s) => {
     const el = window.__probe;
     if (!el || !el.isConnected) return null;
@@ -47,7 +48,7 @@ for (let i = 1; i <= 12; i++) {
   }, STEP);
   if (!r) { console.log(`step ${i}: probe detached`); continue; }
   worst = Math.max(worst, Math.abs(r.drift));
-  console.log(`step ${i}: perceived jump ${r.drift > 0 ? "+" : ""}${r.drift}px  open ${r.open}`);
+  if (Math.abs(r.drift) > 1) console.log(`step ${i}: perceived jump ${r.drift > 0 ? "+" : ""}${r.drift}px  open ${r.open}`);
 }
 console.log("worst perceived jump:", worst + "px");
 await b.close();
