@@ -7,7 +7,7 @@ import { SERVICE_GROUPS, WHO_WE_SERVE, services, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Our Services",
   description:
-    "Personal care, companion care, home and community supports, in-home respite, supervised living, behavioral supervised living, and behavior support for autistic adults, across North Mississippi.",
+    "Personal care, companion care, in-home respite, supervised living, and behavior support for autistic adults, across North Mississippi.",
   alternates: { canonical: "/services" },
 };
 

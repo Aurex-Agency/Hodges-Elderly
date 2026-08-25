@@ -6,7 +6,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Aaliyah Hodges",
   description:
-    "Aaliyah Hodges founded Hodges Elderly and Disable Services after caring for her grandmother through bone cancer, and eight years supporting adults with IDD and mental illness.",
+    "Aaliyah Hodges founded the agency after caring for her grandmother through bone cancer, and eight years supporting adults with IDD and mental illness.",
   alternates: { canonical: "/about" },
 };
 

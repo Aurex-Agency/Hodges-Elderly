@@ -6,7 +6,7 @@ import { faqs, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Answers for Families",
   description:
-    "Straight answers to what families ask before hiring in-home care: how fast we can start, who comes into the home, what it costs, and what Medicaid and Medicare cover.",
+    "Straight answers on how fast we can start, who comes into the home, what it costs, and what Medicaid and Medicare cover.",
   alternates: { canonical: "/answers" },
 };
 

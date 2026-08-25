@@ -343,7 +343,7 @@ export const services = [
     accent: "wine",
     name: "In-home respite",
     blurb:
-      "If you have been the one doing all of it, this is the service that lets you sleep, work, or leave town without worrying. The caregiver comes to them, so nobody has to be moved.",
+      "If you have been the one doing all of it, this is what lets you sleep, work, or leave town without worrying. The caregiver comes to them.",
     forWhom:
       "The daughter, son, or spouse who has become the full-time caregiver and is running out of room.",
     includes: [

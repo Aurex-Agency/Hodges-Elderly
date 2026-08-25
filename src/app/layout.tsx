@@ -20,12 +20,17 @@ const merriweather = Merriweather({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  /* Google truncates titles around 60 characters. The suffix used to be
+   * the full "| Hodges Elderly & Disable Services", 36 characters, which
+   * ate more than half the budget and left 24 of 27 pages truncating in
+   * search results. The full name is still in the H1, the logo, og:site_name
+   * and the LocalBusiness schema, so nothing is lost by shortening it here. */
   title: {
-    default: `${site.shortName} | In-Home Care in Tupelo & North Mississippi`,
-    template: `%s | ${site.shortName}`,
+    default: "In-Home Care in Tupelo & North Mississippi | Hodges",
+    template: "%s | Hodges",
   },
   description:
-    "In-home care, supervised living, and behavior support across Lee, Pontotoc, Union, Chickasaw, Monroe, Lafayette, and Itawamba counties. Founder-led, local, and built on eight years of caring for elderly, IDD, and mental health clients.",
+    "Founder-led in-home care, supervised living, and behavior support across seven counties in North Mississippi. Call 662-788-2032.",
   openGraph: {
     type: "website",
     locale: "en_US",

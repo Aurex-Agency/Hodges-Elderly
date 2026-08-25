@@ -69,7 +69,7 @@ export const guides: Guide[] = [
       "How to apply for the Elderly and Disabled Waiver in North Mississippi",
     metaTitle: "Applying for the E&D Waiver in North Mississippi",
     description:
-      "Mississippi's Elderly and Disabled Waiver pays for in-home personal care instead of a nursing home. Here is who qualifies, who runs it in our seven counties, and how to start.",
+      "Mississippi's waiver pays for in-home care instead of a nursing home. Who qualifies, who runs it in our seven counties, and how to start.",
     dek: "If your parent would otherwise need a nursing home, Mississippi Medicaid may pay for care at home instead. Almost nobody explains how to actually start that process locally, so here it is.",
     category: "Paying for care",
     published: "2026-08-25",
@@ -89,7 +89,7 @@ export const guides: Guide[] = [
     title: "Home health or in-home care: which one do you actually need?",
     metaTitle: "Home Health vs In-Home Care: What Medicare Pays",
     description:
-      "The two services sound identical and are not. One is skilled medical care Medicare may pay for. The other is daily help at home that it will not. Here is how to tell them apart.",
+      "They sound identical and are not. One is skilled care Medicare may pay for. The other is daily help at home that it will not.",
     dek: "Two different services, two different rulebooks, and one very expensive misunderstanding. Most families find out which is which after they have already been billed.",
     category: "Getting started",
     published: "2026-08-25",
@@ -109,7 +109,7 @@ export const guides: Guide[] = [
     title: "The signs a parent needs help at home, and the ones people miss",
     metaTitle: "Signs an Aging Parent Needs Help at Home",
     description:
-      "A practical list of what to look for in the house, in the kitchen, in the mail, and in how they move, plus how to raise it without starting a fight.",
+      "What to look for in the house, the kitchen, the mail, and in how they move, plus how to raise it without starting a fight.",
     dek: "Nobody announces that they have started struggling. It shows up in the mail pile, the pantry, and the way they get out of a chair.",
     category: "Knowing when",
     published: "2026-08-25",
@@ -128,7 +128,7 @@ export const guides: Guide[] = [
     title: "VA Aid and Attendance, and how families use it to pay for care",
     metaTitle: "VA Aid & Attendance for In-Home Care in Mississippi",
     description:
-      "A monthly VA pension supplement that wartime veterans and surviving spouses can put toward in-home care. Who qualifies, current rates, and where to get free help filing.",
+      "A monthly VA supplement wartime veterans and surviving spouses can put toward in-home care. Who qualifies, current rates, and free help filing.",
     dek: "It is one of the most underclaimed benefits in the country, and in a state with as many veterans as Mississippi that is a lot of families paying out of pocket for something already owed to them.",
     category: "Paying for care",
     published: "2026-08-25",

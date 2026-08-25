@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Guides for North Mississippi Families",
   description:
-    "Plain answers to the questions families ask before arranging care at home: what it costs in Mississippi, what Medicaid and Medicare cover, VA benefits, and how to tell when help is needed.",
+    "Plain answers on what care costs in Mississippi, what Medicaid and Medicare cover, VA benefits, and how to tell when a parent needs help at home.",
   alternates: { canonical: "/guides" },
 };
 

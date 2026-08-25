@@ -6,7 +6,7 @@ import { PRICING_CONFIRMED, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "What In-Home Care Costs in North Mississippi",
   description:
-    "How families pay for in-home care in Mississippi: private pay, the Medicaid Elderly and Disabled Waiver, long-term care insurance, and VA benefits, explained plainly.",
+    "How families pay for in-home care in Mississippi: private pay, the Medicaid waiver, long-term care insurance, and VA benefits.",
   alternates: { canonical: "/paying-for-care" },
 };
 

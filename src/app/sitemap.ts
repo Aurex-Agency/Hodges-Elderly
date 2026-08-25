@@ -2,11 +2,15 @@ import type { MetadataRoute } from "next";
 import { guides } from "@/lib/guides";
 import { services, site } from "@/lib/site";
 
-/* Every route carried a lastModified of new Date(), which told crawlers
- * the entire site changed on every deploy. That is noise at best and a
- * credibility problem at worst, so dates are now real where we have them
- * and the build date only where we genuinely do not. */
-const BUILD = new Date();
+/* No lastModified on pages we do not have a real date for.
+ *
+ * It used to be new Date() on every route, which told crawlers the entire
+ * site changed on every deploy, including deploys that only touched a
+ * stylesheet. Google's own guidance is that it will ignore lastmod
+ * altogether once it decides the values are not trustworthy, which would
+ * throw away the accurate dates on the guides along with the invented ones.
+ * So the guides carry their real published date and nothing else carries
+ * anything. An absent lastmod costs nothing; a wrong one costs the lot. */
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: MetadataRoute.Sitemap = [
@@ -25,7 +29,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       .map((t) => ({ url: `/in-home-care/${t.slug}`, priority: 0.8 })),
   ].map((p) => ({
     url: `${site.url}${p.url}`,
-    lastModified: BUILD,
     changeFrequency: "monthly" as const,
     priority: p.priority,
   }));

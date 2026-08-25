@@ -17,8 +17,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = services.find((s) => s.slug === slug);
   if (!service) return {};
+  /* 51 = the 60-character budget Google gives a title, less the
+   * " | Hodges" the layout template appends. Keeping the location where it
+   * fits and dropping it where it does not beats truncating the name of the
+   * service, which is the part somebody is searching for. */
+  const withGeo = `${service.name} in North Mississippi`;
+
   return {
-    title: `${service.name} in Tupelo & North Mississippi`,
+    title: withGeo.length <= 51 ? withGeo : service.name,
     description: service.blurb,
     alternates: { canonical: `/services/${service.slug}` },
   };
