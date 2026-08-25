@@ -81,6 +81,14 @@ export const site = {
     "insured and bonded",
     "Medicaid E&D Waiver enrolled provider",
     "specific license or certification numbers",
+    /* Added 2026-08-25 with the confirmed service list. Home and Community
+     * Supports, Supervised Living and Behavior Support are ID/DD Waiver
+     * categories, and providing them under the waiver requires Department
+     * of Mental Health provider certification. The site describes what she
+     * does and does NOT claim she is certified or waiver-enrolled. Publishing
+     * those service names invites the question, so it needs answering. */
+    "DMH provider certification for ID/DD Waiver services",
+    "ability to bill the ID/DD Waiver for supervised living or behavior support",
   ],
 } as const;
 
@@ -119,13 +127,51 @@ export const NAV = [
   { label: "Contact", href: "/contact" },
 ];
 
-/* TODO(client): confirm this service list and the detail beneath it.
- * Derived from her NPPES taxonomy (In Home Supportive Care; Personal Care
- * Attendant) and her stated eight years with IDD and mental-health
- * clients — not from a service menu she has approved. */
+/* Confirmed by the client 2026-08-25, replacing the earlier inferred list.
+ *
+ * Her own words: "we also do in home respite, home community support,
+ * supervised living, behavioral supervised living, and behavior support for
+ * the autistic. We also serve mental illness, elderly and disabled, and
+ * veterans."
+ *
+ * Those are not loose descriptions. Home and Community Supports, Supervised
+ * Living, Behavior Support and In-Home Respite are all named service
+ * categories in Mississippi's ID/DD Waiver, administered by the Division of
+ * Medicaid with provider certification through the Department of Mental
+ * Health. So the copy below uses the real category names and describes them
+ * the way the state does.
+ *
+ * What it does NOT do is claim she is a certified or enrolled provider of
+ * any of them. That sits in withheldClaims until she says otherwise, and it
+ * is the single most important thing not to get wrong on this page.
+ *
+ * SUPERVISED LIVING IS RESIDENTIAL. Staff on site 24 hours, generally no
+ * more than six people to a home. That is a different service model from
+ * the rest of this list, which is why the two are separated into groups
+ * rather than listed as though they were interchangeable. */
+
+/* The two things she does are genuinely different: going to someone's own
+ * home, and staffing a home people live in. A reader looking for help for
+ * their mother and a family looking for a placement for their adult son
+ * are not the same reader and should not have to sort the list themselves. */
+export const SERVICE_GROUPS = [
+  {
+    id: "at-home",
+    name: "In their own home",
+    blurb:
+      "We come to them. Hours are built around what is actually hard right now, and change as that changes.",
+  },
+  {
+    id: "supported-living",
+    name: "Supported living and behavior support",
+    blurb:
+      "For adults who need more than a few hours a day, including a staffed home to live in and specialist behavior support.",
+  },
+] as const;
 export const services = [
   {
     slug: "personal-care",
+    group: "at-home",
     accent: "pink",
     name: "Personal care",
     blurb:
@@ -144,6 +190,7 @@ export const services = [
   },
   {
     slug: "companion-care",
+    group: "at-home",
     accent: "ochre",
     name: "Companion care",
     blurb:
@@ -162,6 +209,7 @@ export const services = [
   },
   {
     slug: "idd-and-mental-health-support",
+    group: "at-home",
     accent: "spruce",
     name: "IDD and mental health support",
     blurb:
@@ -179,6 +227,7 @@ export const services = [
   },
   {
     slug: "meals-and-homemaking",
+    group: "at-home",
     accent: "clay",
     name: "Meals and homemaking",
     blurb:
@@ -196,6 +245,7 @@ export const services = [
   },
   {
     slug: "errands-and-transportation",
+    group: "at-home",
     accent: "green",
     name: "Errands and transportation",
     blurb:
@@ -212,11 +262,88 @@ export const services = [
     note: "Giving up the keys is one of the hardest days in a person's life. Reliable rides are what makes it survivable.",
   },
   {
-    slug: "respite-for-family",
-    accent: "wine",
-    name: "Respite for family",
+    slug: "home-and-community-supports",
+    group: "at-home",
+    accent: "spruce",
+    name: "Home and community supports",
     blurb:
-      "If you have been the one doing all of it, this is the service that lets you sleep, work, or leave town without worrying.",
+      "Daily help at home plus getting out into the community, for adults who need support to live independently rather than in a facility.",
+    forWhom:
+      "An adult with an intellectual or developmental disability, or with a mental illness, who can live in the community with the right support in place for a few hours a day.",
+    includes: [
+      "Help with bathing, dressing, and personal care",
+      "Meal preparation and eating",
+      "Keeping the home clean, safe, and running",
+      "Getting to appointments, work, church, and activities",
+      "Building the everyday skills that keep independence going",
+      "Support with money, shopping, and planning the week",
+    ],
+    note: "Home and Community Supports is a named service in Mississippi's ID/DD Waiver. Whether the waiver pays for it in a particular case is decided by the Division of Medicaid, not by us.",
+  },
+  {
+    slug: "supervised-living",
+    group: "supported-living",
+    accent: "green",
+    name: "Supervised living",
+    blurb:
+      "A staffed home to live in, with someone there around the clock. A small household, not an institution.",
+    forWhom:
+      "An adult who cannot safely live alone and needs support available at any hour, but who should not be in a nursing facility to get it.",
+    includes: [
+      "Staff on site 24 hours a day, every day",
+      "A small household rather than a facility",
+      "Personal care, meals, and help running the home",
+      "Transport to day programs, work, and community activities",
+      "Shopping for food and personal things",
+      "Help managing money",
+    ],
+    note: "This one is residential. The person lives here, rather than us coming to them, which makes it a different arrangement from the rest of what we do. Under Mississippi's ID/DD Waiver definition, supervised living means staff on site around the clock who can answer a call for help within five minutes, in a home of generally no more than six people.",
+  },
+  {
+    slug: "behavioral-supervised-living",
+    group: "supported-living",
+    accent: "wine",
+    name: "Behavioral supervised living",
+    blurb:
+      "Supervised living for someone whose behavior needs a staff team trained specifically for it, working to a written plan.",
+    forWhom:
+      "An adult who needs a staffed home and whose behavior has made other placements break down, or who has been told repeatedly that a service is not equipped for them.",
+    includes: [
+      "Everything supervised living covers",
+      "Staff trained for the specific behaviors involved",
+      "A written behavior support plan the whole team works to",
+      "Consistency of approach, which matters more here than anywhere",
+      "Close communication with family and support coordinators",
+      "Careful, documented review of what is and is not working",
+    ],
+    note: "Families reach this point having usually been turned away before. Being told a service is not equipped for your son is its own kind of exhausting, and it is worth saying plainly on the phone what has already been tried.",
+  },
+  {
+    slug: "behavior-support",
+    group: "supported-living",
+    accent: "clay",
+    name: "Behavior support for autistic adults",
+    blurb:
+      "Working out what a behavior is actually communicating, then building a plan around it and training everyone who needs to follow it.",
+    forWhom:
+      "An autistic adult, or an adult with an intellectual or developmental disability, whose behavior is getting in the way of the other support they receive.",
+    includes: [
+      "Understanding what the behavior is doing for the person",
+      "A written support plan built around that, not around compliance",
+      "Training the staff who deliver it day to day",
+      "Training family members who want to use the same approach",
+      "Reviewing and adjusting as things change",
+      "Working alongside the other services already in place",
+    ],
+    note: "Mississippi's ID/DD Waiver describes behavior support as a service for people whose behavior stops them benefiting from the other services they receive. The point is not to make someone easier to manage. It is to work out what they are trying to tell us and remove the reason.",
+  },
+  {
+    slug: "respite-for-family",
+    group: "at-home",
+    accent: "wine",
+    name: "In-home respite",
+    blurb:
+      "If you have been the one doing all of it, this is the service that lets you sleep, work, or leave town without worrying. The caregiver comes to them, so nobody has to be moved.",
     forWhom:
       "The daughter, son, or spouse who has become the full-time caregiver and is running out of room.",
     includes: [
@@ -226,6 +353,40 @@ export const services = [
       "Short-notice help when something comes up",
     ],
     note: "Family caregivers burn out, and when they do, the person they are caring for usually ends up in a facility. Respite is not a luxury.",
+  },
+] as const;
+
+/* Who she serves, in her words: "mental illness, elderly and disabled, and
+ * veterans", plus autistic adults, which her behavior support work implies.
+ *
+ * This is its own section on the site because the service list alone does
+ * not answer the question people are actually asking, which is "do you deal
+ * with someone like my son". A list of tasks does not answer that. Naming
+ * the person does. */
+export const WHO_WE_SERVE = [
+  {
+    id: "elderly",
+    accent: "pink",
+    name: "Elderly and disabled adults",
+    body: "Someone who wants to stay in the house they know, and needs help with the parts of the day that have got harder. This is most of the families who call us.",
+  },
+  {
+    id: "idd",
+    accent: "spruce",
+    name: "Adults with IDD and autistic adults",
+    body: `${site.firstName} spent eight years supporting adults with intellectual and developmental disabilities before she opened this agency. It is not a service she added on. It is where she started.`,
+  },
+  {
+    id: "mental-illness",
+    accent: "ochre",
+    name: "Adults living with mental illness",
+    body: "Consistent daily support from people who are not startled by a bad week. Keeping appointments, keeping medication on schedule, and keeping a life going around it.",
+  },
+  {
+    id: "veterans",
+    accent: "green",
+    name: "Veterans",
+    body: "North Mississippi has a lot of veterans, and a lot of them are paying out of pocket for care a benefit would cover. We serve veterans and their surviving spouses, and we will point you at the people who file those claims for free.",
   },
 ] as const;
 
@@ -267,6 +428,26 @@ export const faqs = [
     a: "TODO(client): confirm before publishing. Do not answer this question on the site until the client has cleared exactly what may be stated about screening, insurance, and bonding.",
     group: "Trust and safety",
     withheld: true,
+  },
+  {
+    q: "Do you have somewhere for someone to live, or do you only come to the house?",
+    a: "Both. Most of what we do is in someone's own home, on a schedule. We also provide supervised living, which is a staffed home with someone on site around the clock, for adults who cannot safely live alone. Those are different arrangements and we will be straight with you about which one fits.",
+    group: "What we do",
+  },
+  {
+    q: "Do you work with autistic adults and people with intellectual disabilities?",
+    a: `Yes, and it is where ${site.firstName} started. She spent eight years supporting adults with intellectual and developmental disabilities and with mental illness before opening this agency. We provide home and community supports, supervised living, behavioral supervised living, and behavior support.`,
+    group: "What we do",
+  },
+  {
+    q: "We have been turned away before. Is it worth calling?",
+    a: "Yes, and please say so on the phone. Families whose relative has been told a service is not equipped for them usually spend the first ten minutes bracing for it to happen again. Tell us what has already broken down and what was tried, because that is the useful information.",
+    group: "Trust and safety",
+  },
+  {
+    q: "Do you work with veterans?",
+    a: "Yes. A lot of families here are paying privately for care that a VA benefit would help with, and never knew the benefit existed. We are not a VA provider and we do not file claims, but we will point you at the county veterans service officers who do it for free.",
+    group: "Paying for care",
   },
   {
     q: "Is this medical care?",

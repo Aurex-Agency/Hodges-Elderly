@@ -9,7 +9,9 @@ const BASE = process.env.BASE ?? "http://localhost:55843";
 const ROUTES = ["/", "/about", "/services", "/service-area", "/paying-for-care",
   "/answers", "/careers", "/contact",
   ...["personal-care","companion-care","idd-and-mental-health-support",
-      "meals-and-homemaking","errands-and-transportation","respite-for-family"]
+      "meals-and-homemaking","errands-and-transportation","respite-for-family",
+      "home-and-community-supports","supervised-living",
+      "behavioral-supervised-living","behavior-support"]
     .map((s) => `/services/${s}`),
   ...["tupelo","new-albany","pontotoc"].map((t) => `/in-home-care/${t}`),
   "/guides",

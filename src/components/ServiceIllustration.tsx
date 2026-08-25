@@ -180,6 +180,67 @@ const buildScenes = (bloomTone: string): Record<string, React.ReactNode> => ({
     </>
   ),
 
+
+  /* An open front door with the light on inside, and a path up to it. The
+     ID/DD services are about a door staying open to an ordinary life, not
+     about a building. */
+  "home-and-community-supports": (
+    <>
+      {L("M 20 100 L 100 100")}
+      {L("M 30 100 L 30 44 L 72 26 L 72 100")}
+      {L("M 30 44 L 72 26")}
+      {L("M 72 40 L 96 52 L 96 100")}
+      {L("M 46 100 L 46 62 L 62 62 L 62 100")}
+      <motion.circle cx="58" cy="82" r="2.4" variants={solid} fill="currentColor" />
+      {L("M 80 62 L 88 62", { opacity: 0.5 })}
+      {L("M 80 74 L 88 74", { opacity: 0.5 })}
+      <Bloom x={20} y={84} d={17} tone={bloomTone} />
+    </>
+  ),
+
+  /* Three small roofs sharing one ground line. Supervised living is a
+     household of a few people, which is the whole point of it, so the
+     drawing is houses rather than a facility. */
+  "supervised-living": (
+    <>
+      {L("M 10 96 L 110 96")}
+      {L("M 18 96 L 18 66 L 36 52 L 54 66 L 54 96")}
+      {L("M 30 96 L 30 80 L 42 80 L 42 96")}
+      {L("M 62 96 L 62 60 L 82 44 L 102 60 L 102 96")}
+      {L("M 74 96 L 74 76 L 90 76 L 90 96")}
+      {L("M 70 66 L 78 66", { opacity: 0.5 })}
+      {L("M 86 66 L 94 66", { opacity: 0.5 })}
+      <Bloom x={57} y={30} d={19} tone={bloomTone} />
+    </>
+  ),
+
+  /* A house with a steady light in the window and a clock face beside it:
+     somebody is awake in there at any hour. */
+  "behavioral-supervised-living": (
+    <>
+      {L("M 14 100 L 106 100")}
+      {L("M 22 100 L 22 58 L 50 36 L 78 58 L 78 100")}
+      {L("M 40 100 L 40 76 L 60 76 L 60 100")}
+      {L("M 34 58 L 46 58 L 46 68 L 34 68 Z")}
+      <motion.circle cx="90" cy="46" r="13" variants={line} fill="none" pathLength={1} />
+      {L("M 90 39 L 90 46 L 96 50")}
+      <Bloom x={22} y={86} d={16} tone={bloomTone} />
+    </>
+  ),
+
+  /* Two speech shapes, one tangled and one resolved into a clear line.
+     Behavior support is about working out what is being communicated. */
+  "behavior-support": (
+    <>
+      {L("M 16 32 L 58 32 C 62 32, 64 34, 64 38 L 64 60 C 64 64, 62 66, 58 66 L 32 66 L 20 78 L 22 66 L 16 66 C 12 66, 10 64, 10 60 L 10 38 C 10 34, 12 32, 16 32 Z")}
+      {L("M 20 44 C 26 38, 30 52, 36 46 C 42 40, 46 54, 52 48", { opacity: 0.55 })}
+      {L("M 64 54 L 104 54 C 108 54, 110 56, 110 60 L 110 82 C 110 86, 108 88, 104 88 L 88 88 L 76 100 L 78 88 L 72 88 C 68 88, 66 86, 66 82 L 66 66")}
+      {L("M 76 70 L 100 70", { opacity: 0.55 })}
+      {L("M 76 78 L 92 78", { opacity: 0.55 })}
+      <Bloom x={100} y={30} d={17} tone={bloomTone} />
+    </>
+  ),
+
   /* An armchair with a blanket over the arm. */
   "respite-for-family": (
     <>

@@ -159,8 +159,9 @@ export function Footer() {
         <div className="border-b border-rule pb-10">
           <Logo />
           <p className="mt-5 max-w-md text-lg text-ink-soft">
-            Locally founded in-home care for elderly and disabled adults across
-            North Mississippi.
+            Locally founded care for elderly and disabled adults, adults with
+            IDD, and adults living with mental illness, across North
+            Mississippi. In their own home, or in a home we staff.
           </p>
         </div>
 
@@ -272,7 +273,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
           <p className="text-base text-ink-faint">
-            Non-medical in-home care. Not a home health or hospice provider.
+            Non-medical care. Not a home health or hospice provider.
           </p>
         </div>
       </div>

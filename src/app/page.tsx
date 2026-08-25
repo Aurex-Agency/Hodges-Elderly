@@ -9,13 +9,15 @@ import FigureScene from "@/components/FigureScene";
 import ServicesExplorer from "@/components/ServicesExplorer";
 import { CallButton, ClosingCta, Footer, Header } from "@/components/chrome";
 import { guides } from "@/lib/guides";
-import { countyNames, howItStarts, site, services } from "@/lib/site";
+import { WHO_WE_SERVE, countyNames, howItStarts, site, services } from "@/lib/site";
 
 const STATS = [
   { value: 8, suffix: "years", accent: "spruce", label: "caring for elderly, IDD, and mental health clients" },
   { value: 7, suffix: "counties", accent: "clay", label: "across North Mississippi, all locally served" },
   { value: null, suffix: "Founder-led", accent: "pink", label: `you talk to ${site.founder}, not a franchise office` },
 ];
+
+const atHome = services.filter((s) => s.group === "at-home");
 
 export default function Home() {
   return (
@@ -97,7 +99,12 @@ export default function Home() {
         </section>
 
         {/* Openable in place: the "what does personal care actually cover"
-            question gets answered without leaving the page. */}
+            question gets answered without leaving the page.
+ 
+            Only the at-home services are listed here. Supervised living is a
+            different arrangement entirely, and burying a residential service
+            in a list titled "in the home" would be misleading. It gets its
+            own pointer below. */}
         <section className="mx-auto max-w-6xl px-6 py-20 sm:py-28 lg:py-40">
           <Reveal className="max-w-3xl">
             <h2 className="text-4xl lg:text-5xl">What we do in the home</h2>
@@ -108,7 +115,65 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <ServicesExplorer services={services} />
+          <ServicesExplorer services={atHome} />
+        </section>
+
+        {/* Who we work with, and the services that are not in-home.
+ 
+            This is here because the list above answers "what do you do" and
+            people ring up asking "do you deal with someone like my son".
+            Those are different questions. */}
+        <section className="border-y border-rule bg-mist/65">
+          <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28 lg:py-32">
+            <Reveal className="max-w-3xl">
+              <h2 className="text-4xl lg:text-5xl">Who we work with</h2>
+              <p className="mt-5 text-2xl text-ink-soft">
+                Elderly and disabled adults, adults with IDD and autistic
+                adults, people living with mental illness, and veterans. If
+                you have been turned away before, say so when you call.
+              </p>
+            </Reveal>
+
+            <RevealGroup as="ul" className="mt-14 grid gap-8 sm:grid-cols-2" stagger={0.07}>
+              {WHO_WE_SERVE.map((w) => (
+                <RevealItem as="li" key={w.id}>
+                  <div
+                    style={
+                      {
+                        "--accent": `var(--color-${w.accent})`,
+                        "--accent-wash": `var(--color-${w.accent}-wash)`,
+                      } as React.CSSProperties
+                    }
+                    className="h-full rounded-panel border border-rule bg-page/75 p-8 transition-colors duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent-wash)]"
+                  >
+                    <h3 className="font-display text-[1.55rem] font-bold leading-snug text-[var(--accent)]">
+                      {w.name}
+                    </h3>
+                    <p className="mt-3 text-xl text-ink-soft">{w.body}</p>
+                  </div>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+
+            <Reveal className="mt-12 rounded-panel border-2 border-green bg-green-wash p-8 sm:p-10">
+              <h3 className="font-display text-[1.8rem] font-bold text-forest">
+                When a few hours a day is not enough
+              </h3>
+              <p className="mt-4 max-w-2xl text-xl text-ink-soft">
+                We also provide supervised living and behavioral supervised
+                living, which is a staffed home to live in with someone there
+                around the clock, and behavior support for autistic adults.
+              </p>
+              <p className="mt-6">
+                <Link
+                  href="/services"
+                  className="text-xl font-semibold text-pink underline decoration-pink-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-pink"
+                >
+                  See everything we do
+                </Link>
+              </p>
+            </Reveal>
+          </div>
         </section>
 
         {/* The three steps between deciding to call and someone turning up.

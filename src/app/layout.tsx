@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.shortName}`,
   },
   description:
-    "In-home care across Lee, Pontotoc, Union, Chickasaw, Monroe, Lafayette, and Itawamba counties. Founder-led, local, and built on eight years of caring for elderly, IDD, and mental health clients.",
+    "In-home care, supervised living, and behavior support across Lee, Pontotoc, Union, Chickasaw, Monroe, Lafayette, and Itawamba counties. Founder-led, local, and built on eight years of caring for elderly, IDD, and mental health clients.",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -79,7 +79,7 @@ export default function RootLayout({
               "@id": `${site.url}/#business`,
               name: site.name,
               description:
-                "Non-medical in-home care for elderly and disabled adults across seven counties in North Mississippi.",
+                "Non-medical care for elderly and disabled adults, adults with IDD, autistic adults, adults living with mental illness, and veterans, across seven counties in North Mississippi. In-home support, supervised living, and behavior support.",
               telephone: site.phone,
               email: site.email,
               url: site.url,
@@ -108,7 +108,11 @@ export default function RootLayout({
                 "in-home care",
                 "personal care",
                 "companion care",
-                "respite care",
+                "in-home respite",
+                "home and community supports",
+                "supervised living",
+                "behavior support",
+                "autism support",
                 "caregiver support",
               ],
               hasOfferCatalog: {

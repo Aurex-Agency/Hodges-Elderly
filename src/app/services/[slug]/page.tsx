@@ -144,7 +144,13 @@ export default async function ServicePage({
           <div className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
             <h2 className="text-[2.1rem]">Where we provide it</h2>
             <p className="mt-4 max-w-2xl text-xl text-ink-soft">
-              {service.name} is available across all seven counties we serve.
+              {/* Residential services are not "available across seven
+                  counties" the way a visiting service is: a staffed home is
+                  in one specific place. Saying otherwise would imply she has
+                  homes everywhere, which is not something we know. */}
+              {service.group === "supported-living"
+                ? `We serve families across all seven counties. Call ${site.phone} and we will tell you what is available and where.`
+                : `${service.name} is available across all seven counties we serve.`}
             </p>
             <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
               {site.towns
