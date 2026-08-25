@@ -175,18 +175,21 @@ export default function Home() {
                   &ldquo;Taking care of my grandmother was an eye-opener. That is
                   when I realized caring for people was my passion.&rdquo;
                 </p>
-                <footer className="mt-8 flex items-center gap-4">
-                  {/* TODO(client): replace with her portrait once we have one. */}
+                {/* Plain editorial attribution rather than an initials circle.
+                    A circle of initials only ever reads as a portrait that
+                    failed to load. When there is a real photograph of her,
+                    it belongs here, and until then a rule and her name say
+                    the same thing without pretending anything is missing.
+                    TODO(client): her portrait goes here once we have one. */}
+                <footer className="mt-9">
                   <span
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-green-soft font-display text-2xl"
+                    className="block h-px w-16 bg-green-soft"
                     aria-hidden="true"
-                  >
-                    AH
+                  />
+                  <span className="mt-5 block text-2xl font-semibold text-white">
+                    {site.founder}
                   </span>
-                  <span className="text-lg leading-tight text-green-soft">
-                    <span className="block font-semibold text-white">
-                      {site.founder}
-                    </span>
+                  <span className="mt-1 block text-lg text-green-soft">
                     {site.founderTitle}
                   </span>
                 </footer>
