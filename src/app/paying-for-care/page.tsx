@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "What In-Home Care Costs in North Mississippi",
   description:
     "How families pay for in-home care in Mississippi: private pay, the Medicaid Elderly and Disabled Waiver, long-term care insurance, and VA benefits, explained plainly.",
+  alternates: { canonical: "/paying-for-care" },
 };
 
 /* TODO(client): REAL NUMBERS REQUIRED.
@@ -19,18 +20,31 @@ const PAYMENT_ROUTES = [
   {
     title: "Private pay",
     body: "The family pays directly, usually by the hour. This is how most in-home care in Mississippi is paid for. It is also the fastest to arrange, because it does not depend on anyone else approving it.",
+    guide: {
+      label: "What in-home care costs in Mississippi",
+      href: "/guides/what-in-home-care-costs-in-mississippi",
+    },
   },
   {
     title: "Medicaid Elderly and Disabled Waiver",
     body: "Mississippi's E&D Waiver is a Medicaid program that can cover in-home personal care for people who would otherwise need nursing-home level care. Eligibility is decided by the Mississippi Division of Medicaid, not by any agency. There is an application process and, at times, a waiting list.",
+    guide: {
+      label: "How to apply for the waiver in North Mississippi",
+      href: "/guides/elderly-and-disabled-waiver-north-mississippi",
+    },
   },
   {
     title: "Long-term care insurance",
     body: "If your parent bought a long-term care policy years ago, it may cover exactly this. Policies vary widely in what they pay and what they require, so read the benefit trigger and the elimination period before assuming anything.",
+    guide: null,
   },
   {
     title: "VA benefits",
     body: "Veterans and surviving spouses may qualify for benefits that help pay for in-home care, including Aid and Attendance. This runs through the VA and is worth asking about if there is any service history in the family.",
+    guide: {
+      label: "VA Aid and Attendance, and how families use it",
+      href: "/guides/va-aid-and-attendance-for-in-home-care",
+    },
   },
 ];
 
@@ -47,7 +61,7 @@ export default function PayingForCare() {
 
         <section className="mx-auto max-w-3xl px-6 py-16 sm:py-24 lg:py-28">
           {PRICING_CONFIRMED ? null : (
-            <div className="rounded-2xl border-2 border-plum bg-plum-wash p-8">
+            <div className="rounded-panel border-2 border-plum bg-plum-wash p-8">
               <h2 className="text-[1.7rem]">Our rates</h2>
               <p className="mt-4 text-xl text-ink-soft">
                 Call {site.phone} and we will give you a straight number for the
@@ -81,6 +95,16 @@ export default function PayingForCare() {
                       {route.title}
                     </h3>
                     <p className="mt-3 text-xl text-ink-soft">{route.body}</p>
+                    {route.guide && (
+                      <p className="mt-3">
+                        <Link
+                          href={route.guide.href}
+                          className="text-lg font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                        >
+                          {route.guide.label}
+                        </Link>
+                      </p>
+                    )}
                   </div>
                 </div>
               </li>
@@ -108,7 +132,15 @@ export default function PayingForCare() {
               </p>
               <p>
                 That is not a reason to give up. It is the reason the other four
-                routes above exist.
+                routes above exist. If you are not sure which service you are
+                looking at, our guide on{" "}
+                <Link
+                  href="/guides/home-health-vs-in-home-care"
+                  className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4 transition-colors duration-200 hover:decoration-plum"
+                >
+                  home health versus in-home care
+                </Link>{" "}
+                sets the two side by side.
               </p>
             </div>
           </div>

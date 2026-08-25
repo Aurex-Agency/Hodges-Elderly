@@ -7,6 +7,7 @@ import { countyNames, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Caregiver Jobs in North Mississippi",
   description: `Apply to work as a caregiver with ${site.shortName} in Tupelo, New Albany, Pontotoc, and across seven North Mississippi counties.`,
+  alternates: { canonical: "/careers" },
 };
 
 const FIELDS: Field[] = [
@@ -73,7 +74,7 @@ export default function Careers() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist/70 p-10 lg:p-12">
+            <div className="rounded-panel border border-rule bg-mist/70 p-10 lg:p-12">
               <h2 className="text-[2.1rem]">Apply</h2>
               <p className="mt-3 text-xl text-ink-soft">
                 No long application. Tell us how to reach you and we will call.

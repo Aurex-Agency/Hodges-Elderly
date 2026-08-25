@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import MobileNav from "./MobileNav";
 import BloomingMagnolia from "./motion/BloomingMagnolia";
 import { Reveal, RevealGroup, RevealItem } from "./motion/Reveal";
+import { guides } from "@/lib/guides";
 import { site, services, NAV } from "@/lib/site";
 
 export function CallButton({
@@ -16,7 +17,7 @@ export function CallButton({
   numberClassName?: string;
 }) {
   const base =
-    "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-full px-8 text-xl font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
+    "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-control px-8 text-xl font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
   const styles = {
     solid: "bg-plum text-white hover:bg-plum-deep",
     outline: "border-2 border-plum text-plum hover:bg-plum hover:text-white",
@@ -130,7 +131,7 @@ export function ClosingCta({
           <CallButton variant="onDark" />
           <Link
             href="/contact"
-            className="inline-flex min-h-[3.5rem] items-center rounded-full border-2 border-white/40 px-8 text-xl font-semibold text-white transition-colors duration-200 hover:border-white"
+            className="inline-flex min-h-[3.5rem] items-center rounded-control border-2 border-white/40 px-8 text-xl font-semibold text-white transition-colors duration-200 hover:border-white"
           >
             Send a message
           </Link>
@@ -145,15 +146,16 @@ export function Footer() {
 
   return (
     <footer className="border-t border-rule bg-mist/65">
-      <div className="mx-auto grid max-w-6xl gap-12 px-6 py-14 sm:py-20 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="sm:col-span-2 lg:col-span-1">
+      <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+        <div className="border-b border-rule pb-10">
           <Logo />
-          <p className="mt-5 max-w-xs text-lg text-ink-soft">
+          <p className="mt-5 max-w-md text-lg text-ink-soft">
             Locally founded in-home care for elderly and disabled adults across
             North Mississippi.
           </p>
         </div>
 
+        <div className="grid gap-x-10 gap-y-12 pt-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <h2 className="font-display text-xl font-semibold text-ink">Services</h2>
           <ul className="mt-4 space-y-2.5">
@@ -195,6 +197,30 @@ export function Footer() {
         </div>
 
         <div>
+          <h2 className="font-display text-xl font-semibold text-ink">Guides</h2>
+          <ul className="mt-4 space-y-2.5">
+            {guides.slice(0, 4).map((g) => (
+              <li key={g.slug}>
+                <Link
+                  href={`/guides/${g.slug}`}
+                  className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+                >
+                  {g.metaTitle}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/guides"
+                className="text-lg text-ink-soft transition-colors duration-200 hover:text-plum"
+              >
+                All guides
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
           <h2 className="font-display text-xl font-semibold text-ink">Contact</h2>
           <ul className="mt-4 space-y-2.5 text-lg text-ink-soft">
             <li>
@@ -219,6 +245,7 @@ export function Footer() {
               </Link>
             </li>
           </ul>
+        </div>
         </div>
       </div>
 

@@ -29,7 +29,7 @@ export default function LeadForm({
     return (
       <div
         role="status"
-        className="rounded-2xl border-2 border-green bg-green-wash p-8"
+        className="rounded-panel border-2 border-green bg-green-wash p-8"
       >
         <h3 className="font-display text-[1.7rem] font-semibold text-forest">
           Message received
@@ -46,7 +46,7 @@ export default function LeadForm({
       {state.status === "error" && (
         <div
           role="alert"
-          className="rounded-xl border-2 border-plum bg-plum-wash p-5"
+          className="rounded-panel border-2 border-plum bg-plum-wash p-5"
         >
           <p className="text-xl font-semibold text-plum-deep">{state.message}</p>
         </div>
@@ -88,7 +88,7 @@ export default function LeadForm({
                 rows={5}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 w-full rounded-xl border-2 border-rule bg-page px-4 py-3 text-xl text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 w-full rounded-control border-2 border-rule bg-page px-4 py-3 text-xl text-ink transition-colors duration-200 focus:border-plum"
               />
             ) : (
               <input
@@ -98,7 +98,7 @@ export default function LeadForm({
                 autoComplete={field.autoComplete}
                 aria-invalid={error ? true : undefined}
                 aria-describedby={describedBy}
-                className="mt-2 min-h-[3.25rem] w-full rounded-xl border-2 border-rule bg-page px-4 text-xl text-ink transition-colors duration-200 focus:border-plum"
+                className="mt-2 min-h-[3.25rem] w-full rounded-control border-2 border-rule bg-page px-4 text-xl text-ink transition-colors duration-200 focus:border-plum"
               />
             )}
 
@@ -129,7 +129,7 @@ export default function LeadForm({
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex min-h-[3.5rem] items-center rounded-full bg-plum px-9 text-xl font-semibold text-white transition-colors duration-200 hover:bg-plum-deep disabled:opacity-70"
+        className="inline-flex min-h-[3.5rem] items-center rounded-control bg-plum px-9 text-xl font-semibold text-white transition-colors duration-200 hover:bg-plum-deep disabled:opacity-70"
       >
         {pending ? "Sending…" : submitLabel}
       </button>

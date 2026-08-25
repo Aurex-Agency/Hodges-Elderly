@@ -8,6 +8,7 @@ import Stat from "@/components/motion/Stat";
 import FigureScene from "@/components/FigureScene";
 import ServicesExplorer from "@/components/ServicesExplorer";
 import { CallButton, ClosingCta, Footer, Header } from "@/components/chrome";
+import { guides } from "@/lib/guides";
 import { countyNames, howItStarts, site, services } from "@/lib/site";
 
 const STATS = [
@@ -132,7 +133,7 @@ export default function Home() {
                         "--accent-wash": `var(--color-${step.accent}-wash)`,
                       } as React.CSSProperties
                     }
-                    className="h-full rounded-2xl border border-rule bg-page/75 p-8 transition-colors duration-300 hover:border-[var(--accent)]"
+                    className="h-full rounded-panel border border-rule bg-page/75 p-8 transition-colors duration-300 hover:border-[var(--accent)]"
                   >
                     <FigureScene
                       name={step.scene}
@@ -265,6 +266,61 @@ export default function Home() {
           <p className="mt-12 max-w-3xl text-lg text-ink-faint">
             Including {site.towns.map((t) => t.name).join(", ")}.
           </p>
+        </section>
+
+        {/* Guides. Placed after the service area rather than higher up:
+            somebody ready to call should not have to scroll past reading
+            material to find the phone number. But the people who are not
+            ready to call yet are the majority, and this is what they came
+            for. */}
+        <section className="border-t border-rule bg-mist/65">
+          <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
+            <Reveal className="max-w-3xl">
+              <h2 className="text-4xl lg:text-5xl">
+                Working out what to do next?
+              </h2>
+              <p className="mt-5 text-2xl text-ink-soft">
+                Plain guides to the things nobody explains: what care costs
+                here, what Medicaid and Medicare actually cover, and how to
+                tell when help is needed.
+              </p>
+            </Reveal>
+
+            <RevealGroup as="ul" className="mt-14 grid gap-8 lg:grid-cols-3" stagger={0.08}>
+              {guides.slice(0, 3).map((g) => (
+                <RevealItem as="li" key={g.slug}>
+                  <Link
+                    href={`/guides/${g.slug}`}
+                    style={
+                      {
+                        "--accent": `var(--color-${g.accent})`,
+                        "--accent-wash": `var(--color-${g.accent}-wash)`,
+                      } as React.CSSProperties
+                    }
+                    className="group flex h-full flex-col rounded-panel border border-rule bg-page/75 p-8 transition-colors duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent-wash)]"
+                  >
+                    <span className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.16em] text-[var(--accent)]">
+                      <span className="h-px w-8 bg-[var(--accent)]" aria-hidden="true" />
+                      {g.readMinutes} minute read
+                    </span>
+                    <h3 className="mt-4 font-display text-[1.6rem] font-bold leading-snug text-ink transition-colors duration-200 group-hover:text-[var(--accent)]">
+                      {g.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-lg text-ink-soft">{g.dek}</p>
+                  </Link>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+
+            <Reveal className="mt-12">
+              <Link
+                href="/guides"
+                className="text-xl font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-[6px] transition-colors duration-200 hover:decoration-plum"
+              >
+                Read all guides
+              </Link>
+            </Reveal>
+          </div>
         </section>
 
         <ClosingCta />

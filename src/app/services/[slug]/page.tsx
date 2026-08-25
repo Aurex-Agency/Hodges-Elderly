@@ -20,6 +20,7 @@ export async function generateMetadata({
   return {
     title: `${service.name} in Tupelo & North Mississippi`,
     description: service.blurb,
+    alternates: { canonical: `/services/${service.slug}` },
   };
 }
 
@@ -33,11 +34,58 @@ export default async function ServicePage({
   if (!service) notFound();
 
   const others = services.filter((s) => s.slug !== slug);
+  const url = `${site.url}/services/${service.slug}`;
+
+  /* Service, not Product. There is no price and no offer here, and marking
+   * up an offer we cannot populate would be a rich-result violation as
+   * well as a lie. areaServed carries the local signal instead. */
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: service.name,
+      description: service.blurb,
+      url,
+      serviceType: service.name,
+      category: "Non-medical in-home care",
+      provider: { "@type": "LocalBusiness", "@id": `${site.url}/#business` },
+      areaServed: site.counties.map((c) => ({
+        "@type": "AdministrativeArea",
+        name: `${c.name} County, Mississippi`,
+      })),
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: `What ${service.name.toLowerCase()} includes`,
+        itemListElement: service.includes.map((item) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: item },
+        })),
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Services",
+          item: `${site.url}/services`,
+        },
+        { "@type": "ListItem", position: 3, name: service.name, item: url },
+      ],
+    },
+  ];
 
   return (
     <>
       <Header />
       <main id="main">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <PageHero eyebrow="Services" title={service.name} lede={service.blurb} />
 
         <section

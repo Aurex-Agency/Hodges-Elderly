@@ -8,6 +8,7 @@ import { countyNames, site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact Us",
   description: `Talk to ${site.founder} about in-home care in Tupelo and North Mississippi. Call ${site.phone} or send a message.`,
+  alternates: { canonical: "/contact" },
 };
 
 const FIELDS: Field[] = [
@@ -94,7 +95,7 @@ export default function Contact() {
               </dl>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist/70 p-10 lg:p-12">
+            <div className="rounded-panel border border-rule bg-mist/70 p-10 lg:p-12">
               <h2 className="text-[2.1rem]">Or send a message</h2>
               <p className="mt-3 text-xl text-ink-soft">
                 We will call you back on the number you leave.

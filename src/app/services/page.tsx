@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "In-Home Care Services",
   description:
     "Personal care, companion care, IDD and mental health support, meals and homemaking, errands and transportation, and respite for family caregivers across North Mississippi.",
+  alternates: { canonical: "/services" },
 };
 
 export default function Services() {

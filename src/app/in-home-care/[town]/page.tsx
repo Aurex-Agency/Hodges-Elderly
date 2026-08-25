@@ -46,6 +46,7 @@ export async function generateMetadata({
   return {
     title: `In-Home Care in ${t.name}, MS`,
     description: `Non-medical in-home care for elderly and disabled adults in ${t.name} and ${t.county} County, Mississippi. Locally founded and founder-led.`,
+    alternates: { canonical: `/in-home-care/${t.slug}` },
   };
 }
 
@@ -60,11 +61,54 @@ export default async function TownPage({
 
   const copy = TOWN_COPY[t.slug];
   const otherTowns = townPages.filter((x) => x.slug !== t.slug);
+  const url = `${site.url}/in-home-care/${t.slug}`;
+
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: `In-home care in ${t.name}, Mississippi`,
+      description: `Non-medical in-home care for elderly and disabled adults in ${t.name} and ${t.county} County, Mississippi.`,
+      url,
+      serviceType: "Non-medical in-home care",
+      provider: { "@type": "LocalBusiness", "@id": `${site.url}/#business` },
+      areaServed: [
+        { "@type": "City", name: `${t.name}, Mississippi` },
+        {
+          "@type": "AdministrativeArea",
+          name: `${t.county} County, Mississippi`,
+        },
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Where we go",
+          item: `${site.url}/service-area`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: `In-home care in ${t.name}`,
+          item: url,
+        },
+      ],
+    },
+  ];
 
   return (
     <>
       <Header />
       <main id="main">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <PageHero
           eyebrow={`${t.county} County`}
           title={`In-home care in ${t.name}, Mississippi`}
@@ -96,7 +140,7 @@ export default async function TownPage({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist/70 p-10">
+            <div className="rounded-panel border border-rule bg-mist/70 p-10">
               <h2 className="text-[1.7rem]">Start with a phone call</h2>
               <p className="mt-4 text-xl text-ink-soft">
                 Tell us what a normal day looks like in {t.name} and what has

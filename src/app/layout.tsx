@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Merriweather } from "next/font/google";
 import { MagnoliaDefs } from "@/components/Magnolia";
 import ScrollTint, { ScrollProgress } from "@/components/motion/ScrollTint";
-import { site } from "@/lib/site";
+import { LAUNCH_READY, services, site } from "@/lib/site";
 import "./globals.css";
 
 /* Merriweather throughout, headings and body alike.
@@ -30,10 +30,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: site.shortName,
   },
+  alternates: { canonical: "/" },
   robots: {
-    // TODO(launch): flip to index once the real domain is live.
-    index: false,
-    follow: false,
+    // Driven by the single launch switch in lib/site, alongside robots.txt
+    // and the sitemap, so indexing cannot be turned on in one place and
+    // left off in another.
+    index: LAUNCH_READY,
+    follow: LAUNCH_READY,
   },
 };
 
@@ -56,9 +59,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "HomeAndConstructionBusiness",
-              additionalType: "https://schema.org/LocalBusiness",
+              // Was HomeAndConstructionBusiness, which is schema.org's type
+              // for contractors and tradespeople and describes the wrong
+              // business entirely. There is no schema.org type for
+              // non-medical in-home care, so plain LocalBusiness is the
+              // honest choice: broad, correct, and not a claim to be a
+              // medical provider.
+              "@type": "LocalBusiness",
+              "@id": `${site.url}/#business`,
               name: site.name,
+              description:
+                "Non-medical in-home care for elderly and disabled adults across seven counties in North Mississippi.",
               telephone: site.phone,
               url: site.url,
               founder: { "@type": "Person", name: site.founder },
@@ -70,10 +81,38 @@ export default function RootLayout({
                 postalCode: site.address.zip,
                 addressCountry: "US",
               },
-              areaServed: site.counties.map((c) => ({
-                "@type": "AdministrativeArea",
-                name: `${c.name} County, Mississippi`,
-              })),
+              areaServed: [
+                ...site.counties.map((c) => ({
+                  "@type": "AdministrativeArea",
+                  name: `${c.name} County, Mississippi`,
+                })),
+                // The towns matter as much as the counties: people search
+                // "in-home care Tupelo", not "in-home care Lee County".
+                ...site.towns.map((t) => ({
+                  "@type": "City",
+                  name: `${t.name}, Mississippi`,
+                })),
+              ],
+              knowsAbout: [
+                "in-home care",
+                "personal care",
+                "companion care",
+                "respite care",
+                "caregiver support",
+              ],
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "In-home care services",
+                itemListElement: services.map((s) => ({
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: s.name,
+                    description: s.blurb,
+                    url: `${site.url}/services/${s.slug}`,
+                  },
+                })),
+              },
             }),
           }}
         />

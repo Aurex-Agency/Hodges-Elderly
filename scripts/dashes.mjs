@@ -11,7 +11,14 @@ const ROUTES = ["/", "/about", "/services", "/service-area", "/paying-for-care",
   ...["personal-care","companion-care","idd-and-mental-health-support",
       "meals-and-homemaking","errands-and-transportation","respite-for-family"]
     .map((s) => `/services/${s}`),
-  ...["tupelo","new-albany","pontotoc"].map((t) => `/in-home-care/${t}`)];
+  ...["tupelo","new-albany","pontotoc"].map((t) => `/in-home-care/${t}`),
+  "/guides",
+  ...["what-in-home-care-costs-in-mississippi",
+      "elderly-and-disabled-waiver-north-mississippi",
+      "home-health-vs-in-home-care",
+      "signs-a-parent-needs-help-at-home",
+      "va-aid-and-attendance-for-in-home-care"]
+    .map((g) => `/guides/${g}`)];
 
 const RANGE = /\d\s*–\s*\d/;
 const browser = await chromium.launch();

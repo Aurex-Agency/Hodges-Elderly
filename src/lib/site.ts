@@ -5,6 +5,12 @@
  * must not be rendered as a claim until she clears it.
  */
 
+/* One switch for everything that must not happen before the real domain
+ * is live: search indexing, the robots file, and the sitemap. Flipping
+ * this to true is the launch step, and it is deliberately a single edit
+ * rather than three scattered ones that can be half-done. */
+export const LAUNCH_READY = false;
+
 export const site = {
   name: "Hodges Elderly and Disabled Services",
   shortName: "Hodges Elderly & Disabled Services",

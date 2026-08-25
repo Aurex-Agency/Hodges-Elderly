@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Answers for Families",
   description:
     "Straight answers to what families ask before hiring in-home care: how fast we can start, who comes into the home, what it costs, and what Medicaid and Medicare cover.",
+  alternates: { canonical: "/answers" },
 };
 
 /* Withheld answers are filtered out entirely rather than shown with a
@@ -65,15 +66,36 @@ export default function Answers() {
             </div>
           ))}
 
-          <div className="mt-16 rounded-2xl border border-rule bg-mist/70 p-10">
+          <div className="mt-16 rounded-panel border border-rule bg-mist/70 p-10">
             <h2 className="text-[1.7rem]">Still not answered?</h2>
             <p className="mt-3 text-xl text-ink-soft">
-              Call {site.phone} and ask. Or read more about{" "}
+              Call {site.phone} and ask. Or read the longer versions in our{" "}
               <Link
-                href="/paying-for-care"
+                href="/guides"
                 className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
               >
-                what in-home care costs
+                guides for families
+              </Link>
+              , which go through{" "}
+              <Link
+                href="/guides/what-in-home-care-costs-in-mississippi"
+                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+              >
+                what care costs in Mississippi
+              </Link>
+              ,{" "}
+              <Link
+                href="/guides/elderly-and-disabled-waiver-north-mississippi"
+                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+              >
+                the Medicaid waiver
+              </Link>
+              , and{" "}
+              <Link
+                href="/guides/home-health-vs-in-home-care"
+                className="font-semibold text-plum underline decoration-plum-soft decoration-2 underline-offset-4"
+              >
+                what Medicare does and does not pay for
               </Link>
               .
             </p>

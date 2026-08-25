@@ -1,7 +1,9 @@
 import { chromium } from "playwright";
 const BASE = process.env.BASE ?? "http://localhost:55843";
 const ROUTES = ["/", "/about", "/services", "/services/personal-care", "/service-area",
-  "/in-home-care/tupelo", "/paying-for-care", "/answers", "/careers", "/contact"];
+  "/in-home-care/tupelo", "/paying-for-care", "/answers", "/careers", "/contact",
+  "/guides", "/guides/what-in-home-care-costs-in-mississippi",
+  "/guides/elderly-and-disabled-waiver-north-mississippi",];
 const browser = await chromium.launch();
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 let bad = 0;

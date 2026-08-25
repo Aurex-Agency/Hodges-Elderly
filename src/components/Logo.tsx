@@ -3,7 +3,7 @@ import { PETAL } from "./Magnolia";
 /* Redrawn from the client's supplied JPEG (assets/brand-source/logo-original.jpg).
  *
  * Deliberately kept: the H monogram, the square frame, the magnolia, and
- * her plum-and-green pairing, so she stays recognisable to anyone who has
+ * her plum-and-green pairing, so she stays recognizable to anyone who has
  * already seen a card or a flyer.
  *
  * Deliberately fixed: the original wordmark reads "DISABLE SERVICES".

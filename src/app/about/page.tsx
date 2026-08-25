@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "About Aaliyah Hodges",
   description:
     "Aaliyah Hodges founded Hodges Elderly and Disabled Services after caring for her grandmother through bone cancer, and eight years supporting adults with IDD and mental illness.",
+  alternates: { canonical: "/about" },
 };
 
 export default function About() {

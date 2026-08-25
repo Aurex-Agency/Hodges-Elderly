@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Service Area | Seven North Mississippi Counties",
   description:
     "Hodges Elderly and Disabled Services provides in-home care in Lee, Pontotoc, Union, Chickasaw, Monroe, Lafayette, and Itawamba counties.",
+  alternates: { canonical: "/service-area" },
 };
 
 export default function ServiceArea() {

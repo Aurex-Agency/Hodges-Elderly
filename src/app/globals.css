@@ -52,6 +52,13 @@
   --color-ink-faint: #667079;
   --color-rule: #dde4df;
 
+  /* Corner radius. Pill-shaped buttons read as consumer-app chrome; this
+     is a care agency and the softer rectangle reads steadier and more
+     grown-up. Two steps only, so the site has one radius language:
+     controls (buttons, inputs) and panels (cards, callouts). */
+  --radius-control: 0.625rem;
+  --radius-panel: 0.875rem;
+
   --font-display: var(--font-merriweather), Georgia, serif;
   --font-body: var(--font-merriweather), Georgia, serif;
 }

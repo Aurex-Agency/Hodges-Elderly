@@ -38,7 +38,7 @@ export default function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-nav"
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex min-h-[3.25rem] cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-full border-2 border-plum px-4 text-base font-semibold text-plum transition-colors duration-200 hover:bg-plum hover:text-white sm:gap-3 sm:px-6"
+        className="inline-flex min-h-[3.25rem] cursor-pointer items-center gap-2.5 whitespace-nowrap rounded-control border-2 border-plum px-4 text-base font-semibold text-plum transition-colors duration-200 hover:bg-plum hover:text-white sm:gap-3 sm:px-6"
       >
         <span className="relative flex h-4 w-5 flex-col justify-between" aria-hidden="true">
           <motion.span
