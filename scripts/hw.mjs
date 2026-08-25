@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 const b = await chromium.launch();
-const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+const p = await b.newPage({ viewport: { width: +(process.env.W||390), height: 844 } });
 await p.goto(process.env.BASE + "/", { waitUntil: "networkidle" });
 console.log(JSON.stringify(await p.evaluate(() => {
   const inner = document.querySelector("header").firstElementChild;

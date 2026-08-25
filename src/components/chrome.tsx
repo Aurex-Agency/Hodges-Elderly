@@ -8,9 +8,12 @@ import { site, services, NAV } from "@/lib/site";
 export function CallButton({
   variant = "solid",
   className = "",
+  numberClassName = "",
 }: {
   variant?: "solid" | "outline" | "onDark";
   className?: string;
+  /** Lets a cramped header hide the number and keep just "Call". */
+  numberClassName?: string;
 }) {
   const base =
     "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-full px-8 text-xl font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
@@ -30,7 +33,7 @@ export function CallButton({
           strokeLinejoin="round"
         />
       </svg>
-      Call {site.phone}
+      Call<span className={numberClassName}>&nbsp;{site.phone}</span>
     </a>
   );
 }
@@ -42,12 +45,12 @@ export function Header() {
         <Link href="/" aria-label={`${site.shortName} home`}>
           <Logo />
         </Link>
-        <nav aria-label="Main" className="hidden items-center gap-7 xl:flex">
+        <nav aria-label="Main" className="hidden items-center gap-6 xl:flex">
           {NAV.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="whitespace-nowrap text-lg font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
+              className="whitespace-nowrap text-base font-semibold text-ink-soft transition-colors duration-200 hover:text-plum"
             >
               {item.label}
             </Link>
@@ -57,7 +60,8 @@ export function Header() {
           <div className="hidden sm:block">
             <CallButton
               variant="outline"
-              className="min-h-[3.25rem] whitespace-nowrap px-6 text-base xl:text-lg"
+              className="min-h-[3.25rem] whitespace-nowrap px-5 text-base lg:px-6"
+              numberClassName="hidden lg:inline"
             />
           </div>
           <MobileNav />

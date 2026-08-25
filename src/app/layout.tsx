@@ -1,25 +1,20 @@
 import type { Metadata } from "next";
-import { Source_Serif_4, Source_Sans_3 } from "next/font/google";
+import { Merriweather } from "next/font/google";
 import { MagnoliaDefs } from "@/components/Magnolia";
 import ScrollTint, { ScrollProgress } from "@/components/motion/ScrollTint";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-/* Source Serif 4: warm and credible, but drawn for reading rather than for
- * display. Replaces Fraunces, whose high contrast and decorative ampersand
- * cost too much legibility for this readership. */
-const serif = Source_Serif_4({
+/* Merriweather throughout, headings and body alike.
+ *
+ * It was drawn specifically for reading on screens: a large x-height,
+ * sturdy stems and open counters, which is the right set of qualities for
+ * a readership that is mostly over 55 and often reading on a phone. */
+const merriweather = Merriweather({
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-merriweather",
   display: "swap",
-});
-
-/* Source Sans 3: large x-height, open apertures, unambiguous numerals.
- * The reader is frequently 55+ and on a phone. */
-const sans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -46,7 +41,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={merriweather.variable}>
       <body className="antialiased">
         <a
           href="#main"
