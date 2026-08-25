@@ -73,7 +73,7 @@ export default function Careers() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist p-8 lg:p-10">
+            <div className="rounded-2xl border border-rule bg-mist/70 p-8 lg:p-10">
               <h2 className="text-3xl">Apply</h2>
               <p className="mt-3 text-lg text-ink-soft">
                 No long application. Tell us how to reach you and we will call.

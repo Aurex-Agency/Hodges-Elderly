@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Magnolia from "@/components/Magnolia";
 import BloomingMagnolia from "@/components/motion/BloomingMagnolia";
+import HeroBloom from "@/components/motion/HeroBloom";
 import DriftingPetals from "@/components/motion/DriftingPetals";
 import { Reveal, RevealGroup, RevealItem } from "@/components/motion/Reveal";
 import Stat from "@/components/motion/Stat";
@@ -23,16 +24,14 @@ export default function Home() {
       <main id="main">
         {/* Hero. There is no photography, so the bloom does the emotional
             work a photograph normally would — and it opens on arrival. */}
-        <section className="relative overflow-hidden bg-page">
+        <section className="relative overflow-hidden">
           {/* On narrow screens the text spans the full width, so a
               full-strength bloom behind it destroys legibility. There it
               becomes a faint, leafless corner accent instead. */}
           <div className="pointer-events-none absolute -right-24 -top-16 h-[20rem] w-[20rem] opacity-40 lg:hidden">
             <Magnolia className="h-full w-full -rotate-[14deg]" withLeaves={false} />
           </div>
-          <div className="pointer-events-none absolute -right-44 -top-20 hidden h-[54rem] w-[54rem] opacity-[0.88] lg:block">
-            <BloomingMagnolia className="h-full w-full -rotate-[14deg]" />
-          </div>
+          <HeroBloom className="pointer-events-none absolute -right-44 -top-20 hidden h-[54rem] w-[54rem] opacity-[0.88] lg:block" />
 
           <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-16 lg:pb-32 lg:pt-24">
             <RevealGroup className="max-w-2xl" stagger={0.09}>
@@ -82,7 +81,7 @@ export default function Home() {
 
         {/* Three things that are true today. The insured/bonded and waiver
             claims belong here too — withheld until the client confirms. */}
-        <section className="border-y border-rule bg-mist">
+        <section className="border-y border-rule bg-mist/65">
           <div className="mx-auto grid max-w-6xl gap-px bg-rule sm:grid-cols-3">
             {STATS.map((s) => (
               <Stat
@@ -113,7 +112,7 @@ export default function Home() {
 
         {/* The three steps between deciding to call and someone turning up.
             Families stall for months here, so it gets its own section. */}
-        <section className="border-y border-rule bg-mist">
+        <section className="border-y border-rule bg-mist/65">
           <div className="mx-auto max-w-6xl px-6 py-20 lg:py-28">
             <Reveal className="max-w-2xl">
               <h2 className="text-4xl lg:text-5xl">How it starts</h2>
@@ -133,7 +132,7 @@ export default function Home() {
                         "--accent-wash": `var(--color-${step.accent}-wash)`,
                       } as React.CSSProperties
                     }
-                    className="h-full rounded-2xl border border-rule bg-page p-7 transition-colors duration-300 hover:border-[var(--accent)]"
+                    className="h-full rounded-2xl border border-rule bg-page/75 p-7 transition-colors duration-300 hover:border-[var(--accent)]"
                   >
                     <FigureScene
                       name={step.scene}

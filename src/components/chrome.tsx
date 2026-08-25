@@ -36,7 +36,7 @@ export function CallButton({
 
 export function Header() {
   return (
-    <header className="relative z-20 border-b border-rule bg-page">
+    <header className="relative z-20 border-b border-rule">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5">
         <Link href="/" aria-label={`${site.shortName} home`}>
           <Logo />
@@ -71,7 +71,7 @@ export function PageHero({
   lede?: string;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-rule bg-mist">
+    <section className="relative overflow-hidden border-b border-rule bg-mist/65">
       <div className="pointer-events-none absolute -right-28 -top-24 hidden h-[30rem] w-[30rem] opacity-70 lg:block">
         <BloomingMagnolia className="h-full w-full -rotate-[14deg]" />
       </div>
@@ -133,7 +133,7 @@ export function Footer() {
   const townPages = site.towns.filter((t) => t.page);
 
   return (
-    <footer className="border-t border-rule bg-mist">
+    <footer className="border-t border-rule bg-mist/65">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
           <Logo />

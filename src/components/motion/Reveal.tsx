@@ -8,16 +8,18 @@ import type { ReactNode } from "react";
  * The audience skews 55+ and often arrives worried about a parent, so the
  * brief here is "the page feels alive", not "the page performs". Movement
  * is short, single-direction, and never delays reading: text is legible
- * from the first frame of the transition, and the whole thing is done in
- * under half a second.
+ * from the first frame of the transition, and the spring settles quickly.
  *
  * Everything animates transform and opacity only. */
 
-const EASE = [0.22, 0.61, 0.36, 1] as const;
+/* A gentle spring rather than a fixed duration. Springs settle instead of
+ * stopping, which is most of what "smooth" means when you feel it. A touch
+ * of bounce, not enough to look bouncy. */
+const SPRING = { type: "spring", bounce: 0.16, duration: 0.85 } as const;
 
 export const riseVariants: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  shown: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
+  hidden: { opacity: 0, y: 26, scale: 0.985 },
+  shown: { opacity: 1, y: 0, scale: 1, transition: SPRING },
 };
 
 /** Fade-and-rise a single block when it scrolls into view. */
@@ -40,12 +42,14 @@ export function Reveal({
       className={className}
       initial={reduced ? "shown" : "hidden"}
       whileInView="shown"
-      viewport={{ once: true, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.2, margin: "0px 0px -12% 0px" }}
       variants={{
         hidden: riseVariants.hidden,
         shown: {
-          ...riseVariants.shown,
-          transition: { duration: 0.5, ease: EASE, delay },
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { ...SPRING, delay },
         },
       }}
     >
@@ -74,7 +78,7 @@ export function RevealGroup({
       className={className}
       initial={reduced ? "shown" : "hidden"}
       whileInView="shown"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15, margin: "0px 0px -12% 0px" }}
       variants={{
         hidden: {},
         shown: { transition: { staggerChildren: reduced ? 0 : stagger } },

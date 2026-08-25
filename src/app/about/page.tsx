@@ -53,7 +53,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="border-y border-rule bg-mist">
+        <section className="border-y border-rule bg-mist/65">
           <div className="mx-auto max-w-3xl px-6 py-16 lg:py-20">
             <h2 className="text-3xl lg:text-4xl">A second generation</h2>
             <div className="mt-6 space-y-6 text-lg text-ink-soft">

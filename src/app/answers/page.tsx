@@ -65,7 +65,7 @@ export default function Answers() {
             </div>
           ))}
 
-          <div className="mt-16 rounded-2xl border border-rule bg-mist p-8">
+          <div className="mt-16 rounded-2xl border border-rule bg-mist/70 p-8">
             <h2 className="text-2xl">Still not answered?</h2>
             <p className="mt-3 text-lg text-ink-soft">
               Call {site.phone} and ask. Or read more about{" "}

@@ -48,7 +48,7 @@ export default function Stat({
 
   return (
     <motion.div
-      className="bg-mist px-6 py-9 text-center transition-colors duration-300 hover:bg-[var(--accent-wash)]"
+      className="bg-mist/80 px-6 py-9 text-center transition-colors duration-300 hover:bg-[var(--accent-wash)]"
       style={
         {
           "--accent": `var(--color-${accent})`,

@@ -92,7 +92,7 @@ export default async function ServicePage({
           </div>
         </section>
 
-        <section className="border-y border-rule bg-mist">
+        <section className="border-y border-rule bg-mist/65">
           <div className="mx-auto max-w-6xl px-6 py-16">
             <h2 className="text-3xl">Where we provide it</h2>
             <p className="mt-4 max-w-2xl text-lg text-ink-soft">

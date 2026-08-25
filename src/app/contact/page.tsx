@@ -94,7 +94,7 @@ export default function Contact() {
               </dl>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist p-8 lg:p-10">
+            <div className="rounded-2xl border border-rule bg-mist/70 p-8 lg:p-10">
               <h2 className="text-3xl">Or send a message</h2>
               <p className="mt-3 text-lg text-ink-soft">
                 We will call you back on the number you leave.

@@ -96,7 +96,7 @@ export default async function TownPage({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-rule bg-mist p-8">
+            <div className="rounded-2xl border border-rule bg-mist/70 p-8">
               <h2 className="text-2xl">Start with a phone call</h2>
               <p className="mt-4 text-lg text-ink-soft">
                 Tell us what a normal day looks like in {t.name} and what has
@@ -119,7 +119,7 @@ export default async function TownPage({
           </div>
         </section>
 
-        <section className="border-y border-rule bg-mist">
+        <section className="border-y border-rule bg-mist/65">
           <div className="mx-auto max-w-6xl px-6 py-16">
             <h2 className="text-3xl">What we help with in {t.name}</h2>
             <ul className="mt-8 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">

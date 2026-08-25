@@ -63,10 +63,13 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* The page ground lives here, not on body, so the fixed scroll-tint
+     layer sitting behind body's content is not painted over. */
+  background: var(--color-page);
 }
 
 body {
-  background: var(--color-page);
+  background: transparent;
   color: var(--color-ink);
   font-family: var(--font-body);
   /* 18px floor. Do not lower this. */

@@ -33,7 +33,7 @@ export default function ServiceArea() {
                       "--accent-wash": `var(--color-${county.accent}-wash)`,
                     } as React.CSSProperties
                   }
-                  className="group bg-page p-7 transition-colors duration-300 hover:bg-[var(--accent-wash)]"
+                  className="group bg-page/75 p-7 transition-colors duration-300 hover:bg-[var(--accent-wash)]"
                 >
                   <h2 className="font-display text-2xl font-semibold text-ink transition-colors duration-300 group-hover:text-[var(--accent)]">
                     {county.name} County

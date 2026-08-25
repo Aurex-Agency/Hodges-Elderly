@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { PETAL, PETAL_BACK } from "../Magnolia";
+import { BACK_WHORL, PETAL } from "../Magnolia";
 
 /* A few magnolia petals drifting down the page.
  *
@@ -36,7 +36,7 @@ export default function DriftingPetals() {
         <motion.svg
           key={i}
           viewBox="0 0 400 400"
-          className="absolute h-40 w-40 opacity-[0.13]"
+          className="absolute h-44 w-44 opacity-[0.16]"
           style={{ left: p.left, top: "-12rem" }}
           initial={{ y: 0, x: 0, rotate: 0 }}
           animate={{
@@ -57,13 +57,20 @@ export default function DriftingPetals() {
             },
           }}
         >
-          <g transform={`translate(200 200) scale(${p.scale * 6})`}>
-            <path
-              d={PETAL}
-              fill={`url(#${PETAL_BACK})`}
-              stroke="#c3d0c8"
-              strokeWidth="1.4"
-            />
+          {/* A whole small bloom, not a lone tepal: at this size a single
+              petal reads as a pale smudge rather than a flower. */}
+          <g transform={`translate(200 200) scale(${p.scale * 3.4})`}>
+            {BACK_WHORL.map((angle) => (
+              <path
+                key={angle}
+                d={PETAL}
+                transform={`rotate(${angle})`}
+                fill="#ffffff"
+                stroke="#d8e2db"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+            ))}
           </g>
         </motion.svg>
       ))}

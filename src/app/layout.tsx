@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Serif_4, Source_Sans_3 } from "next/font/google";
 import { MagnoliaDefs } from "@/components/Magnolia";
+import ScrollTint, { ScrollProgress } from "@/components/motion/ScrollTint";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -81,6 +82,8 @@ export default function RootLayout({
             }),
           }}
         />
+        <ScrollTint />
+        <ScrollProgress />
         <MagnoliaDefs />
         {children}
       </body>
