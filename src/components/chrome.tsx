@@ -16,8 +16,17 @@ export function CallButton({
   /** Lets a cramped header hide the number and keep just "Call". */
   numberClassName?: string;
 }) {
+  /* The hover state used to lift the button 2px. That is a real bug, not a
+   * taste question: the element moves out from under the cursor, fires
+   * mouseleave, drops back, fires mouseenter, and oscillates. Measured at
+   * the bottom edge it produced 56 enter/leave events in 900ms, which is
+   * the flicker you can feel on every call button on the site.
+   *
+   * Hover now deepens the colour and raises a soft shadow, neither of which
+   * moves the hit box. The press-down moved to :active, where it cannot
+   * oscillate because it is driven by mousedown rather than by hit testing. */
   const base =
-    "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-control px-8 text-xl font-semibold transition-[color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0";
+    "inline-flex min-h-[3.5rem] items-center gap-3 whitespace-nowrap rounded-control px-8 text-xl font-semibold shadow-none transition-[color,background-color,border-color,box-shadow,transform] duration-200 hover:shadow-lift active:translate-y-px";
   const styles = {
     solid: "bg-plum text-white hover:bg-plum-deep",
     outline: "border-2 border-plum text-plum hover:bg-plum hover:text-white",
@@ -131,7 +140,7 @@ export function ClosingCta({
           <CallButton variant="onDark" />
           <Link
             href="/contact"
-            className="inline-flex min-h-[3.5rem] items-center rounded-control border-2 border-white/40 px-8 text-xl font-semibold text-white transition-colors duration-200 hover:border-white"
+            className="inline-flex min-h-[3.5rem] items-center rounded-control border-2 border-white/40 px-8 text-xl font-semibold text-white transition-[color,background-color,border-color] duration-200 hover:border-white hover:bg-white/10 active:translate-y-px"
           >
             Send a message
           </Link>

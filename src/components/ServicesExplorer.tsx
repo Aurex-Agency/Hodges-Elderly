@@ -93,13 +93,30 @@ export default function ServicesExplorer({
       { rootMargin: "-50% 0px -49.6% 0px", threshold: 0 },
     );
 
-    /* Closes only once the row has left the viewport entirely, in either
-     * direction. Nothing folds shut in front of the reader. */
+    /* Closes only once the row has left the viewport entirely, and only
+     * downward: the row has to be below the fold, meaning the reader
+     * scrolled back up past it.
+     *
+     * It used to close in either direction, and closing a row that had
+     * left through the TOP was a real glitch. Collapsing a panel above the
+     * reading position removes 800-odd pixels of document from above the
+     * reader, which has to be paid back by moving the scroll position the
+     * same amount. Those two changes cannot be made atomic: measured on a
+     * 390px viewport, the content jumped 822px for a single painted frame
+     * before the correction landed, on every row, and it made no
+     * difference whether the correction came from a ResizeObserver, from a
+     * direct scrollTop write, or from the browser's own scroll anchoring.
+     *
+     * Not removing the height is the only fix that actually works. A row
+     * that has scrolled off the top is invisible, so leaving it open costs
+     * the reader nothing, and on the way back up it closes as soon as it
+     * drops below the fold, where a height change is expected and unseen. */
     const closer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           const slug = entry.target.getAttribute("data-slug");
-          if (slug && !entry.isIntersecting) remove(slug);
+          if (!slug || entry.isIntersecting) continue;
+          if (entry.boundingClientRect.top >= window.innerHeight) remove(slug);
         }
       },
       { threshold: 0 },
@@ -138,7 +155,13 @@ export default function ServicesExplorer({
         }
       }
       if (correction !== 0) {
-        window.scrollBy({ top: correction, behavior: "instant" });
+        /* Direct scrollTop write rather than window.scrollBy.
+         * scrollBy routes through the scroll-behaviour machinery and was
+         * landing a frame after the height change, which left one painted
+         * frame with the content ~780px out of place. Writing scrollTop
+         * applies inside this callback, which runs after layout and before
+         * paint, so the two changes are seen together. */
+        document.documentElement.scrollTop += correction;
       }
     });
 

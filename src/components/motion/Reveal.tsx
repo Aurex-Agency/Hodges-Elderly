@@ -17,9 +17,17 @@ import type { ReactNode } from "react";
  * of bounce, not enough to look bouncy. */
 const SPRING = { type: "spring", bounce: 0.16, duration: 0.85 } as const;
 
+/* No scale.
+ *
+ * These variants used to rise from scale 0.985. Nobody reads 1.5% as
+ * movement, but everybody sees its side effect: a fractionally scaled
+ * element has its text re-rasterised on every frame of the spring, so
+ * headings shimmer very slightly on the way in. On a site whose readers are
+ * mostly over 55 that is a bad trade for an effect they cannot perceive.
+ * Translate and opacity only, which is also the cheap pair. */
 export const riseVariants: Variants = {
-  hidden: { opacity: 0, y: 26, scale: 0.985 },
-  shown: { opacity: 1, y: 0, scale: 1, transition: SPRING },
+  hidden: { opacity: 0, y: 26 },
+  shown: { opacity: 1, y: 0, transition: SPRING },
 };
 
 /** Fade-and-rise a single block when it scrolls into view. */
@@ -48,7 +56,6 @@ export function Reveal({
         shown: {
           opacity: 1,
           y: 0,
-          scale: 1,
           transition: { ...SPRING, delay },
         },
       }}

@@ -11,7 +11,14 @@ await p.waitForTimeout(1200);
 
 /* Perceived jump: take whatever the reader is looking at near the top of the
  * viewport, scroll a fixed amount, and see whether THAT element moved by
- * exactly that amount. Anything else is a visible lurch. */
+ * exactly that amount. Anything else is a visible lurch.
+ *
+ * KNOWN BLIND SPOT. This scrolls in discrete steps and waits 700ms before
+ * measuring, so it only sees drift that SETTLES wrong. It reported a clean
+ * 0px the whole time the accordion was popping content 822px for a single
+ * frame on every row close, because the correction landed before the
+ * measurement. Use scripts/content-jump.mjs for per-frame jolt under
+ * continuous scroll. A green run here is not evidence of smoothness. */
 const STEP = +(process.env.STEP || 120);
 let worst = 0;
 const N = +(process.env.N || 12);

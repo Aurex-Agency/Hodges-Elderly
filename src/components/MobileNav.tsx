@@ -13,6 +13,11 @@ import { NAV, site } from "@/lib/site";
  *
  * Standard disclosure pattern: a real button with aria-expanded and
  * aria-controls, Escape closes, focus returns to the trigger. */
+/* One transition for all three bars. They were on 0.22, 0.15 and 0.22, so
+ * the middle bar finished early and the cross assembled in two stages
+ * rather than one movement. */
+const BAR = { duration: 0.24, ease: [0.22, 0.61, 0.36, 1] } as const;
+
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -44,17 +49,17 @@ export default function MobileNav() {
           <motion.span
             className="block h-[2.5px] w-full rounded-full bg-current"
             animate={{ rotate: open ? 45 : 0, y: open ? 6.5 : 0 }}
-            transition={{ duration: 0.22 }}
+            transition={BAR}
           />
           <motion.span
             className="block h-[2.5px] w-full rounded-full bg-current"
             animate={{ opacity: open ? 0 : 1 }}
-            transition={{ duration: 0.15 }}
+            transition={{ ...BAR, duration: 0.16 }}
           />
           <motion.span
             className="block h-[2.5px] w-full rounded-full bg-current"
             animate={{ rotate: open ? -45 : 0, y: open ? -6.5 : 0 }}
-            transition={{ duration: 0.22 }}
+            transition={BAR}
           />
         </span>
         Menu

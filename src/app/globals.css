@@ -56,8 +56,21 @@
      is a care agency and the softer rectangle reads steadier and more
      grown-up. Two steps only, so the site has one radius language:
      controls (buttons, inputs) and panels (cards, callouts). */
+  /* The one lift shadow. Plum-tinted rather than neutral grey so it reads
+     as part of the palette instead of as a drop shadow. */
+  --shadow-lift: 0 6px 18px -6px color-mix(in srgb, var(--color-plum) 42%, transparent);
+
   --radius-control: 0.625rem;
   --radius-panel: 0.875rem;
+
+  /* Every CSS transition in the project inherits this unless it says
+     otherwise. Tailwind's stock curve is a symmetric ease-in-out, which is
+     the wrong shape for hover feedback: it starts slowly, so the button
+     feels a beat behind the cursor. This is the same ease-out cubic the
+     JavaScript animations use, so a hover and a reveal now share a family
+     resemblance instead of quietly disagreeing. */
+  --default-transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --default-transition-duration: 200ms;
 
   --font-display: var(--font-merriweather), Georgia, serif;
   --font-body: var(--font-merriweather), Georgia, serif;
