@@ -14,22 +14,12 @@ import {
   UL,
 } from "@/components/guide";
 import { guideBySlug } from "@/lib/guides";
+import { guideMetadata } from "@/lib/guide-meta";
 import { site } from "@/lib/site";
 
 const guide = guideBySlug("what-in-home-care-costs-in-mississippi")!;
 
-export const metadata: Metadata = {
-  title: guide.metaTitle,
-  description: guide.description,
-  alternates: { canonical: `/guides/${guide.slug}` },
-  openGraph: {
-    type: "article",
-    title: guide.title,
-    description: guide.description,
-    publishedTime: guide.published,
-    modifiedTime: guide.updated,
-  },
-};
+export const metadata: Metadata = guideMetadata(guide);
 
 const SOURCES = [
   {

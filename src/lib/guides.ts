@@ -12,6 +12,12 @@
  *
  * Dates are literal strings, not new Date(), so a rebuild never quietly
  * republishes everything with today's date.
+ *
+ * This module deliberately has NO value imports. scripts/social-assets.mjs
+ * loads it directly under plain node to generate a share card per guide,
+ * and node resolves extensionless specifiers differently from the bundler,
+ * so a single `import { site } from "./site"` here breaks that script. The
+ * metadata builder that does need `site` lives in guide-meta.ts.
  */
 
 export type Guide = {

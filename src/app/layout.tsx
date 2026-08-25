@@ -29,6 +29,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: site.shortName,
+    url: site.url,
+  },
+  /* The card was defaulting to "summary", which is the small square
+   * thumbnail. The share image is a 1200x630 landscape card and needs the
+   * large variant or it gets cropped to a square and loses the headline.
+   *
+   * The image itself is picked up from opengraph-image.png / twitter-image.png
+   * sitting next to this file, with alt text from the matching .alt.txt. */
+  twitter: {
+    card: "summary_large_image",
   },
   alternates: { canonical: "/" },
   robots: {
